@@ -9,7 +9,8 @@
    },
    "stars": {
     "2026-W39": 18036
-   }
+   },
+   "status": "New"
   },
   "ClementTsang/bottom": {
    "excluded": false,
@@ -20,7 +21,8 @@
    },
    "stars": {
     "2026-W39": 14039
-   }
+   },
+   "status": "New"
   },
   "QwikDev/partytown": {
    "excluded": false,
@@ -31,7 +33,8 @@
    },
    "stars": {
     "2026-W39": 13779
-   }
+   },
+   "status": "New"
   },
   "TwiN/gatus": {
    "excluded": false,
@@ -42,7 +45,8 @@
    },
    "stars": {
     "2026-W39": 12125
-   }
+   },
+   "status": "New"
   },
   "aden-hive/hive": {
    "excluded": false,
@@ -53,7 +57,8 @@
    },
    "stars": {
     "2026-W39": 11061
-   }
+   },
+   "status": "New"
   },
   "bastienwirtz/homer": {
    "excluded": false,
@@ -64,7 +69,8 @@
    },
    "stars": {
     "2026-W39": 11614
-   }
+   },
+   "status": "New"
   },
   "certimate-go/certimate": {
    "excluded": false,
@@ -75,7 +81,8 @@
    },
    "stars": {
     "2026-W39": 9321
-   }
+   },
+   "status": "New"
   },
   "dataelement/bisheng": {
    "excluded": false,
@@ -86,7 +93,8 @@
    },
    "stars": {
     "2026-W39": 11993
-   }
+   },
+   "status": "New"
   },
   "decaporg/decap-cms": {
    "excluded": false,
@@ -96,19 +104,21 @@
     "2026-W39": 77
    },
    "stars": {
-    "2026-W39": 19392
-   }
+    "2026-W39": 19393
+   },
+   "status": "New"
   },
   "deeplethe/utopia": {
    "excluded": false,
    "first_seen": "2026-W39",
    "last_seen": "2026-W39",
    "score": {
-    "2026-W39": 69
+    "2026-W39": 68
    },
    "stars": {
-    "2026-W39": 9597
-   }
+    "2026-W39": 9598
+   },
+   "status": "New"
   },
   "emdash-cms/emdash": {
    "excluded": false,
@@ -118,8 +128,9 @@
     "2026-W39": 87
    },
    "stars": {
-    "2026-W39": 12432
-   }
+    "2026-W39": 12435
+   },
+   "status": "New"
   },
   "frappe/frappe": {
    "excluded": false,
@@ -130,7 +141,8 @@
    },
    "stars": {
     "2026-W39": 10813
-   }
+   },
+   "status": "New"
   },
   "getgrav/grav": {
    "excluded": false,
@@ -141,7 +153,8 @@
    },
    "stars": {
     "2026-W39": 15667
-   }
+   },
+   "status": "New"
   },
   "grocy/grocy": {
    "excluded": false,
@@ -152,7 +165,8 @@
    },
    "stars": {
     "2026-W39": 9519
-   }
+   },
+   "status": "New"
   },
   "hyperdxio/hyperdx": {
    "excluded": false,
@@ -163,7 +177,8 @@
    },
    "stars": {
     "2026-W39": 9908
-   }
+   },
+   "status": "New"
   },
   "iib0011/omni-tools": {
    "excluded": false,
@@ -174,7 +189,8 @@
    },
    "stars": {
     "2026-W39": 10231
-   }
+   },
+   "status": "New"
   },
   "influxdata/telegraf": {
    "excluded": false,
@@ -185,7 +201,8 @@
    },
    "stars": {
     "2026-W39": 17821
-   }
+   },
+   "status": "New"
   },
   "kanboard/kanboard": {
    "excluded": false,
@@ -196,7 +213,8 @@
    },
    "stars": {
     "2026-W39": 9878
-   }
+   },
+   "status": "New"
   },
   "keystonejs/keystone": {
    "excluded": false,
@@ -207,7 +225,8 @@
    },
    "stars": {
     "2026-W39": 9975
-   }
+   },
+   "status": "New"
   },
   "leeoniya/uPlot": {
    "excluded": false,
@@ -217,8 +236,9 @@
     "2026-W39": 73
    },
    "stars": {
-    "2026-W39": 10509
-   }
+    "2026-W39": 10508
+   },
+   "status": "New"
   },
   "oblien/openship": {
    "excluded": false,
@@ -228,8 +248,9 @@
     "2026-W39": 67
    },
    "stars": {
-    "2026-W39": 12390
-   }
+    "2026-W39": 12391
+   },
+   "status": "New"
   },
   "owncast/owncast": {
    "excluded": false,
@@ -240,7 +261,8 @@
    },
    "stars": {
     "2026-W39": 11548
-   }
+   },
+   "status": "New"
   },
   "rmyndharis/OpenWA": {
    "excluded": false,
@@ -250,8 +272,9 @@
     "2026-W39": 85
    },
    "stars": {
-    "2026-W39": 14453
-   }
+    "2026-W39": 14457
+   },
+   "status": "New"
   },
   "sissbruecker/linkding": {
    "excluded": false,
@@ -262,7 +285,8 @@
    },
    "stars": {
     "2026-W39": 11214
-   }
+   },
+   "status": "New"
   },
   "suitenumerique/docs": {
    "excluded": false,
@@ -273,7 +297,8 @@
    },
    "stars": {
     "2026-W39": 16847
-   }
+   },
+   "status": "New"
   },
   "theonedev/onedev": {
    "excluded": false,
@@ -283,8 +308,9 @@
     "2026-W39": 67
    },
    "stars": {
-    "2026-W39": 15258
-   }
+    "2026-W39": 15259
+   },
+   "status": "New"
   },
   "usekaneo/kaneo": {
    "excluded": false,
@@ -295,7 +321,8 @@
    },
    "stars": {
     "2026-W39": 9149
-   }
+   },
+   "status": "New"
   },
   "vercel/commerce": {
    "excluded": false,
@@ -306,7 +333,8 @@
    },
    "stars": {
     "2026-W39": 14272
-   }
+   },
+   "status": "New"
   },
   "wallabag/wallabag": {
    "excluded": false,
@@ -317,7 +345,8 @@
    },
    "stars": {
     "2026-W39": 12975
-   }
+   },
+   "status": "New"
   },
   "winsiderss/systeminformer": {
    "excluded": false,
@@ -327,8 +356,9 @@
     "2026-W39": 78
    },
    "stars": {
-    "2026-W39": 16058
-   }
+    "2026-W39": 16059
+   },
+   "status": "New"
   }
  },
  "version": 1,
