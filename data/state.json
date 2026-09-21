@@ -1,5 +1,338 @@
 {
+ "repos": {
+  "AsyncFuncAI/deepwiki-open": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 69
+   },
+   "stars": {
+    "2026-W39": 18036
+   }
+  },
+  "ClementTsang/bottom": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 68
+   },
+   "stars": {
+    "2026-W39": 14039
+   }
+  },
+  "QwikDev/partytown": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 79
+   },
+   "stars": {
+    "2026-W39": 13779
+   }
+  },
+  "TwiN/gatus": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 58
+   },
+   "stars": {
+    "2026-W39": 12125
+   }
+  },
+  "aden-hive/hive": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 45
+   },
+   "stars": {
+    "2026-W39": 11061
+   }
+  },
+  "bastienwirtz/homer": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 63
+   },
+   "stars": {
+    "2026-W39": 11614
+   }
+  },
+  "certimate-go/certimate": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 72
+   },
+   "stars": {
+    "2026-W39": 9321
+   }
+  },
+  "dataelement/bisheng": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 63
+   },
+   "stars": {
+    "2026-W39": 11993
+   }
+  },
+  "decaporg/decap-cms": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 77
+   },
+   "stars": {
+    "2026-W39": 19392
+   }
+  },
+  "deeplethe/utopia": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 69
+   },
+   "stars": {
+    "2026-W39": 9597
+   }
+  },
+  "emdash-cms/emdash": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 87
+   },
+   "stars": {
+    "2026-W39": 12432
+   }
+  },
+  "frappe/frappe": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 74
+   },
+   "stars": {
+    "2026-W39": 10813
+   }
+  },
+  "getgrav/grav": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 15667
+   }
+  },
+  "grocy/grocy": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 9519
+   }
+  },
+  "hyperdxio/hyperdx": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 87
+   },
+   "stars": {
+    "2026-W39": 9908
+   }
+  },
+  "iib0011/omni-tools": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 38
+   },
+   "stars": {
+    "2026-W39": 10231
+   }
+  },
+  "influxdata/telegraf": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 79
+   },
+   "stars": {
+    "2026-W39": 17821
+   }
+  },
+  "kanboard/kanboard": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 87
+   },
+   "stars": {
+    "2026-W39": 9878
+   }
+  },
+  "keystonejs/keystone": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 9975
+   }
+  },
+  "leeoniya/uPlot": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 73
+   },
+   "stars": {
+    "2026-W39": 10509
+   }
+  },
+  "oblien/openship": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 12390
+   }
+  },
+  "owncast/owncast": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 85
+   },
+   "stars": {
+    "2026-W39": 11548
+   }
+  },
+  "rmyndharis/OpenWA": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 85
+   },
+   "stars": {
+    "2026-W39": 14453
+   }
+  },
+  "sissbruecker/linkding": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 11214
+   }
+  },
+  "suitenumerique/docs": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 90
+   },
+   "stars": {
+    "2026-W39": 16847
+   }
+  },
+  "theonedev/onedev": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 15258
+   }
+  },
+  "usekaneo/kaneo": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 87
+   },
+   "stars": {
+    "2026-W39": 9149
+   }
+  },
+  "vercel/commerce": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 14272
+   }
+  },
+  "wallabag/wallabag": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 69
+   },
+   "stars": {
+    "2026-W39": 12975
+   }
+  },
+  "winsiderss/systeminformer": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 16058
+   }
+  }
+ },
  "version": 1,
- "weeks": [],
- "repos": {}
+ "weeks": [
+  "2026-W39"
+ ]
 }
