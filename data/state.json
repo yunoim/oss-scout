@@ -1,5 +1,53 @@
 {
  "repos": {
+  "0x2E/fusion": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 2181
+   },
+   "status": "New"
+  },
+  "0xERR0R/blocky": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 52
+   },
+   "stars": {
+    "2026-W39": 6965
+   },
+   "status": "New"
+  },
+  "ArnasDon/wacrm": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 72
+   },
+   "stars": {
+    "2026-W39": 2374
+   },
+   "status": "New"
+  },
+  "ArtalkJS/Artalk": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 70
+   },
+   "stars": {
+    "2026-W39": 2337
+   },
+   "status": "New"
+  },
   "AsyncFuncAI/deepwiki-open": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -9,6 +57,42 @@
    },
    "stars": {
     "2026-W39": 18036
+   },
+   "status": "New"
+  },
+  "AtalayaLabs/OxiCloud": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 90
+   },
+   "stars": {
+    "2026-W39": 3586
+   },
+   "status": "New"
+  },
+  "Athou/commafeed": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 46
+   },
+   "stars": {
+    "2026-W39": 3627
+   },
+   "status": "New"
+  },
+  "BuilderIO/builder": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 77
+   },
+   "stars": {
+    "2026-W39": 8844
    },
    "status": "New"
   },
@@ -24,6 +108,342 @@
    },
    "status": "New"
   },
+  "CoreBunch/Instatic": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 90
+   },
+   "stars": {
+    "2026-W39": 8747
+   },
+   "status": "New"
+  },
+  "CorentinTh/enclosed": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 51
+   },
+   "stars": {
+    "2026-W39": 2089
+   },
+   "status": "New"
+  },
+  "David-Crty/databasement": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 77
+   },
+   "stars": {
+    "2026-W39": 2421
+   },
+   "status": "New"
+  },
+  "DavidWells/analytics": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 58
+   },
+   "stars": {
+    "2026-W39": 2664
+   },
+   "status": "New"
+  },
+  "DebugSwift/DebugSwift": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 77
+   },
+   "stars": {
+    "2026-W39": 2404
+   },
+   "status": "New"
+  },
+  "Django-CRM/Django-CRM": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 85
+   },
+   "stars": {
+    "2026-W39": 2427
+   },
+   "status": "New"
+  },
+  "Finb/bark-server": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 53
+   },
+   "stars": {
+    "2026-W39": 3627
+   },
+   "status": "New"
+  },
+  "Flagsmith/flagsmith": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 50
+   },
+   "stars": {
+    "2026-W39": 6563
+   },
+   "status": "New"
+  },
+  "GhostWriters/DockSTARTer": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 64
+   },
+   "stars": {
+    "2026-W39": 2570
+   },
+   "status": "New"
+  },
+  "GreptimeTeam/greptimedb": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 64
+   },
+   "stars": {
+    "2026-W39": 6697
+   },
+   "status": "New"
+  },
+  "Gururagavendra/gmail-cleaner": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 58
+   },
+   "stars": {
+    "2026-W39": 2104
+   },
+   "status": "New"
+  },
+  "HarnessRouter/harnessrouter": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 64
+   },
+   "stars": {
+    "2026-W39": 1953
+   },
+   "status": "New"
+  },
+  "Javis603/token-monitor": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 75
+   },
+   "stars": {
+    "2026-W39": 2271
+   },
+   "status": "New"
+  },
+  "Jazee6/cloudflare-ai-web": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 37
+   },
+   "stars": {
+    "2026-W39": 2182
+   },
+   "status": "New"
+  },
+  "Kaustubh-Natuskar/moreThanFAANGM": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 66
+   },
+   "stars": {
+    "2026-W39": 5230
+   },
+   "status": "New"
+  },
+  "LearningCircuit/local-deep-research": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 73
+   },
+   "stars": {
+    "2026-W39": 9113
+   },
+   "status": "New"
+  },
+  "LumePart/Explo": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 75
+   },
+   "stars": {
+    "2026-W39": 1984
+   },
+   "status": "New"
+  },
+  "Maciek-roboblog/Claude-Code-Usage-Monitor": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 63
+   },
+   "stars": {
+    "2026-W39": 8715
+   },
+   "status": "New"
+  },
+  "MauriceNino/dashdot": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 76
+   },
+   "stars": {
+    "2026-W39": 3547
+   },
+   "status": "New"
+  },
+  "Microsoft365DSC/Microsoft365DSC": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 2393
+   },
+   "status": "New"
+  },
+  "Observal/Observal": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 60
+   },
+   "stars": {
+    "2026-W39": 2864
+   },
+   "status": "New"
+  },
+  "OpenVidu/openvidu": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 52
+   },
+   "stars": {
+    "2026-W39": 2130
+   },
+   "status": "New"
+  },
+  "Osmantic/ODS": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 53
+   },
+   "stars": {
+    "2026-W39": 6679
+   },
+   "status": "New"
+  },
+  "Paca-AI/paca": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 54
+   },
+   "stars": {
+    "2026-W39": 1842
+   },
+   "status": "New"
+  },
+  "Paymenter/Paymenter": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 83
+   },
+   "stars": {
+    "2026-W39": 2312
+   },
+   "status": "New"
+  },
+  "PiranhaCMS/piranha.core": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 2195
+   },
+   "status": "New"
+  },
+  "Pouzor/homelable": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 90
+   },
+   "stars": {
+    "2026-W39": 3753
+   },
+   "status": "New"
+  },
+  "PySpur-Dev/pyspur": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 47
+   },
+   "stars": {
+    "2026-W39": 5786
+   },
+   "status": "New"
+  },
   "QwikDev/partytown": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -33,6 +453,54 @@
    },
    "stars": {
     "2026-W39": 13779
+   },
+   "status": "New"
+  },
+  "RubixML/ML": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 74
+   },
+   "stars": {
+    "2026-W39": 2207
+   },
+   "status": "New"
+  },
+  "Squidex/squidex": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 2510
+   },
+   "status": "New"
+  },
+  "Sylius/Sylius": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 81
+   },
+   "stars": {
+    "2026-W39": 8539
+   },
+   "status": "New"
+  },
+  "Thinkmill/keystatic": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 2401
    },
    "status": "New"
   },
@@ -48,6 +516,42 @@
    },
    "status": "New"
   },
+  "UnicomAI/wanwu": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 71
+   },
+   "stars": {
+    "2026-W39": 2477
+   },
+   "status": "New"
+  },
+  "Vexa-ai/vexa": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 55
+   },
+   "stars": {
+    "2026-W39": 2809
+   },
+   "status": "New"
+  },
+  "Volmarg/personal-management-system": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 4162
+   },
+   "status": "New"
+  },
   "aden-hive/hive": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -57,6 +561,150 @@
    },
    "stars": {
     "2026-W39": 11061
+   },
+   "status": "New"
+  },
+  "aimeos/aimeos": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 5455
+   },
+   "status": "New"
+  },
+  "aimeos/aimeos-laravel": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 60
+   },
+   "stars": {
+    "2026-W39": 8700
+   },
+   "status": "New"
+  },
+  "ankane/ahoy": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 63
+   },
+   "stars": {
+    "2026-W39": 4480
+   },
+   "status": "New"
+  },
+  "antoinezambelli/forge": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 2249
+   },
+   "status": "New"
+  },
+  "apache/hertzbeat": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 54
+   },
+   "stars": {
+    "2026-W39": 7401
+   },
+   "status": "New"
+  },
+  "archtechx/tenancy": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 4410
+   },
+   "status": "New"
+  },
+  "arl/statsviz": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 69
+   },
+   "stars": {
+    "2026-W39": 3646
+   },
+   "status": "New"
+  },
+  "arnegiacomo/fugleramme": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 64
+   },
+   "stars": {
+    "2026-W39": 3243
+   },
+   "status": "New"
+  },
+  "asciinema/asciinema-server": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 39
+   },
+   "stars": {
+    "2026-W39": 2499
+   },
+   "status": "New"
+  },
+  "authgear/authgear-server": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 58
+   },
+   "stars": {
+    "2026-W39": 2060
+   },
+   "status": "New"
+  },
+  "autobase-tech/autobase": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 77
+   },
+   "stars": {
+    "2026-W39": 4394
+   },
+   "status": "New"
+  },
+  "av/harbor": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 60
+   },
+   "stars": {
+    "2026-W39": 3220
    },
    "status": "New"
   },
@@ -72,6 +720,102 @@
    },
    "status": "New"
   },
+  "beenuar/AiSOC": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 2360
+   },
+   "status": "New"
+  },
+  "benvinegar/counterscale": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 71
+   },
+   "stars": {
+    "2026-W39": 2146
+   },
+   "status": "New"
+  },
+  "blackcandy-org/blackcandy": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 4418
+   },
+   "status": "New"
+  },
+  "boxlite-ai/boxlite": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 52
+   },
+   "stars": {
+    "2026-W39": 2338
+   },
+   "status": "New"
+  },
+  "bpatrik/pigallery2": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 52
+   },
+   "stars": {
+    "2026-W39": 2282
+   },
+   "status": "New"
+  },
+  "brotandgames/ciao": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 1981
+   },
+   "status": "New"
+  },
+  "builderz-labs/mission-control": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 77
+   },
+   "stars": {
+    "2026-W39": 6250
+   },
+   "status": "New"
+  },
+  "bullet-train-co/bullet_train": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 1887
+   },
+   "status": "New"
+  },
   "certimate-go/certimate": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -84,6 +828,54 @@
    },
    "status": "New"
   },
+  "claabs/epicgames-freegames-node": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 65
+   },
+   "stars": {
+    "2026-W39": 1918
+   },
+   "status": "New"
+  },
+  "clidey/whodb": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 57
+   },
+   "stars": {
+    "2026-W39": 5034
+   },
+   "status": "New"
+  },
+  "cozystack/cozystack": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 41
+   },
+   "stars": {
+    "2026-W39": 2232
+   },
+   "status": "New"
+  },
+  "databasus/databasus": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 8618
+   },
+   "status": "New"
+  },
   "dataelement/bisheng": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -93,6 +885,18 @@
    },
    "stars": {
     "2026-W39": 11993
+   },
+   "status": "New"
+  },
+  "daya0576/beaverhabits": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 76
+   },
+   "stars": {
+    "2026-W39": 1841
    },
    "status": "New"
   },
@@ -120,6 +924,78 @@
    },
    "status": "New"
   },
+  "doramart/DoraCMS": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 3543
+   },
+   "status": "New"
+  },
+  "dotnet/spark": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 70
+   },
+   "stars": {
+    "2026-W39": 2096
+   },
+   "status": "New"
+  },
+  "duckdb/duckdb-wasm": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 2124
+   },
+   "status": "New"
+  },
+  "dwgx/WindsurfAPI": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 3035
+   },
+   "status": "New"
+  },
+  "electerious/Ackee": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 87
+   },
+   "stars": {
+    "2026-W39": 4709
+   },
+   "status": "New"
+  },
+  "elie222/rakazo": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 55
+   },
+   "stars": {
+    "2026-W39": 2813
+   },
+   "status": "New"
+  },
   "emdash-cms/emdash": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -129,6 +1005,90 @@
    },
    "stars": {
     "2026-W39": 12435
+   },
+   "status": "New"
+  },
+  "estruyf/vscode-front-matter": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 73
+   },
+   "stars": {
+    "2026-W39": 2544
+   },
+   "status": "New"
+  },
+  "evidence-dev/evidence": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 73
+   },
+   "stars": {
+    "2026-W39": 6950
+   },
+   "status": "New"
+  },
+  "featbit/featbit": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 81
+   },
+   "stars": {
+    "2026-W39": 1908
+   },
+   "status": "New"
+  },
+  "flightlessmango/MangoHud": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 66
+   },
+   "stars": {
+    "2026-W39": 9056
+   },
+   "status": "New"
+  },
+  "flyfish-dev/file-viewer": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 39
+   },
+   "stars": {
+    "2026-W39": 2396
+   },
+   "status": "New"
+  },
+  "flyteorg/flyte": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 66
+   },
+   "stars": {
+    "2026-W39": 7546
+   },
+   "status": "New"
+  },
+  "frappe/builder": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 2377
    },
    "status": "New"
   },
@@ -144,6 +1104,42 @@
    },
    "status": "New"
   },
+  "frappe/frappe_docker": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 69
+   },
+   "stars": {
+    "2026-W39": 2572
+   },
+   "status": "New"
+  },
+  "gamosoft/NoteDiscovery": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 82
+   },
+   "stars": {
+    "2026-W39": 2810
+   },
+   "status": "New"
+  },
+  "getarcaneapp/arcane": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 73
+   },
+   "stars": {
+    "2026-W39": 7482
+   },
+   "status": "New"
+  },
   "getgrav/grav": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -153,6 +1149,30 @@
    },
    "stars": {
     "2026-W39": 15667
+   },
+   "status": "New"
+  },
+  "github-aws-runners/terraform-aws-github-runner": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 65
+   },
+   "stars": {
+    "2026-W39": 3133
+   },
+   "status": "New"
+  },
+  "goniszewski/grimoire": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 72
+   },
+   "stars": {
+    "2026-W39": 2858
    },
    "status": "New"
   },
@@ -168,6 +1188,42 @@
    },
    "status": "New"
   },
+  "homarr-labs/dashboard-icons": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 54
+   },
+   "stars": {
+    "2026-W39": 8754
+   },
+   "status": "New"
+  },
+  "hslr-s/sun-panel": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 5320
+   },
+   "status": "New"
+  },
+  "hwdsl2/wireguard-install": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 57
+   },
+   "stars": {
+    "2026-W39": 2663
+   },
+   "status": "New"
+  },
   "hyperdxio/hyperdx": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -177,6 +1233,30 @@
    },
    "stars": {
     "2026-W39": 9908
+   },
+   "status": "New"
+  },
+  "iflytek/astron-agent": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 66
+   },
+   "stars": {
+    "2026-W39": 9021
+   },
+   "status": "New"
+  },
+  "iflytek/astron-rpa": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 57
+   },
+   "stars": {
+    "2026-W39": 5551
    },
    "status": "New"
   },
@@ -192,6 +1272,18 @@
    },
    "status": "New"
   },
+  "influxdata/kapacitor": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 79
+   },
+   "stars": {
+    "2026-W39": 2377
+   },
+   "status": "New"
+  },
   "influxdata/telegraf": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -201,6 +1293,78 @@
    },
    "stars": {
     "2026-W39": 17821
+   },
+   "status": "New"
+  },
+  "ironcalc/IronCalc": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 55
+   },
+   "stars": {
+    "2026-W39": 4165
+   },
+   "status": "New"
+  },
+  "isso-comments/isso": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 72
+   },
+   "stars": {
+    "2026-W39": 5308
+   },
+   "status": "New"
+  },
+  "itswadesh/svelte-commerce": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 88
+   },
+   "stars": {
+    "2026-W39": 1814
+   },
+   "status": "New"
+  },
+  "jarvis2f/telegram-files": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 71
+   },
+   "stars": {
+    "2026-W39": 2400
+   },
+   "status": "New"
+  },
+  "jeremylongshore/tons-of-skills-marketplace": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 76
+   },
+   "stars": {
+    "2026-W39": 2781
+   },
+   "status": "New"
+  },
+  "juggleim/im-server": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 64
+   },
+   "stars": {
+    "2026-W39": 3557
    },
    "status": "New"
   },
@@ -216,6 +1380,18 @@
    },
    "status": "New"
   },
+  "kdash-rs/kdash": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 82
+   },
+   "stars": {
+    "2026-W39": 2539
+   },
+   "status": "New"
+  },
   "keystonejs/keystone": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -225,6 +1401,18 @@
    },
    "stars": {
     "2026-W39": 9975
+   },
+   "status": "New"
+  },
+  "laravel/telescope": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 5229
    },
    "status": "New"
   },
@@ -240,6 +1428,222 @@
    },
    "status": "New"
   },
+  "linode/apl-core": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 54
+   },
+   "stars": {
+    "2026-W39": 2259
+   },
+   "status": "New"
+  },
+  "lmnr-ai/lmnr": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 59
+   },
+   "stars": {
+    "2026-W39": 3275
+   },
+   "status": "New"
+  },
+  "lunarphp/lunar": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 76
+   },
+   "stars": {
+    "2026-W39": 3735
+   },
+   "status": "New"
+  },
+  "mayswind/ezbookkeeping": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 81
+   },
+   "stars": {
+    "2026-W39": 5634
+   },
+   "status": "New"
+  },
+  "mayukh4/linux-android": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 51
+   },
+   "stars": {
+    "2026-W39": 3541
+   },
+   "status": "New"
+  },
+  "melgarafael/DeskcommCRM": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 87
+   },
+   "stars": {
+    "2026-W39": 3417
+   },
+   "status": "New"
+  },
+  "mercurjs/mercur": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 75
+   },
+   "stars": {
+    "2026-W39": 1777
+   },
+   "status": "New"
+  },
+  "microweber/microweber": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 81
+   },
+   "stars": {
+    "2026-W39": 3438
+   },
+   "status": "New"
+  },
+  "moltis-org/moltis": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 84
+   },
+   "stars": {
+    "2026-W39": 2867
+   },
+   "status": "New"
+  },
+  "montanaflynn/stats": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 79
+   },
+   "stars": {
+    "2026-W39": 3025
+   },
+   "status": "New"
+  },
+  "mostafa-wahied/portracker": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 84
+   },
+   "stars": {
+    "2026-W39": 2443
+   },
+   "status": "New"
+  },
+  "msgbyte/tianji": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 61
+   },
+   "stars": {
+    "2026-W39": 3099
+   },
+   "status": "New"
+  },
+  "muety/wakapi": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 82
+   },
+   "stars": {
+    "2026-W39": 4434
+   },
+   "status": "New"
+  },
+  "nndeploy/nndeploy": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 46
+   },
+   "stars": {
+    "2026-W39": 1878
+   },
+   "status": "New"
+  },
+  "nunomaduro/phpinsights": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 82
+   },
+   "stars": {
+    "2026-W39": 5635
+   },
+   "status": "New"
+  },
+  "nuver-labs/vps-audit": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 52
+   },
+   "stars": {
+    "2026-W39": 3130
+   },
+   "status": "New"
+  },
+  "nuxt/content": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 76
+   },
+   "stars": {
+    "2026-W39": 3667
+   },
+   "status": "New"
+  },
+  "nyblnet/bento": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 5168
+   },
+   "status": "New"
+  },
   "oblien/openship": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -249,6 +1653,54 @@
    },
    "stars": {
     "2026-W39": 12391
+   },
+   "status": "New"
+  },
+  "oomol-lab/open-connector": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 57
+   },
+   "stars": {
+    "2026-W39": 5857
+   },
+   "status": "New"
+  },
+  "open-multi-agent/open-multi-agent": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 6947
+   },
+   "status": "New"
+  },
+  "operacle/checkcle": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 70
+   },
+   "stars": {
+    "2026-W39": 3272
+   },
+   "status": "New"
+  },
+  "oqtane/oqtane.framework": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 66
+   },
+   "stars": {
+    "2026-W39": 2256
    },
    "status": "New"
   },
@@ -264,6 +1716,150 @@
    },
    "status": "New"
   },
+  "owncloud/ocis": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 55
+   },
+   "stars": {
+    "2026-W39": 2126
+   },
+   "status": "New"
+  },
+  "pacifio/atlas": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 61
+   },
+   "stars": {
+    "2026-W39": 5548
+   },
+   "status": "New"
+  },
+  "pawelmalak/flame": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 57
+   },
+   "stars": {
+    "2026-W39": 6549
+   },
+   "status": "New"
+  },
+  "pglombardo/PasswordPusher": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 55
+   },
+   "stars": {
+    "2026-W39": 3202
+   },
+   "status": "New"
+  },
+  "picocms/Pico": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 3905
+   },
+   "status": "New"
+  },
+  "pipeshub-ai/pipeshub-ai": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 58
+   },
+   "stars": {
+    "2026-W39": 3765
+   },
+   "status": "New"
+  },
+  "plasmicapp/plasmic": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 7031
+   },
+   "status": "New"
+  },
+  "prest/prest": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 90
+   },
+   "stars": {
+    "2026-W39": 4620
+   },
+   "status": "New"
+  },
+  "primocms/primo": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 83
+   },
+   "stars": {
+    "2026-W39": 2373
+   },
+   "status": "New"
+  },
+  "psviderski/uncloud": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 51
+   },
+   "stars": {
+    "2026-W39": 5496
+   },
+   "status": "New"
+  },
+  "qor/qor": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 64
+   },
+   "stars": {
+    "2026-W39": 5343
+   },
+   "status": "New"
+  },
+  "rcourtman/Pulse": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 85
+   },
+   "stars": {
+    "2026-W39": 6736
+   },
+   "status": "New"
+  },
   "rmyndharis/OpenWA": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -273,6 +1869,78 @@
    },
    "stars": {
     "2026-W39": 14457
+   },
+   "status": "New"
+  },
+  "robusta-dev/krr": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 73
+   },
+   "stars": {
+    "2026-W39": 4729
+   },
+   "status": "New"
+  },
+  "robusta-dev/robusta": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 70
+   },
+   "stars": {
+    "2026-W39": 3100
+   },
+   "status": "New"
+  },
+  "sanity-io/sanity": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 77
+   },
+   "stars": {
+    "2026-W39": 6326
+   },
+   "status": "New"
+  },
+  "sethcottle/littlelink": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 3085
+   },
+   "status": "New"
+  },
+  "shopware/shopware": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 3427
+   },
+   "status": "New"
+  },
+  "shy3130/tick-stock-panel": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 86
+   },
+   "stars": {
+    "2026-W39": 4861
    },
    "status": "New"
   },
@@ -288,6 +1956,66 @@
    },
    "status": "New"
   },
+  "sitespeedio/sitespeed.io": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 5028
+   },
+   "status": "New"
+  },
+  "skyhook-io/radar": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 55
+   },
+   "stars": {
+    "2026-W39": 3418
+   },
+   "status": "New"
+  },
+  "spatie/laravel-activitylog": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 78
+   },
+   "stars": {
+    "2026-W39": 5901
+   },
+   "status": "New"
+  },
+  "spatie/laravel-analytics": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 3241
+   },
+   "status": "New"
+  },
+  "stumpapp/stump": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 71
+   },
+   "stars": {
+    "2026-W39": 2709
+   },
+   "status": "New"
+  },
   "suitenumerique/docs": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -297,6 +2025,102 @@
    },
    "stars": {
     "2026-W39": 16847
+   },
+   "status": "New"
+  },
+  "superplanehq/superplane": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 59
+   },
+   "stars": {
+    "2026-W39": 7528
+   },
+   "status": "New"
+  },
+  "superradcompany/microsandbox": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 65
+   },
+   "stars": {
+    "2026-W39": 8341
+   },
+   "status": "New"
+  },
+  "sveltia/sveltia-cms": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 76
+   },
+   "stars": {
+    "2026-W39": 2856
+   },
+   "status": "New"
+  },
+  "tailscale-dev/ScaleTail": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 60
+   },
+   "stars": {
+    "2026-W39": 2070
+   },
+   "status": "New"
+  },
+  "talivia-group/talivia": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 83
+   },
+   "stars": {
+    "2026-W39": 2395
+   },
+   "status": "New"
+  },
+  "tbphp/gpt-load": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 88
+   },
+   "stars": {
+    "2026-W39": 6930
+   },
+   "status": "New"
+  },
+  "the-momentum/open-wearables": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 70
+   },
+   "stars": {
+    "2026-W39": 2543
+   },
+   "status": "New"
+  },
+  "thedevdojo/wave": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 66
+   },
+   "stars": {
+    "2026-W39": 6554
    },
    "status": "New"
   },
@@ -312,6 +2136,42 @@
    },
    "status": "New"
   },
+  "traccar/traccar": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 46
+   },
+   "stars": {
+    "2026-W39": 7785
+   },
+   "status": "New"
+  },
+  "ueberdosis/hocuspocus": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 72
+   },
+   "stars": {
+    "2026-W39": 2586
+   },
+   "status": "New"
+  },
+  "umputun/remark42": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 80
+   },
+   "stars": {
+    "2026-W39": 5610
+   },
+   "status": "New"
+  },
   "usekaneo/kaneo": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -321,6 +2181,30 @@
    },
    "stars": {
     "2026-W39": 9149
+   },
+   "status": "New"
+  },
+  "uselotus/lotus": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 75
+   },
+   "stars": {
+    "2026-W39": 1838
+   },
+   "status": "New"
+  },
+  "vas3k/TaxHacker": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 89
+   },
+   "stars": {
+    "2026-W39": 6714
    },
    "status": "New"
   },
@@ -336,6 +2220,42 @@
    },
    "status": "New"
   },
+  "vidstack/player": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 58
+   },
+   "stars": {
+    "2026-W39": 3676
+   },
+   "status": "New"
+  },
+  "vladkens/macmon": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 63
+   },
+   "stars": {
+    "2026-W39": 1891
+   },
+   "status": "New"
+  },
+  "vuestorefront/storefront-ui": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 65
+   },
+   "stars": {
+    "2026-W39": 2512
+   },
+   "status": "New"
+  },
   "wallabag/wallabag": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -348,6 +2268,30 @@
    },
    "status": "New"
   },
+  "wasi-master/13ft": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 69
+   },
+   "stars": {
+    "2026-W39": 4289
+   },
+   "status": "New"
+  },
+  "whiteguo233/OpenBiliClaw": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 3342
+   },
+   "status": "New"
+  },
   "winsiderss/systeminformer": {
    "excluded": false,
    "first_seen": "2026-W39",
@@ -357,6 +2301,78 @@
    },
    "stars": {
     "2026-W39": 16059
+   },
+   "status": "New"
+  },
+  "withcatai/node-llama-cpp": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 71
+   },
+   "stars": {
+    "2026-W39": 2185
+   },
+   "status": "New"
+  },
+  "wookayin/gpustat": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 67
+   },
+   "stars": {
+    "2026-W39": 4392
+   },
+   "status": "New"
+  },
+  "xerrors/Yuxi": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 90
+   },
+   "stars": {
+    "2026-W39": 7158
+   },
+   "status": "New"
+  },
+  "zalando/logbook": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 76
+   },
+   "stars": {
+    "2026-W39": 2065
+   },
+   "status": "New"
+  },
+  "zenml-io/zenml": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 68
+   },
+   "stars": {
+    "2026-W39": 5588
+   },
+   "status": "New"
+  },
+  "zenstackhq/zenstack": {
+   "excluded": false,
+   "first_seen": "2026-W39",
+   "last_seen": "2026-W39",
+   "score": {
+    "2026-W39": 62
+   },
+   "stars": {
+    "2026-W39": 2946
    },
    "status": "New"
   }
