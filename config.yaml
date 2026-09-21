@@ -1,0 +1,171 @@
+# OSS Scout configuration. All values here are overridable; env secrets live in .env / Actions secrets.
+
+discovery:
+  # {90d} is replaced with an ISO date N days before run time.
+  queries:
+    - topic:self-hosted license:mit stars:500..20000 pushed:>{90d}
+    - topic:self-hosted license:apache-2.0 stars:500..20000 pushed:>{90d}
+    - topic:self-hosted license:bsd-3-clause stars:300..20000 pushed:>{90d}
+    - topic:saas license:mit stars:300..10000 pushed:>{90d}
+    - topic:crm license:mit stars:200..10000 pushed:>{90d}
+    - topic:analytics license:mit stars:500..20000 pushed:>{90d}
+    - topic:cms license:mit stars:500..20000 pushed:>{90d}
+    - topic:ecommerce license:mit stars:300..20000 pushed:>{90d}
+    - topic:llm topic:workflow license:apache-2.0 stars:500..20000 pushed:>{90d}
+    - topic:monitoring license:mit stars:500..20000 pushed:>{90d}
+    - topic:booking license:mit stars:100..10000 pushed:>{90d}
+    - topic:invoice license:mit stars:100..10000 pushed:>{90d}
+  sorts: [stars, updated]
+  pages_per_query: 2
+  per_page: 100
+  max_push_age_days: 90
+  # Cap on candidates enriched + audited per run (top by stars). ~10 GitHub calls per repo on a cold
+  # ETag cache; 200 repos ≈ 2,000 calls, fine for a PAT (5,000/h), slow on the Actions token (1,000/h).
+  # `--limit N` on the CLI overrides this.
+  max_candidates: 200
+  # Search results already carry the repo detail; set true to re-fetch GET /repos/{owner}/{repo} anyway.
+  refresh_repo_detail: false
+  # Repos whose topics include any of these are dropped as non-products.
+  exclude_topics: [awesome, tutorial, boilerplate, learning, awesome-list, template, starter, starter-kit, course]
+  # Repo name patterns (regex, matched on the repo name without owner).
+  exclude_name_patterns: ["^awesome-", "-list$", "-tutorial$", "-boilerplate$", "-template$", "-starter$", "-examples?$"]
+
+audit:
+  ok_licenses: [MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, 0BSD, Unlicense]
+  # Patterns (regex, case-insensitive) that mark the root license copyleft/restricted.
+  copyleft_patterns:
+    - "GNU AFFERO GENERAL PUBLIC LICENSE"
+    - "GNU GENERAL PUBLIC LICENSE"
+    - "GNU LESSER GENERAL PUBLIC LICENSE"
+    - "Server Side Public License"
+    - "Business Source License"
+    - "Eclipse Public License"
+    - "Mozilla Public License"
+    - "Elastic License"
+    - "Commons Clause"
+    - "Sustainable Use License"
+    - '\bAGPL\b'
+    - '\bSSPL\b'
+    - '\bBUSL\b'
+  copyleft_spdx: [AGPL-3.0, AGPL-1.0, GPL-2.0, GPL-3.0, GPL-1.0, LGPL-2.1, LGPL-3.0, LGPL-2.0, SSPL-1.0, BUSL-1.1, EPL-1.0, EPL-2.0, MPL-2.0, MPL-1.1, Elastic-2.0]
+  # Phrases (regex, case-insensitive) in LICENSE or README that indicate additional restrictions.
+  restricted_term_patterns:
+    - "multi-tenant"
+    - "multitenant"
+    - 'SaaS\s*(is\s*)?(not\s*(permitted|allowed)|prohibited|금지)'
+    - "may not be used to provide"
+    - "without the express written permission"
+    - "retain the .* logo"
+    - "you may not remove or obscure"
+    - "Sustainable Use"
+    - "Commons Clause"
+    - "additional terms"
+    - "Additional Conditions"
+    - "enterprise edition"
+    - "Enterprise License"
+  ee_dir_names: [ee, enterprise, premium, pro]
+  ee_parent_dirs: [packages, apps]
+  max_deps: 60
+  dep_copyleft_pattern: '(^|[^A-Za-z])(AGPL|GPL|SSPL|BUSL)'
+  trademark_patterns: ["trademark", "™", "®", "brand guidelines"]
+
+# Repos that look permissive in search but are known traps. Always excluded with the reason.
+known_traps:
+  n8n-io/n8n: "Sustainable Use License — 호스팅 재판매 불가"
+  langgenius/dify: "Apache-2.0 + 추가조건(멀티테넌트 SaaS 금지, 로고 제거 금지)"
+  open-webui/open-webui: "브랜딩 유지 조항"
+  metabase/metabase: "AGPL"
+  grafana/grafana: "AGPL"
+  makeplane/plane: "AGPL"
+  twentyhq/twenty: "AGPL"
+  nocodb/nocodb: "AGPL"
+  calcom/cal.com: "AGPL + ee 상용"
+  directus/directus: "BSL"
+  outline/outline: "BSL"
+
+scoring:
+  # Max points per component. Must sum to 100.
+  weights:
+    license: 20
+    activity: 15
+    popularity: 15
+    community: 10
+    deploy: 15
+    category: 15
+    korea: 10
+  license:
+    ok: 20
+    unknown: 8
+    ee_dir_penalty: 5
+  activity:
+    recent_push_days: 14
+    recent_push_points: 10
+    release_within_days: 90
+    release_points: 5
+  popularity:
+    log_stars_points: 8
+    log_stars_max: 5.0     # log10(100k) == full marks
+    growth_points: 7
+    growth_full_ratio: 0.05  # +5 %/week == full marks
+  community:
+    contributors_threshold: 20
+    contributors_points: 5
+    issue_ratio_points: 5
+    issue_ratio_bad: 0.05   # open_issues/stars >= 5 % == 0 points
+  deploy:
+    dockerfile: 5
+    compose: 5
+    helm_or_env: 3
+    single_binary: 2
+  category:
+    default_weight: 8
+    weights:
+      analytics: 15
+      crm: 15
+      commerce: 15
+      cms: 15
+      booking: 15
+      invoice: 15
+      notification: 15
+      monitoring: 15
+      llm-workflow: 15
+      internal-tools: 15
+      devtool: 5
+      lib: 5
+    keywords:
+      analytics: [analytics, metrics, statistics, web-analytics, product-analytics, tracking, dashboard, bi, business-intelligence]
+      crm: [crm, customer, sales, lead, leads, contacts, helpdesk, support-ticket, ticketing]
+      commerce: [ecommerce, e-commerce, commerce, shop, store, storefront, cart, checkout, marketplace, pos]
+      cms: [cms, headless-cms, blog, content-management, website-builder, wiki, knowledge-base, documentation]
+      booking: [booking, scheduling, appointment, appointments, calendar, reservation, reservations]
+      invoice: [invoice, invoicing, billing, accounting, expenses, subscription, payments]
+      notification: [notification, notifications, email, newsletter, sms, push, messaging, chat]
+      monitoring: [monitoring, uptime, status-page, observability, logging, alerting, apm, incident]
+      llm-workflow: [llm, workflow, automation, agent, agents, rag, chatbot, ai-workflow, low-code, no-code, nocode]
+      internal-tools: [admin, admin-panel, internal-tools, backoffice, erp, hr, project-management, kanban, forms, form-builder, survey, low-code-platform]
+      devtool: [cli, devops, ci, ci-cd, developer-tools, testing, linter, sdk, terminal, kubernetes, docker, deployment, api-gateway, proxy]
+      lib: [library, framework, component, components, ui-components, react-components, plugin, hooks, utility, utils]
+  korea:
+    no_korean_locale: 4
+    stripe_without_kr_pay: 3
+    no_kr_social_login: 3
+    i18n_dirs: [locales, locale, i18n, lang, langs, languages, messages, translations, translation,
+                public/locales, public/lang, public/i18n, public/intl, public/intl/messages, public/static/locales, src/locales, src/locale, src/i18n, src/lang, src/langs,
+                src/translations, src/messages, app/locales, assets/i18n, resources/lang, frontend/src/locales,
+                web/src/locales, apps/web/messages, apps/web/locales, packages/i18n]
+    max_i18n_listings: 4
+    korean_locale_markers: ["ko", "ko-kr", "ko_kr", "kor", "korean", "ko.json", "ko.yml", "ko.yaml", "ko.ts", "ko.js", "ko.po", "ko.properties"]
+  models:
+    korea_threshold: 7
+    saas_categories: [analytics, crm, commerce, cms, booking, invoice, notification, monitoring, llm-workflow, internal-tools]
+    onprem_categories: [cms, commerce, internal-tools]
+  confidence_low_unknowns: 3
+
+report:
+  top_n: 15
+  mail_top_n: 10
+  rising_n: 5
+  timezone: Asia/Seoul
+
+state:
+  history_weeks: 26
