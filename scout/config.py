@@ -181,6 +181,24 @@ def load_config(path: Path | str | None = None) -> Config:
     return Config.model_validate(raw)
 
 
+def _gh_cli_token() -> str | None:
+    """Fallback for local runs: reuse the token the GitHub CLI keeps in its keyring (`gh auth token`)."""
+    import shutil
+    import subprocess
+
+    gh = shutil.which("gh") or next(
+        (p for p in (r"C:\Program Files\GitHub CLI\gh.exe",) if Path(p).exists()), None
+    )
+    if not gh:
+        return None
+    try:
+        out = subprocess.run([gh, "auth", "token"], capture_output=True, text=True, timeout=10)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    token = out.stdout.strip()
+    return token if out.returncode == 0 and token else None
+
+
 def load_env(dotenv_path: Path | str | None = None) -> Env:
     try:
         from dotenv import load_dotenv
@@ -197,7 +215,7 @@ def load_env(dotenv_path: Path | str | None = None) -> Env:
         return None
 
     return Env(
-        github_token=_get("GITHUB_TOKEN", "GH_TOKEN"),
+        github_token=_get("GITHUB_TOKEN", "GH_TOKEN") or _gh_cli_token(),
         notion_token=_get("NOTION_TOKEN"),
         notion_database_id=_get("NOTION_DATABASE_ID"),
         notion_parent_page_id=_get("NOTION_PARENT_PAGE_ID"),

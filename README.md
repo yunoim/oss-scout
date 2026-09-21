@@ -41,7 +41,7 @@ pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-`.env` 에 `GITHUB_TOKEN` 만 채워도 dry-run 은 동작합니다.
+`.env` 에 `GITHUB_TOKEN` 만 채워도 dry-run 은 동작합니다. 비워두면 `gh auth login` 된 GitHub CLI 의 토큰(`gh auth token`)을 자동으로 씁니다.
 
 ```powershell
 python -m scout.main run --dry-run --limit 30
