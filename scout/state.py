@@ -81,7 +81,8 @@ class State:
         return {n for n, r in self.data["repos"].items() if (r.get("status") or "").lower() == "rejected"}
 
     # ------------------------------------------------------------------ updates
-    def record(self, week: str, full_name: str, stars: int, score: int, excluded: bool = False) -> None:
+    def record(self, week: str, full_name: str, stars: int, score: int, excluded: bool = False,
+               signals: int | None = None) -> None:
         repos = self.data["repos"]
         r = repos.setdefault(full_name, {"first_seen": week, "stars": {}, "score": {}})
         r.setdefault("first_seen", week)
@@ -89,6 +90,8 @@ class State:
         r.setdefault("stars", {})[week] = stars
         r.setdefault("score", {})[week] = score
         r["excluded"] = excluded
+        if signals is not None:
+            r["kr_signals"] = signals
         if week not in self.data["weeks"]:
             self.data["weeks"].append(week)
 

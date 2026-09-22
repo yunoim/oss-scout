@@ -20,18 +20,33 @@ def _row(i: int, e: Entry) -> str:
     c, a, s = e.candidate, e.audit, e.score
     delta = f" (+{s.stars_delta:,})" if s.stars_delta is not None and s.stars_delta >= 0 else (f" ({s.stars_delta:,})" if s.stars_delta is not None else "")
     flags = ", ".join(a.flags()) or "—"
+    sig = f"{e.demand.issues}i/{e.demand.prs}p" if e.demand and e.demand.fetched else "—"
     return (
         f"<tr><td>{i}</td><td><a href='{_esc(c.html_url)}'>{_esc(c.full_name)}</a></td>"
         f"<td align='right'><b>{s.total}</b>{'<sup>low</sup>' if s.confidence == 'low' else ''}</td>"
         f"<td>{_esc(a.spdx or 'unknown')}</td><td align='right'>{c.stars:,}{_esc(delta)}</td>"
-        f"<td>{_esc(', '.join(s.models) or '—')}</td><td align='right'>{s.korea_points}</td><td>{_esc(flags)}</td></tr>"
+        f"<td>{_esc(', '.join(s.models) or '—')}</td><td align='right'>{s.korea_points}</td><td>{_esc(sig)}</td><td>{_esc(flags)}</td></tr>"
     )
+
+
+def _demand_table(entries: list[Entry]) -> str:
+    if not entries:
+        return "<p><i>한국 관련 이슈·PR 없음</i></p>"
+    rows = []
+    for e in entries:
+        d = e.demand
+        assert d is not None
+        links = " · ".join(f"<a href='{_esc(i.url)}'>{'[PR] ' if i.is_pr else ''}{'🟢 ' if i.state == 'open' else ''}{_esc(i.title[:50])}</a>" for i in d.top)
+        rows.append(f"<tr><td><a href='{_esc(e.candidate.html_url)}'>{_esc(e.candidate.full_name)}</a></td><td align='right'>{e.score.total}</td>"
+                    f"<td align='right'>{d.issues}/{d.prs}</td><td align='right'>{d.open_issues}</td><td align='right'>{d.recent}</td><td>{links}</td></tr>")
+    head = "<tr><th>Repo</th><th>Score</th><th>이슈/PR</th><th>open</th><th>최근 1년</th><th>대표 이슈</th></tr>"
+    return f"<table border='1' cellpadding='6' cellspacing='0' style='border-collapse:collapse;font-size:13px'>{head}{''.join(rows)}</table>"
 
 
 def _table(entries: list[Entry]) -> str:
     if not entries:
         return "<p><i>없음</i></p>"
-    head = "<tr><th>#</th><th>Repo</th><th>Score</th><th>License</th><th>Stars (Δ7d)</th><th>Model</th><th>KR</th><th>Flags</th></tr>"
+    head = "<tr><th>#</th><th>Repo</th><th>Score</th><th>License</th><th>Stars (Δ7d)</th><th>Model</th><th>KR</th><th>신호</th><th>Flags</th></tr>"
     rows = "".join(_row(i, e) for i, e in enumerate(entries, 1))
     return f"<table border='1' cellpadding='6' cellspacing='0' style='border-collapse:collapse;font-size:13px'>{head}{rows}</table>"
 
@@ -60,6 +75,9 @@ def build_html(summary: RunSummary, cfg: Config) -> str:
         _table(top),
         "<h3>신규 진입</h3>",
         _table(new),
+        "<h3>한국 수요 신호 Top 5</h3>",
+        "<p style='color:#666;font-size:12px'>이슈 = 한국어·카카오·네이버·토스 관련 요청(수요) · PR = 누군가 이미 시도 · 🟢 = open</p>",
+        _demand_table(summary.demand_ranked(5)),
         "<p>",
     ]
     if summary.notion_url:

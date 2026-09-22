@@ -161,6 +161,17 @@ scoring:
     onprem_categories: [cms, commerce, internal-tools]
   confidence_low_unknowns: 3
 
+# Korea demand signals: search each top candidate's issues/PRs for Korean-market keywords.
+# One Search API call per repo (30/min limit) -> keep max_repos modest.
+demand:
+  enabled: true
+  max_repos: 60            # top-N passed candidates by score
+  sample_size: 30          # issues fetched per repo (sorted by reactions)
+  recent_days: 365
+  top_issues: 3            # links kept per repo for the report / Notion
+  # Matched in issue/PR titles only. Avoid common English words (e.g. bare "toss").
+  keywords: [korean, 한국어, 한글, korea, kakao, 카카오, kakaopay, naver, 네이버, naverpay, tosspayments, 토스페이먼츠, 토스]
+
 report:
   top_n: 15
   mail_top_n: 10

@@ -126,6 +126,15 @@ class ScoringConfig(BaseModel):
         return self
 
 
+class DemandConfig(BaseModel):
+    enabled: bool = True
+    max_repos: int = 60
+    sample_size: int = 30
+    recent_days: int = 365
+    top_issues: int = 3
+    keywords: list[str] = ["korean", "한국어", "korea", "kakao", "naver", "toss"]
+
+
 class ReportConfig(BaseModel):
     top_n: int = 15
     mail_top_n: int = 10
@@ -142,6 +151,7 @@ class Config(BaseModel):
     audit: AuditConfig
     known_traps: dict[str, str] = {}
     scoring: ScoringConfig
+    demand: DemandConfig = DemandConfig()
     report: ReportConfig = ReportConfig()
     state: StateConfig = StateConfig()
 

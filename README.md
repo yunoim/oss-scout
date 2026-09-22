@@ -89,8 +89,13 @@ discover ──▶ audit ──▶ score ──▶ report.md ──▶ state.jso
    - 상표: README 의 `trademark` / ™ / ® / `brand guidelines` → 정보성 플래그 (리브랜딩 알림)
    - `known_traps` 목록은 무조건 제외
 3. **score** — 아래 표. 가중치는 `config.yaml → scoring.weights` (합 100 강제).
-4. **report** — 요약 · Top 15 · 신규 진입 · 급상승 · 제외 목록 · 상세 카드(점수 분해·다음 액션).
-5. **sinks** — Notion(`Status` 는 덮어쓰지 않음, `Rejected` 는 다음 주 Top 15 에서 제외) · Gmail.
+4. **demand** — 점수 상위 60개 리포의 이슈·PR 에서 `korean · 한국어 · kakao · naver · toss` 등을 검색해
+   **한국 수요 신호**를 셉니다. 이슈 = 누군가 요청함(수요), PR = 누군가 이미 시도함. 점수에는 넣지 않고
+   리포트 "한국 수요 신호 Top 10" 섹션 · 테이블 `신호` 열(`2i/1p`) · Notion `KR Signals` 로만 노출합니다.
+   반자동 영업의 리드 소스입니다. 공개 이슈에 답글을 다는 것은 스팸 규제와 무관합니다.
+   `python -m scout.main demand owner/repo` 로 단일 조회. `demand.enabled: false` 또는 `--no-demand` 로 끔.
+5. **report** — 요약 · Top 15 · 신규 진입 · 급상승 · 한국 수요 신호 · 제외 목록 · 상세 카드(점수 분해·다음 액션).
+6. **sinks** — Notion(`Status` 는 덮어쓰지 않음, `Rejected` 는 다음 주 Top 15 에서 제외) · Gmail.
 
 ### 점수 (기본 가중치)
 

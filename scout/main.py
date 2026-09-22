@@ -63,6 +63,8 @@ def cmd_run(args: argparse.Namespace, cfg: Config, env: Env) -> int:
             entries.append(Entry(c, a, sb))
             log.info("[%d/%d] %-45s %3d %s%s", i, len(candidates), c.full_name, sb.total,
                      a.spdx or "?", " EXCLUDED" if sb.excluded else "")
+        if cfg.demand.enabled and not args.no_demand:
+            _collect_demand(client, cfg, entries, now)
         log.info("api calls=%d etag hits=%d", client.requests_made, client.cache.hits)
     finally:
         client.close()
@@ -100,7 +102,8 @@ def cmd_run(args: argparse.Namespace, cfg: Config, env: Env) -> int:
         return 0
 
     for e in entries:
-        state.record(week, e.candidate.full_name, e.candidate.stars, e.score.total, e.score.excluded)
+        state.record(week, e.candidate.full_name, e.candidate.stars, e.score.total, e.score.excluded,
+                     signals=e.signals if e.demand and e.demand.fetched else None)
     state.prune(cfg.state.history_weeks)
     state.save()
 
@@ -123,6 +126,38 @@ def cmd_run(args: argparse.Namespace, cfg: Config, env: Env) -> int:
                 log.warning("mail failed: %s", e)
         else:
             log.warning("mail not configured (SMTP_USER, SMTP_APP_PASSWORD, MAIL_TO) — skipping")
+    return 0
+
+
+def _collect_demand(client: GitHubClient, cfg: Config, entries: list[Entry], now: datetime) -> None:
+    """Search Korea-related issues/PRs for the top-N passed entries (one Search API call each)."""
+    from .demand import fetch_signals
+
+    targets = sorted((e for e in entries if not e.score.excluded), key=lambda e: e.score.total, reverse=True)[: cfg.demand.max_repos]
+    hits = 0
+    for i, e in enumerate(targets, 1):
+        try:
+            e.demand = fetch_signals(client, e.candidate.full_name, cfg, now)
+            if e.signals:
+                hits += 1
+        except Exception as ex:  # noqa: BLE001
+            log.warning("demand search failed for %s: %s", e.candidate.full_name, ex)
+        if i % 20 == 0:
+            log.info("demand signals %d/%d (repos with signals so far: %d)", i, len(targets), hits)
+    log.info("demand signals done: %d/%d repos have Korea-related issues/PRs", hits, len(targets))
+
+
+def cmd_demand(args: argparse.Namespace, cfg: Config, env: Env) -> int:
+    from .demand import fetch_signals
+
+    client = _client(env)
+    try:
+        sig = fetch_signals(client, args.repo, cfg)
+    finally:
+        client.close()
+    out = sig.model_dump()
+    out["score"] = sig.score
+    print(json.dumps(out, ensure_ascii=False, indent=2, default=str))
     return 0
 
 
@@ -177,7 +212,12 @@ def build_parser() -> argparse.ArgumentParser:
     r.add_argument("--limit", type=int, default=None, help="max candidates to enrich/audit")
     r.add_argument("--no-notion", action="store_true")
     r.add_argument("--no-mail", action="store_true")
+    r.add_argument("--no-demand", action="store_true", help="skip Korea demand-signal issue search")
     r.set_defaults(func=cmd_run)
+
+    d = sub.add_parser("demand", help="Korea demand signals (issues/PRs) for a single owner/repo")
+    d.add_argument("repo")
+    d.set_defaults(func=cmd_demand)
 
     a = sub.add_parser("audit", help="audit a single owner/repo and print JSON")
     a.add_argument("repo")

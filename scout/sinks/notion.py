@@ -31,6 +31,8 @@ def schema_properties() -> dict:
         "Category": {"select": {"options": [{"name": n} for n in CATEGORY_OPTIONS]}},
         "Model": {"multi_select": {"options": [{"name": n} for n in MODEL_OPTIONS]}},
         "KR Opportunity": {"number": {"format": "number"}},
+        "KR Signals": {"number": {"format": "number"}},
+        "KR Signal Issues": {"rich_text": {}},
         "Flags": {"multi_select": {"options": [{"name": n} for n in FLAG_OPTIONS]}},
         "Status": {"select": {"options": [{"name": n, "color": c} for n, c in
                               zip(STATUS_OPTIONS, ["blue", "yellow", "purple", "green", "red"])]}},
@@ -43,6 +45,16 @@ def schema_properties() -> dict:
 def _rt(text: str) -> list[dict]:
     text = text[:1900]
     return [{"type": "text", "text": {"content": text}}] if text else []
+
+
+def _links(items: list[tuple[str, str]]) -> list[dict]:
+    """Rich text made of linked titles separated by ' · ' (Notion caps each text run at 2000 chars)."""
+    out: list[dict] = []
+    for idx, (title, url) in enumerate(items):
+        if idx:
+            out.append({"type": "text", "text": {"content": " · "}})
+        out.append({"type": "text", "text": {"content": title[:120], "link": {"url": url}}})
+    return out
 
 
 def _title(text: str) -> list[dict]:
@@ -149,6 +161,12 @@ class NotionSink:
             "First Seen": {"date": {"start": first_seen or _week_monday(week)}},
             "Notes": {"rich_text": _rt(notes)},
         }
+        if e.demand and e.demand.fetched:
+            d = e.demand
+            props["KR Signals"] = {"number": d.issues + d.prs}
+            props["KR Signal Issues"] = {"rich_text": _links(
+                [(("[PR] " if i.is_pr else "") + ("🟢 " if i.state == "open" else "") + i.title, i.url) for i in d.top]
+            )}
         if set_status:
             props["Status"] = {"select": {"name": "New"}}
         return props
