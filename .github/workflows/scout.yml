@@ -78,6 +78,8 @@ jobs:
             echo "no changes to commit"
           else
             git commit -m "scout: $(date -u +%G-W%V)"
+            # main may have moved while the run was going (a manual push mid-run) -> rebase, then push
+            git pull --rebase --autostash origin main
             git push
           fi
 
