@@ -111,7 +111,9 @@ discover ──▶ audit ──▶ score ──▶ report.md ──▶ state.jso
 
 보정: copyleft/제한 라이선스 · known_traps → **0점 + excluded**. 미확인 항목(license/contributors/releases/deps/korea) 3개 이상 → `confidence: low`.
 
-추천 모델 태그: compose + SaaS 계열 → `managed-hosting` · cms/commerce/internal-tools → `si-onprem` · 한국 기회 ≥7 → `korean-localization` · devtool → `template-sale`.
+추천 모델 태그: compose + SaaS 계열 → `managed-hosting` · cms/commerce/internal-tools → `si-onprem` · 한국 기회 ≥7 → `korean-localization` · devtool → `template-sale` · 루트에 `plugins/` `extensions/` 류 폴더 + stars ≥ 8k → `plugin-sale`(플러그인 마켓에 팔 수 있는 플랫폼).
+
+검색은 두 층입니다. 제품 층(`stars 100..20000`, 직접 포크·호스팅 대상)과 플랫폼 층(`stars 20000..100000`, 플러그인·한국 결제 연동을 팔 대상). 플랫폼 층은 `plugin-sale` 태그와 함께 읽으세요. 생태계가 작은 플랫폼의 플러그인은 안 팔립니다(Paymenter 토스 플러그인: 6개월 구매 0 실측).
 
 ## 설정 위치 (`config.yaml`)
 

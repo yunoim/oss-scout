@@ -13,7 +13,7 @@ from ..report import Entry, RunSummary
 log = logging.getLogger(__name__)
 
 DB_TITLE = "OSS Scout"
-MODEL_OPTIONS = ["managed-hosting", "si-onprem", "korean-localization", "template-sale"]
+MODEL_OPTIONS = ["managed-hosting", "si-onprem", "korean-localization", "template-sale", "plugin-sale"]
 FLAG_OPTIONS = ["ee_dir", "trademark", "restricted_terms", "copyleft_deps", "unknown", "readme_terms"]
 STATUS_OPTIONS = ["New", "Reviewing", "Forked", "Selling", "Rejected"]
 CATEGORY_OPTIONS = ["analytics", "crm", "commerce", "cms", "booking", "invoice", "notification", "monitoring",

@@ -101,6 +101,15 @@ def test_category_detection_and_models(cfg):
     assert "template-sale" in score_candidate(dev, _ok_audit(), cfg, now=NOW).models
 
 
+def test_plugin_sale_tag(cfg):
+    big = make_candidate(stars=30_000, root_dirs=["src", "plugins"])
+    small = make_candidate(stars=3_000, root_dirs=["src", "plugins"])
+    none = make_candidate(stars=30_000, root_dirs=["src"])
+    assert "plugin-sale" in score_candidate(big, _ok_audit(), cfg, now=NOW).models
+    assert "plugin-sale" not in score_candidate(small, _ok_audit(), cfg, now=NOW).models
+    assert "plugin-sale" not in score_candidate(none, _ok_audit(), cfg, now=NOW).models
+
+
 def test_deploy_signals():
     c = make_candidate(language="Rust", root_files=["Dockerfile.dev", "compose.yaml", "Cargo.toml"], root_dirs=["helm"])
     ds = deploy_signals(c)

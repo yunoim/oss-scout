@@ -73,6 +73,15 @@ def deploy_signals(c: Candidate) -> dict[str, bool]:
     return {"dockerfile": dockerfile, "compose": compose, "helm_or_env": helm_or_env, "single_binary": single_binary}
 
 
+def plugin_dir(c: Candidate, cfg: Config) -> str | None:
+    """Name of a root-level plugin/extension directory, if any (no API call: uses the root listing)."""
+    wanted = {d.lower() for d in cfg.scoring.models.plugin_dirs}
+    for d in c.root_dirs:
+        if d.lower() in wanted:
+            return d
+    return None
+
+
 def _scale(raw: float, raw_max: float, weight: int) -> float:
     if raw_max <= 0:
         return 0.0
@@ -210,6 +219,10 @@ def score_candidate(
         models.append("korean-localization")
     if sb.category == "devtool":
         models.append("template-sale")
+    pdir = plugin_dir(c, cfg)
+    if pdir and c.stars >= m.plugin_min_stars:
+        models.append("plugin-sale")
+        notes.append(f"plugin ecosystem: {pdir}/")
     sb.models = models
 
     sb.next_action = next_action(a, sb)

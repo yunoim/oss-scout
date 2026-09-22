@@ -15,6 +15,13 @@ discovery:
     - topic:monitoring license:mit stars:500..20000 pushed:>{90d}
     - topic:booking license:mit stars:100..10000 pushed:>{90d}
     - topic:invoice license:mit stars:100..10000 pushed:>{90d}
+    # Platform tier (20k-100k stars): where plugin/extension marketplaces are big enough to sell into.
+    - topic:self-hosted license:mit stars:20000..100000 pushed:>{90d}
+    - topic:self-hosted license:apache-2.0 stars:20000..100000 pushed:>{90d}
+    - topic:ecommerce license:mit stars:20000..100000 pushed:>{90d}
+    - topic:cms license:mit stars:20000..100000 pushed:>{90d}
+    - topic:low-code license:apache-2.0 stars:20000..100000 pushed:>{90d}
+    - topic:llm license:mit stars:20000..100000 pushed:>{90d}
   sorts: [stars, updated]
   pages_per_query: 2
   per_page: 100
@@ -22,7 +29,7 @@ discovery:
   # Cap on candidates enriched + audited per run (top by stars). ~10 GitHub calls per repo on a cold
   # ETag cache; 200 repos ≈ 2,000 calls, fine for a PAT (5,000/h), slow on the Actions token (1,000/h).
   # `--limit N` on the CLI overrides this.
-  max_candidates: 200
+  max_candidates: 260
   # Search results already carry the repo detail; set true to re-fetch GET /repos/{owner}/{repo} anyway.
   refresh_repo_detail: false
   # Repos whose topics include any of these are dropped as non-products.
@@ -159,6 +166,9 @@ scoring:
     korea_threshold: 7
     saas_categories: [analytics, crm, commerce, cms, booking, invoice, notification, monitoring, llm-workflow, internal-tools]
     onprem_categories: [cms, commerce, internal-tools]
+    # plugin-sale: a plugins/extensions dir exists AND the project is big enough for a marketplace to matter.
+    plugin_dirs: [plugins, plugin, extensions, extension, integrations, addons, add-ons, modules, apps, marketplace, connectors]
+    plugin_min_stars: 8000
   confidence_low_unknowns: 3
 
 # Korea demand signals: search each top candidate's issues/PRs for Korean-market keywords.

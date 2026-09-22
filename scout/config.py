@@ -100,6 +100,8 @@ class ModelsConfig(BaseModel):
     korea_threshold: int = 7
     saas_categories: list[str]
     onprem_categories: list[str]
+    plugin_dirs: list[str] = ["plugins", "extensions", "integrations", "addons", "modules"]
+    plugin_min_stars: int = 8000
 
 
 class ScoringConfig(BaseModel):
