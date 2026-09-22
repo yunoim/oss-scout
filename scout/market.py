@@ -36,9 +36,30 @@ class MarketSignals(BaseModel):
     naver_news: int | None = None
 
 
+FRONTEND_DIRS = {"frontend", "web", "webui", "web-ui", "ui", "client", "app", "apps", "dashboard", "portal", "admin", "console"}
+PACKAGE_MANIFESTS = {"pyproject.toml", "setup.py", "setup.cfg", "cargo.toml", "go.mod"}
+
+
+def looks_like_framework(c: Candidate) -> bool:
+    """Installed as a package, not deployed as an app: manifest present, no Dockerfile/compose, no UI dir.
+
+    LightRAG-style projects ship a Dockerfile and a webui/ dir -> product. A pure `pip install` library
+    has neither -> framework. Buyers of frameworks are developers, not businesses.
+    """
+    files = {f.lower() for f in c.root_files}
+    dirs = {d.lower() for d in c.root_dirs}
+    if not (files & PACKAGE_MANIFESTS) and "package.json" not in files:
+        return False
+    has_deploy = any(f.startswith("dockerfile") for f in files) or any(f.startswith(("docker-compose", "compose.")) for f in files) or "docker" in dirs
+    has_ui = bool(dirs & FRONTEND_DIRS)
+    return not has_deploy and not has_ui
+
+
 def buyer_breadth(c: Candidate, category: str, cfg: Config) -> tuple[Breadth, str]:
     m = cfg.scoring.market
     topics = set(c.topics)
+    if looks_like_framework(c) and category not in ("commerce", "cms", "crm", "invoice", "booking"):
+        return "devtool", "package without Dockerfile/compose/UI (framework, not a product)"
     text = f"{c.name} {(c.description or '')}".lower()
     tokens = set(re.split(r"[^a-z0-9]+", text))
 

@@ -19,6 +19,21 @@ def test_breadth_rules(cfg):
     assert buyer_breadth(make_candidate(topics=["database", "library"]), "lib", cfg)[0] == "devtool"  # libs never enterprise
 
 
+def test_framework_vs_product(cfg):
+    from scout.market import looks_like_framework
+
+    lib = make_candidate(topics=["llm", "rag"], root_files=["README.md", "pyproject.toml", "LICENSE"], root_dirs=["src", "tests", "docs"])
+    app = make_candidate(topics=["llm", "rag"], root_files=["README.md", "pyproject.toml", "Dockerfile", "docker-compose.yml"], root_dirs=["src", "webui"])
+    ui_only = make_candidate(topics=["llm"], root_files=["README.md", "package.json"], root_dirs=["frontend", "backend"])
+    no_manifest = make_candidate(topics=["llm"], root_files=["README.md"], root_dirs=["scripts"])
+    assert looks_like_framework(lib)
+    assert not looks_like_framework(app)
+    assert not looks_like_framework(ui_only)
+    assert not looks_like_framework(no_manifest)
+    assert buyer_breadth(lib, "llm-workflow", cfg) == ("devtool", "package without Dockerfile/compose/UI (framework, not a product)")
+    assert buyer_breadth(app, "llm-workflow", cfg)[0] == "business"
+
+
 def test_awareness_points():
     assert awareness_points(None, 4, 3000) is None
     assert awareness_points(0, 4, 3000) == 0.0
