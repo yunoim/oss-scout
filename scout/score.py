@@ -60,6 +60,10 @@ def detect_category(c: Candidate, cfg: Config) -> tuple[str, int]:
                 best = cand
     if not best:
         return "other", cat_cfg.default_weight
+    # Libraries/frameworks/SDKs are not sellable products even when they match llm/analytics keywords.
+    lib_markers = {"library", "framework", "sdk", "python-library", "npm-package", "toolkit", "python-package", "pip", "npm"}
+    if best[2] != "lib" and (topics & lib_markers) and "self-hosted" not in topics and "selfhosted" not in topics:
+        return "lib", cat_cfg.weights.get("lib", cat_cfg.default_weight)
     return best[2], best[1]
 
 

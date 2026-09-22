@@ -101,6 +101,13 @@ def test_category_detection_and_models(cfg):
     assert "template-sale" in score_candidate(dev, _ok_audit(), cfg, now=NOW).models
 
 
+def test_library_demoted_even_with_llm_topics(cfg):
+    lib = make_candidate(topics=["llm", "rag", "agents", "framework"], description="Data framework for LLM applications")
+    assert detect_category(lib, cfg) == ("lib", 5)
+    app = make_candidate(topics=["llm", "rag", "self-hosted", "framework"], description="Self-hosted RAG app")
+    assert detect_category(app, cfg)[0] == "llm-workflow"
+
+
 def test_plugin_sale_tag(cfg):
     big = make_candidate(stars=30_000, root_dirs=["src", "plugins"])
     small = make_candidate(stars=3_000, root_dirs=["src", "plugins"])
