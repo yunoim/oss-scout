@@ -18,9 +18,13 @@ def test_weights_sum_to_100(cfg):
 
 
 def test_perfect_candidate_hits_100(cfg):
+    from scout.market import MarketSignals
+
     c = make_candidate(stars=200_000, contributors=500, open_issues=0, language="Go",
+                       topics=["analytics", "observability", "self-hosted"],
                        root_files=["README.md", "LICENSE", "Dockerfile", "docker-compose.yml", ".env.example", "go.mod"])
-    sb = score_candidate(c, _ok_audit(), cfg, prev_stars=("2026-W38", 150_000), is_new=False, now=NOW)
+    sb = score_candidate(c, _ok_audit(), cfg, prev_stars=("2026-W38", 150_000), is_new=False, now=NOW,
+                         market=MarketSignals(breadth="enterprise", naver_total=10_000))
     assert sb.total == 100
     assert sb.confidence == "normal"
     assert sb.unknowns == []
@@ -106,6 +110,8 @@ def test_library_demoted_even_with_llm_topics(cfg):
     assert detect_category(lib, cfg) == ("lib", 5)
     app = make_candidate(topics=["llm", "rag", "self-hosted", "framework"], description="Self-hosted RAG app")
     assert detect_category(app, cfg)[0] == "llm-workflow"
+    shop = make_candidate(topics=["ecommerce", "symfony", "framework"], description="Open source eCommerce framework")
+    assert detect_category(shop, cfg)[0] == "commerce"
 
 
 def test_plugin_sale_tag(cfg):

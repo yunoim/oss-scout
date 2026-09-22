@@ -87,6 +87,22 @@ class CategoryScoreConfig(BaseModel):
     keywords: dict[str, list[str]]
 
 
+class MarketScoreConfig(BaseModel):
+    breadth_points: dict[str, int] = {"narrow": 1, "consumer": 2, "devtool": 3, "business": 5, "enterprise": 6}
+    awareness_points: int = 4
+    awareness_full_at: int = 3000
+    awareness_unknown_points: int = 2
+    business_categories: list[str] = ["analytics", "crm", "commerce", "cms", "booking", "invoice", "notification",
+                                      "monitoring", "llm-workflow", "internal-tools"]
+    narrow_topics: list[str] = ["newsletter", "blog", "homelab", "personal"]
+    consumer_topics: list[str] = ["productivity", "chat", "social-network"]
+    enterprise_topics: list[str] = ["observability", "database", "kubernetes", "security", "erp"]
+
+    @property
+    def breadth_max(self) -> int:
+        return max(self.breadth_points.values())
+
+
 class KoreaScoreConfig(BaseModel):
     no_korean_locale: int = 4
     stripe_without_kr_pay: int = 3
@@ -112,13 +128,14 @@ class ScoringConfig(BaseModel):
     community: CommunityScoreConfig = CommunityScoreConfig()
     deploy: DeployScoreConfig = DeployScoreConfig()
     category: CategoryScoreConfig
+    market: MarketScoreConfig = MarketScoreConfig()
     korea: KoreaScoreConfig
     models: ModelsConfig
     confidence_low_unknowns: int = 3
 
     @model_validator(mode="after")
     def _weights_sum_100(self) -> "ScoringConfig":
-        required = {"license", "activity", "popularity", "community", "deploy", "category", "korea"}
+        required = {"license", "activity", "popularity", "community", "deploy", "category", "market", "korea"}
         missing = required - set(self.weights)
         if missing:
             raise ValueError(f"scoring.weights missing: {sorted(missing)}")
@@ -176,10 +193,16 @@ class Env(BaseModel):
     smtp_port: int = 587
     mail_to: str | None = None
     github_repository: str | None = None  # owner/repo hosting the reports (set by Actions)
+    naver_client_id: str | None = None
+    naver_client_secret: str | None = None
 
     @property
     def notion_enabled(self) -> bool:
         return bool(self.notion_token and (self.notion_database_id or self.notion_parent_page_id))
+
+    @property
+    def naver_enabled(self) -> bool:
+        return bool(self.naver_client_id and self.naver_client_secret)
 
     @property
     def mail_enabled(self) -> bool:
@@ -237,4 +260,6 @@ def load_env(dotenv_path: Path | str | None = None) -> Env:
         smtp_port=int(_get("SMTP_PORT") or 587),
         mail_to=_get("MAIL_TO"),
         github_repository=_get("GITHUB_REPOSITORY", "REPORT_REPOSITORY"),
+        naver_client_id=_get("NAVER_CLIENT_ID"),
+        naver_client_secret=_get("NAVER_CLIENT_SECRET"),
     )

@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from .audit import AuditResult
 from .config import Config
 from .discover import Candidate
+from .market import MarketSignals, awareness_points, buyer_breadth
 
 COMPOSE_RE = re.compile(r"^(docker-)?compose([.-].*)?\.ya?ml$", re.I)
 HELM_DIRS = {"helm", "charts", "chart", "k8s", "kubernetes", "kube", "deploy", "deployment", "deployments"}
@@ -24,6 +25,8 @@ class ScoreBreakdown(BaseModel):
     components: dict[str, float] = {}
     category: str = "other"
     category_weight: int = 8
+    breadth: str = "business"
+    naver_mentions: int | None = None
     models: list[str] = []
     korea_points: int = 0
     confidence: str = "normal"
@@ -62,7 +65,10 @@ def detect_category(c: Candidate, cfg: Config) -> tuple[str, int]:
         return "other", cat_cfg.default_weight
     # Libraries/frameworks/SDKs are not sellable products even when they match llm/analytics keywords.
     lib_markers = {"library", "framework", "sdk", "python-library", "npm-package", "toolkit", "python-package", "pip", "npm"}
-    if best[2] != "lib" and (topics & lib_markers) and "self-hosted" not in topics and "selfhosted" not in topics:
+    # ...unless the topics also say it is a deployable product (Sylius is an "ecommerce framework" but sells as a platform).
+    product_markers = {"self-hosted", "selfhosted", "ecommerce", "e-commerce", "cms", "headless-cms", "crm", "erp", "saas",
+                       "platform", "shop", "storefront", "admin-panel", "low-code", "no-code"}
+    if best[2] != "lib" and (topics & lib_markers) and not (topics & product_markers):
         return "lib", cat_cfg.weights.get("lib", cat_cfg.default_weight)
     return best[2], best[1]
 
@@ -100,6 +106,7 @@ def score_candidate(
     prev_stars: tuple[str, int] | None = None,
     is_new: bool = True,
     now: datetime | None = None,
+    market: MarketSignals | None = None,
 ) -> ScoreBreakdown:
     now = now or datetime.now(timezone.utc)
     sc = cfg.scoring
@@ -186,6 +193,22 @@ def score_candidate(
     # 6. category marketability
     cat_max = max(max(sc.category.weights.values(), default=0), sc.category.default_weight)
     sb.components["category"] = _scale(sb.category_weight, cat_max, W["category"])
+
+    # 6b. market breadth (who pays in Korea, how many)
+    mc = sc.market
+    if market is None:
+        breadth, reason = buyer_breadth(c, sb.category, cfg)
+        market = MarketSignals(breadth=breadth, breadth_reason=reason)
+    sb.breadth = market.breadth
+    sb.naver_mentions = market.naver_total
+    breadth_raw = mc.breadth_points.get(market.breadth, mc.breadth_points.get("consumer", 2))
+    aware = awareness_points(market.naver_total, mc.awareness_points, mc.awareness_full_at)
+    if aware is None:
+        aware = float(mc.awareness_unknown_points)
+        unknowns.append("market")
+    sb.components["market"] = _scale(breadth_raw + aware, mc.breadth_max + mc.awareness_points, W["market"])
+    if market.breadth in ("narrow", "consumer"):
+        notes.append(f"market {market.breadth}: {market.breadth_reason}")
 
     # 7. korea opportunity
     kc = sc.korea

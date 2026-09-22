@@ -47,6 +47,7 @@ def cmd_run(args: argparse.Namespace, cfg: Config, env: Env) -> int:
     try:
         candidates, dropped, raw = discover(client, cfg, limit=args.limit, now=now)
         auditor = Auditor(client, cfg)
+        naver = _naver(env)
         entries: list[Entry] = []
         for i, c in enumerate(candidates, 1):
             try:
@@ -59,6 +60,7 @@ def cmd_run(args: argparse.Namespace, cfg: Config, env: Env) -> int:
                 prev_stars=state.previous_stars(c.full_name, week),
                 is_new=state.is_new(c.full_name, week),
                 now=now,
+                market=_market(c, a, cfg, naver),
             )
             entries.append(Entry(c, a, sb))
             log.info("[%d/%d] %-45s %3d %s%s", i, len(candidates), c.full_name, sb.total,
@@ -129,6 +131,28 @@ def cmd_run(args: argparse.Namespace, cfg: Config, env: Env) -> int:
     return 0
 
 
+def _naver(env: Env):
+    if not env.naver_enabled:
+        log.warning("NAVER_CLIENT_ID/SECRET not set — Korean awareness scored neutral (market unknown)")
+        return None
+    from .market import NaverSearch
+
+    return NaverSearch(env.naver_client_id, env.naver_client_secret)
+
+
+def _market(c: Candidate, a, cfg: Config, naver):
+    """Market signals need the category first; detect it the same way score_candidate does."""
+    from .market import collect_market
+    from .score import detect_category
+
+    category, _ = detect_category(c, cfg)
+    try:
+        return collect_market(c, category, cfg, naver)
+    except Exception as e:  # noqa: BLE001
+        log.warning("market signals failed for %s: %s", c.full_name, e)
+        return None
+
+
 def _collect_demand(client: GitHubClient, cfg: Config, entries: list[Entry], now: datetime) -> None:
     """Search Korea-related issues/PRs for the top-N passed entries (one Search API call each)."""
     from .demand import fetch_signals
@@ -190,8 +214,9 @@ def cmd_score(args: argparse.Namespace, cfg: Config, env: Env) -> int:
     finally:
         client.close()
     week = iso_week(now)
+    naver = _naver(env)
     sb = score_candidate(c, a, cfg, prev_stars=state.previous_stars(c.full_name, week),
-                         is_new=state.is_new(c.full_name, week), now=now)
+                         is_new=state.is_new(c.full_name, week), now=now, market=_market(c, a, cfg, naver))
     out = sb.model_dump()
     out["audit"] = {"license_status": a.license_status, "spdx": a.spdx, "flags": a.flags(),
                     "copyleft_deps": a.copyleft_deps, "unknown_deps": a.unknown_deps, "deps_checked": a.deps_checked,

@@ -23,6 +23,7 @@ GitHub에서 **상업적 재사용이 가능한(MIT / Apache-2.0 / BSD / ISC) �
    | `GH_PAT` | 권장 | classic PAT (`public_repo`). 없으면 기본 `GITHUB_TOKEN` 사용 (core 1,000 req/h → 첫 실행이 느림) |
    | `NOTION_TOKEN` | 선택 | Notion internal integration 토큰 |
    | `NOTION_DATABASE_ID` **또는** `NOTION_PARENT_PAGE_ID` | 선택 | 기존 DB id, 또는 DB 를 자동 생성할 부모 페이지 id (integration 을 해당 페이지에 연결해야 함) |
+   | `NAVER_CLIENT_ID` / `NAVER_CLIENT_SECRET` | 선택 | [developers.naver.com](https://developers.naver.com) 검색 API. 시장 규모 점수의 "한국 인지도" 에 쓰임. 없으면 중립 처리 |
    | `SMTP_USER` | 선택 | Gmail 주소 |
    | `SMTP_APP_PASSWORD` | 선택 | Google 계정 → 보안 → **앱 비밀번호** (2단계 인증 필요) |
    | `MAIL_TO` | 선택 | 수신 주소 (쉼표 구분 가능) |
@@ -103,10 +104,11 @@ discover ──▶ audit ──▶ score ──▶ report.md ──▶ state.jso
 |---|---:|---|
 | 라이선스 청결도 | 20 | ok 20 · unknown 8 · `restricted_terms`/`copyleft_deps` 0 · `ee_dir` −5 |
 | 활성도 | 15 | push ≤14일 10 + 90일 내 릴리즈 5 |
-| 인기·모멘텀 | 15 | log10(stars) 정규화 8 + 주간 star 증가율 7 (히스토리 없는 첫 주는 stars 만으로 15 환산) |
+| 인기·모멘텀 | 10 | log10(stars) 정규화 8 + 주간 star 증가율 7 (히스토리 없는 첫 주는 stars 만으로 환산) |
 | 커뮤니티 건강 | 10 | 컨트리뷰터 ≥20 5 + open_issues/stars 비율 낮을수록 5 |
 | 배포 용이성 | 15 | Dockerfile 5 + compose 5 + helm/k8s 또는 .env.example 3 + Go/Rust 단일 바이너리 2 |
-| 카테고리 시장성 | 15 | analytics/crm/commerce/cms/booking/invoice/notification/monitoring/llm-workflow/internal-tools 15 · devtool/lib 5 · 기타 8 |
+| 카테고리 시장성 | 10 | analytics/crm/commerce/cms/booking/invoice/notification/monitoring/llm-workflow/internal-tools 15 · devtool/lib 5 · 기타 8 (10점으로 환산) |
+| **시장 규모** | 10 | **구매자 폭** 0~6: 개인·크리에이터용(newsletter/blog/homelab…) 1 · 소비자 2 · 개발도구 3 · 모든 사업체 5 · 기업 인프라(observability/database/security…) 6 + **한국 인지도** 0~4: 네이버 블로그·카페·뉴스 언급 수(로그, 3,000건 = 만점). 네이버 키 없으면 중립 2 + `market` 미확인 |
 | 한국 기회 | 10 | ko 로케일 없음 +4 · stripe 만 있고 toss/kakao 없음 +3 · 카카오/네이버 로그인 없음 +3 (README 에 로그인/OAuth 언급 또는 SaaS 계열 카테고리일 때만) |
 
 보정: copyleft/제한 라이선스 · known_traps → **0점 + excluded**. 미확인 항목(license/contributors/releases/deps/korea) 3개 이상 → `confidence: low`.

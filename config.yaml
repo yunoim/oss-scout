@@ -95,11 +95,31 @@ scoring:
   weights:
     license: 20
     activity: 15
-    popularity: 15
+    popularity: 10
     community: 10
     deploy: 15
-    category: 15
+    category: 10
+    market: 10
     korea: 10
+  # Market breadth: who pays for this in Korea, and how many of them exist.
+  market:
+    breadth_points: {narrow: 1, consumer: 2, devtool: 3, business: 5, enterprise: 6}
+    awareness_points: 4          # Naver blog+cafe+news mentions, log-scaled; needs NAVER_CLIENT_ID/SECRET
+    awareness_full_at: 3000      # this many mentions == full awareness points
+    awareness_unknown_points: 2  # neutral when Naver is not configured (flagged as unknown)
+    business_categories: [analytics, crm, commerce, cms, booking, invoice, notification, monitoring, llm-workflow, internal-tools]
+    # Tools individuals/creators buy for themselves -> tiny Korean market even with huge star counts.
+    narrow_topics: [newsletter, blog, blogging, personal-blog, personal-website, portfolio, homelab, home-server, home-lab,
+                    selfhosting, podcast, creator, creators, writing, journal, journaling, note-taking, notes, bookmarks,
+                    bookmark-manager, rss, rss-reader, feed-reader, read-it-later, gaming, minecraft, discord-bot, wallpaper,
+                    resume, cv, recipes, fitness, habit-tracker, personal-finance, budgeting, photos, photo-gallery,
+                    media-server, plex, home-automation, smart-home, ebook, comics, manga, anime, music-player]
+    consumer_topics: [productivity, todo, calendar-app, chat, messenger, social-network, fediverse, mastodon, activitypub,
+                      education, learning-platform, language-learning, quiz, game]
+    # Every company with infrastructure buys these -> broadest Korean B2B market.
+    enterprise_topics: [observability, apm, database, kubernetes, k8s, devops-platform, security, soc, siem, iam, sso,
+                        identity, erp, data-pipeline, etl, data-warehouse, mdm, itsm, cmdb, backup, disaster-recovery,
+                        api-gateway, service-mesh, feature-flags, workflow-orchestration, bpm, low-code-platform, ecommerce-platform]
   license:
     ok: 20
     unknown: 8
