@@ -108,7 +108,7 @@ discover ──▶ audit ──▶ score ──▶ report.md ──▶ state.jso
 | 커뮤니티 건강 | 10 | 컨트리뷰터 ≥20 5 + open_issues/stars 비율 낮을수록 5 |
 | 배포 용이성 | 15 | Dockerfile 5 + compose 5 + helm/k8s 또는 .env.example 3 + Go/Rust 단일 바이너리 2 |
 | 카테고리 시장성 | 10 | analytics/crm/commerce/cms/booking/invoice/notification/monitoring/llm-workflow/internal-tools 15 · devtool/lib 5 · 기타 8 (10점으로 환산) |
-| **시장 규모** | 10 | **구매자 폭** 0~6: 개인·크리에이터용(newsletter/blog/homelab…) 1 · 소비자 2 · 개발도구 3 · 모든 사업체 5 · 기업 인프라(observability/database/security…) 6 + **한국 인지도** 0~4: 네이버 블로그·카페·뉴스 언급 수(로그, 3,000건 = 만점). 네이버 키 없으면 중립 2 + `market` 미확인 |
+| **시장 규모** | 10 | **구매자 폭** 0~6: 개인·크리에이터용(newsletter/blog/homelab…) 1 · 소비자 2 · 개발도구 3(pip/npm 패키지인데 Dockerfile·compose·UI 없으면 여기) · 모든 사업체 5 · 기업 인프라(observability/database/security…) 6. **네이버 언급 수**는 수집해 `KR Mentions` 로 보여주지만 가중치 0 (2026-W39 측정: 일반 단어 이름이 1~3만 건으로 부풀고 ClickHouse 150 · uptime-kuma 16 으로 과소. 검색어 보정 뒤 `awareness_points` 로 켬) |
 | 한국 기회 | 10 | ko 로케일 없음 +4 · stripe 만 있고 toss/kakao 없음 +3 · 카카오/네이버 로그인 없음 +3 (README 에 로그인/OAuth 언급 또는 SaaS 계열 카테고리일 때만) |
 
 보정: copyleft/제한 라이선스 · known_traps → **0점 + excluded**. 미확인 항목(license/contributors/releases/deps/korea) 3개 이상 → `confidence: low`.

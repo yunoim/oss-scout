@@ -104,9 +104,13 @@ scoring:
   # Market breadth: who pays for this in Korea, and how many of them exist.
   market:
     breadth_points: {narrow: 1, consumer: 2, devtool: 3, business: 5, enterprise: 6}
-    awareness_points: 4          # Naver blog+cafe+news mentions, log-scaled; needs NAVER_CLIENT_ID/SECRET
+    # Naver mention counts (blog+cafe+news, query "<name> github") are collected and shown as `KR Mentions`
+    # but weighted 0: measured 2026-W39, common-word names (docs, content, prest) hit 10k-30k while genuinely
+    # known tools (ClickHouse 150, uptime-kuma 16) under-matched. Raise awareness_points once a query form is
+    # calibrated (candidate: exact "owner/name" phrase).
+    awareness_points: 0
     awareness_full_at: 3000      # this many mentions == full awareness points
-    awareness_unknown_points: 2  # neutral when Naver is not configured (flagged as unknown)
+    awareness_unknown_points: 0  # neutral when Naver is not configured
     business_categories: [analytics, crm, commerce, cms, booking, invoice, notification, monitoring, llm-workflow, internal-tools]
     # Tools individuals/creators buy for themselves -> tiny Korean market even with huge star counts.
     narrow_topics: [newsletter, blog, blogging, personal-blog, personal-website, portfolio, homelab, home-server, home-lab,

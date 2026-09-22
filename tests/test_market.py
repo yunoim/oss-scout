@@ -12,6 +12,7 @@ from tests.test_score import _ok_audit
 def test_breadth_rules(cfg):
     assert buyer_breadth(make_candidate(topics=["newsletter", "cms"], description="Publishing platform"), "cms", cfg)[0] == "narrow"
     assert buyer_breadth(make_candidate(topics=["homelab", "monitoring"]), "monitoring", cfg)[0] == "narrow"
+    assert buyer_breadth(make_candidate(topics=["homelab", "kubernetes", "proxmox"]), "monitoring", cfg)[0] == "narrow"  # narrow beats infra
     assert buyer_breadth(make_candidate(topics=["analytics", "self-hosted"]), "analytics", cfg)[0] == "business"
     assert buyer_breadth(make_candidate(topics=["observability", "monitoring"]), "monitoring", cfg)[0] == "enterprise"
     assert buyer_breadth(make_candidate(topics=["cli"]), "devtool", cfg)[0] == "devtool"
@@ -49,13 +50,21 @@ def test_market_component_moves_score(cfg):
     s_biz = score_candidate(biz, a, cfg, now=NOW)
     assert s_narrow.breadth == "narrow" and s_biz.breadth == "business"
     assert s_narrow.components["market"] < s_biz.components["market"]
-    assert "market" in s_narrow.unknowns  # no Naver -> awareness unknown
     assert any("market narrow" in n for n in s_narrow.notes)
-    # with Naver evidence the unknown disappears and full awareness lifts the score
-    m = MarketSignals(breadth="business", breadth_reason="x", naver_total=5000)
-    s_known = score_candidate(biz, a, cfg, now=NOW, market=m)
-    assert "market" not in s_known.unknowns
-    assert s_known.components["market"] == cfg.scoring.weights["market"] * (5 + 4) / (6 + 4)
+    mc = cfg.scoring.market
+    if mc.awareness_points == 0:
+        # awareness disabled (2026-W39 calibration): market is breadth only, no unknown flag
+        assert "market" not in s_narrow.unknowns
+        assert s_biz.components["market"] == cfg.scoring.weights["market"] * 5 / mc.breadth_max
+        m = MarketSignals(breadth="business", breadth_reason="x", naver_total=5000)
+        assert score_candidate(biz, a, cfg, now=NOW, market=m).components["market"] == s_biz.components["market"]
+        assert score_candidate(biz, a, cfg, now=NOW, market=m).naver_mentions == 5000  # still recorded
+    else:
+        assert "market" in s_narrow.unknowns
+        m = MarketSignals(breadth="business", breadth_reason="x", naver_total=10**9)
+        s_known = score_candidate(biz, a, cfg, now=NOW, market=m)
+        assert "market" not in s_known.unknowns
+        assert s_known.components["market"] == cfg.scoring.weights["market"] * (5 + mc.awareness_points) / (mc.breadth_max + mc.awareness_points)
 
 
 def test_naver_collect_apihub(cfg):

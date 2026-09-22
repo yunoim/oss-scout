@@ -70,10 +70,11 @@ def buyer_breadth(c: Candidate, category: str, cfg: Config) -> tuple[Breadth, st
                 return w
         return None
 
-    if (w := hit(m.enterprise_topics)) and category not in ("lib",):
-        return "enterprise", f"enterprise topic: {w}"
+    # Individual/creator markers win over infra markers: a homelab tool tagged `kubernetes` is still homelab.
     if (w := hit(m.narrow_topics)):
         return "narrow", f"individual/creator topic: {w}"
+    if (w := hit(m.enterprise_topics)) and category not in ("lib",):
+        return "enterprise", f"enterprise topic: {w}"
     if (w := hit(m.consumer_topics)):
         return "consumer", f"consumer topic: {w}"
     if category in ("devtool", "lib"):

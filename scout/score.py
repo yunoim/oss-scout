@@ -205,7 +205,8 @@ def score_candidate(
     aware = awareness_points(market.naver_total, mc.awareness_points, mc.awareness_full_at)
     if aware is None:
         aware = float(mc.awareness_unknown_points)
-        unknowns.append("market")
+        if mc.awareness_points > 0:  # only an unknown when awareness actually counts
+            unknowns.append("market")
     sb.components["market"] = _scale(breadth_raw + aware, mc.breadth_max + mc.awareness_points, W["market"])
     if market.breadth in ("narrow", "consumer"):
         notes.append(f"market {market.breadth}: {market.breadth_reason}")
