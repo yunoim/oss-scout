@@ -132,12 +132,16 @@ def cmd_run(args: argparse.Namespace, cfg: Config, env: Env) -> int:
 
 
 def _naver(env: Env):
-    if not env.naver_enabled:
-        log.warning("NAVER_CLIENT_ID/SECRET not set — Korean awareness scored neutral (market unknown)")
+    mode = env.naver_mode
+    if mode is None:
+        log.warning("NCP_APIGW_KEY_ID/KEY (NAVER API HUB) not set — Korean awareness scored neutral (market unknown)")
         return None
     from .market import NaverSearch
 
-    return NaverSearch(env.naver_client_id, env.naver_client_secret)
+    if mode == "legacy":
+        log.warning("using legacy developers.naver.com search keys — service ends 2027-06-30, migrate to NAVER API HUB")
+        return NaverSearch(env.naver_client_id, env.naver_client_secret, mode="legacy")
+    return NaverSearch(env.ncp_apigw_key_id, env.ncp_apigw_key, mode="apihub")
 
 
 def _market(c: Candidate, a, cfg: Config, naver):

@@ -3,7 +3,7 @@ from __future__ import annotations
 import httpx
 import respx
 
-from scout.market import NAVER_API, MarketSignals, NaverSearch, awareness_points, buyer_breadth, collect_market
+from scout.market import NAVER_API, NAVER_APIHUB, MarketSignals, NaverSearch, awareness_points, buyer_breadth, collect_market
 from scout.score import score_candidate
 from tests.conftest import NOW, make_candidate
 from tests.test_score import _ok_audit
@@ -43,17 +43,43 @@ def test_market_component_moves_score(cfg):
     assert s_known.components["market"] == cfg.scoring.weights["market"] * (5 + 4) / (6 + 4)
 
 
-def test_naver_collect(cfg):
+def test_naver_collect_apihub(cfg):
     c = make_candidate(full_name="acme/widget", topics=["analytics"])
     with respx.mock() as r:
-        r.get(f"{NAVER_API}/blog.json").mock(return_value=httpx.Response(200, json={"total": 120}))
-        r.get(f"{NAVER_API}/cafearticle.json").mock(return_value=httpx.Response(200, json={"total": 30}))
-        r.get(f"{NAVER_API}/news.json").mock(return_value=httpx.Response(401, json={"errorMessage": "bad key"}))
-        naver = NaverSearch("id", "secret")
+        r.get(f"{NAVER_APIHUB}/blog").mock(return_value=httpx.Response(200, json={"total": 120}))
+        r.get(f"{NAVER_APIHUB}/cafearticle").mock(return_value=httpx.Response(200, json={"total": 30}))
+        r.get(f"{NAVER_APIHUB}/news").mock(return_value=httpx.Response(401, json={"errorMessage": "bad key"}))
+        naver = NaverSearch("kid", "ksecret")  # default mode = apihub
         sig = collect_market(c, "analytics", cfg, naver)
         naver.close()
-        first_url = str(r.calls[0].request.url)
+        first = r.calls[0].request
     assert sig.breadth == "business"
     assert sig.naver_blog == 120 and sig.naver_cafe == 30 and sig.naver_news is None
     assert sig.naver_total == 150
-    assert first_url.count("widget") == 1 and "%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4" in first_url  # "오픈소스"
+    assert first.headers["X-NCP-APIGW-API-KEY-ID"] == "kid" and first.headers["X-NCP-APIGW-API-KEY"] == "ksecret"
+    assert str(first.url).count("widget") == 1 and "%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4" in str(first.url)  # "오픈소스"
+
+
+def test_naver_collect_legacy(cfg):
+    c = make_candidate(full_name="acme/widget", topics=["analytics"])
+    with respx.mock() as r:
+        for k in ("blog", "cafearticle", "news"):
+            r.get(f"{NAVER_API}/{k}.json").mock(return_value=httpx.Response(200, json={"total": 10}))
+        naver = NaverSearch("id", "secret", mode="legacy")
+        sig = collect_market(c, "analytics", cfg, naver)
+        naver.close()
+        first = r.calls[0].request
+    assert sig.naver_total == 30
+    assert first.headers["X-Naver-Client-Id"] == "id"
+
+
+def test_env_naver_mode(monkeypatch):
+    from scout.config import load_env
+
+    for k in ("NCP_APIGW_KEY_ID", "NCP_APIGW_KEY", "NAVER_CLIENT_ID", "NAVER_CLIENT_SECRET"):
+        monkeypatch.delenv(k, raising=False)
+    assert load_env(dotenv_path="nonexistent.env").naver_mode is None
+    monkeypatch.setenv("NAVER_CLIENT_ID", "a"); monkeypatch.setenv("NAVER_CLIENT_SECRET", "b")
+    assert load_env(dotenv_path="nonexistent.env").naver_mode == "legacy"
+    monkeypatch.setenv("NCP_APIGW_KEY_ID", "c"); monkeypatch.setenv("NCP_APIGW_KEY", "d")
+    assert load_env(dotenv_path="nonexistent.env").naver_mode == "apihub"  # API HUB wins when both exist

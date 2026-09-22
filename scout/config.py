@@ -193,7 +193,9 @@ class Env(BaseModel):
     smtp_port: int = 587
     mail_to: str | None = None
     github_repository: str | None = None  # owner/repo hosting the reports (set by Actions)
-    naver_client_id: str | None = None
+    ncp_apigw_key_id: str | None = None      # NAVER API HUB (new)
+    ncp_apigw_key: str | None = None
+    naver_client_id: str | None = None       # developers.naver.com legacy (keys issued before 2026-07-25)
     naver_client_secret: str | None = None
 
     @property
@@ -201,8 +203,17 @@ class Env(BaseModel):
         return bool(self.notion_token and (self.notion_database_id or self.notion_parent_page_id))
 
     @property
+    def naver_mode(self) -> str | None:
+        """'apihub' | 'legacy' | None — which Naver search credentials are available."""
+        if self.ncp_apigw_key_id and self.ncp_apigw_key:
+            return "apihub"
+        if self.naver_client_id and self.naver_client_secret:
+            return "legacy"
+        return None
+
+    @property
     def naver_enabled(self) -> bool:
-        return bool(self.naver_client_id and self.naver_client_secret)
+        return self.naver_mode is not None
 
     @property
     def mail_enabled(self) -> bool:
@@ -260,6 +271,8 @@ def load_env(dotenv_path: Path | str | None = None) -> Env:
         smtp_port=int(_get("SMTP_PORT") or 587),
         mail_to=_get("MAIL_TO"),
         github_repository=_get("GITHUB_REPOSITORY", "REPORT_REPOSITORY"),
+        ncp_apigw_key_id=_get("NCP_APIGW_KEY_ID", "NAVER_APIHUB_KEY_ID"),
+        ncp_apigw_key=_get("NCP_APIGW_KEY", "NAVER_APIHUB_KEY"),
         naver_client_id=_get("NAVER_CLIENT_ID"),
         naver_client_secret=_get("NAVER_CLIENT_SECRET"),
     )

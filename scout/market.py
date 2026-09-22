@@ -21,7 +21,10 @@ log = logging.getLogger(__name__)
 
 Breadth = Literal["narrow", "consumer", "devtool", "business", "enterprise"]
 
+# Legacy developers.naver.com endpoint: new key issuance stopped 2026-07-31, service ends 2027-06-30.
 NAVER_API = "https://openapi.naver.com/v1/search"
+# NAVER API HUB (Naver Cloud Platform): the only path for new keys. Free tier 775,000 calls/month, 50 RPS.
+NAVER_APIHUB = "https://naverapihub.apigw.ntruss.com/search/v1"
 
 
 class MarketSignals(BaseModel):
@@ -60,17 +63,31 @@ def buyer_breadth(c: Candidate, category: str, cfg: Config) -> tuple[Breadth, st
 
 
 class NaverSearch:
-    """Naver Search API counts. Free tier: 25,000 calls/day."""
+    """Naver Search API mention counts.
 
-    def __init__(self, client_id: str, client_secret: str, timeout: float = 15.0):
-        self.http = httpx.Client(
-            headers={"X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret, "User-Agent": "oss-scout/0.1"},
-            timeout=timeout,
-        )
+    mode="apihub" (default, NAVER Cloud Platform API HUB):
+        GET https://naverapihub.apigw.ntruss.com/search/v1/{blog|news|cafearticle}
+        headers X-NCP-APIGW-API-KEY-ID / X-NCP-APIGW-API-KEY
+    mode="legacy" (developers.naver.com, keys issued before 2026-07-25 only):
+        GET https://openapi.naver.com/v1/search/{kind}.json
+        headers X-Naver-Client-Id / X-Naver-Client-Secret
+    """
+
+    def __init__(self, key_id: str, key_secret: str, mode: str = "apihub", timeout: float = 15.0):
+        self.mode = mode
+        if mode == "legacy":
+            headers = {"X-Naver-Client-Id": key_id, "X-Naver-Client-Secret": key_secret}
+        else:
+            headers = {"X-NCP-APIGW-API-KEY-ID": key_id, "X-NCP-APIGW-API-KEY": key_secret}
+        headers["User-Agent"] = "oss-scout/0.1"
+        self.http = httpx.Client(headers=headers, timeout=timeout)
+
+    def _url(self, kind: str) -> str:
+        return f"{NAVER_API}/{kind}.json" if self.mode == "legacy" else f"{NAVER_APIHUB}/{kind}"
 
     def total(self, kind: str, query: str) -> int | None:
         try:
-            r = self.http.get(f"{NAVER_API}/{kind}.json", params={"query": query, "display": 1})
+            r = self.http.get(self._url(kind), params={"query": query, "display": 1})
         except httpx.HTTPError as e:
             log.debug("naver %s failed: %s", kind, e)
             return None

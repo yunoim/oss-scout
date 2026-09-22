@@ -23,7 +23,7 @@ GitHub에서 **상업적 재사용이 가능한(MIT / Apache-2.0 / BSD / ISC) �
    | `GH_PAT` | 권장 | classic PAT (`public_repo`). 없으면 기본 `GITHUB_TOKEN` 사용 (core 1,000 req/h → 첫 실행이 느림) |
    | `NOTION_TOKEN` | 선택 | Notion internal integration 토큰 |
    | `NOTION_DATABASE_ID` **또는** `NOTION_PARENT_PAGE_ID` | 선택 | 기존 DB id, 또는 DB 를 자동 생성할 부모 페이지 id (integration 을 해당 페이지에 연결해야 함) |
-   | `NAVER_CLIENT_ID` / `NAVER_CLIENT_SECRET` | 선택 | [developers.naver.com](https://developers.naver.com) 검색 API. 시장 규모 점수의 "한국 인지도" 에 쓰임. 없으면 중립 처리 |
+   | `NCP_APIGW_KEY_ID` / `NCP_APIGW_KEY` | 선택 | **NAVER API HUB**(Naver Cloud Platform) 검색 API 키. 시장 규모 점수의 "한국 인지도" 에 쓰임. 없으면 중립 처리. 개발자센터(developers.naver.com) 검색 API 는 2026-07-31 신규 발급 종료, 2027-06-30 서비스 종료 → 기존 키만 `NAVER_CLIENT_ID/SECRET` 으로 |
    | `SMTP_USER` | 선택 | Gmail 주소 |
    | `SMTP_APP_PASSWORD` | 선택 | Google 계정 → 보안 → **앱 비밀번호** (2단계 인증 필요) |
    | `MAIL_TO` | 선택 | 수신 주소 (쉼표 구분 가능) |
