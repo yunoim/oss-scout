@@ -51,6 +51,7 @@
   "AsyncFuncAI/deepwiki-open": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 2,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 69
@@ -87,6 +88,7 @@
   "BuilderIO/builder": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 77
@@ -99,6 +101,7 @@
   "ClementTsang/bottom": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 68
@@ -111,6 +114,7 @@
   "CoreBunch/Instatic": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 90
@@ -219,6 +223,7 @@
   "GreptimeTeam/greptimedb": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 64
@@ -291,6 +296,7 @@
   "LearningCircuit/local-deep-research": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 73
@@ -315,6 +321,7 @@
   "Maciek-roboblog/Claude-Code-Usage-Monitor": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 63
@@ -447,6 +454,7 @@
   "QwikDev/partytown": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 79
@@ -483,6 +491,7 @@
   "Sylius/Sylius": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 1,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 81
@@ -579,6 +588,7 @@
   "aimeos/aimeos-laravel": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 60
@@ -711,6 +721,7 @@
   "bastienwirtz/homer": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 63
@@ -819,6 +830,7 @@
   "certimate-go/certimate": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 72
@@ -867,6 +879,7 @@
   "databasus/databasus": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 62
@@ -879,6 +892,7 @@
   "dataelement/bisheng": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 1,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 63
@@ -903,6 +917,7 @@
   "decaporg/decap-cms": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 3,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 77
@@ -915,12 +930,13 @@
   "deeplethe/utopia": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
-    "2026-W39": 68
+    "2026-W39": 69
    },
    "stars": {
-    "2026-W39": 9648
+    "2026-W39": 9673
    },
    "status": "New"
   },
@@ -999,6 +1015,7 @@
   "emdash-cms/emdash": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 3,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 87
@@ -1023,6 +1040,7 @@
   "evidence-dev/evidence": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 73
@@ -1047,6 +1065,7 @@
   "flightlessmango/MangoHud": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 66
@@ -1071,6 +1090,7 @@
   "flyteorg/flyte": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 66
@@ -1095,6 +1115,7 @@
   "frappe/frappe": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 74
@@ -1131,6 +1152,7 @@
   "getarcaneapp/arcane": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 3,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 73
@@ -1143,6 +1165,7 @@
   "getgrav/grav": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 1,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 80
@@ -1179,6 +1202,7 @@
   "grocy/grocy": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 78
@@ -1227,6 +1251,7 @@
   "hyperdxio/hyperdx": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 1,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 87
@@ -1239,6 +1264,7 @@
   "iflytek/astron-agent": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 66
@@ -1287,6 +1313,7 @@
   "influxdata/telegraf": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 79
@@ -1371,6 +1398,7 @@
   "kanboard/kanboard": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 6,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 87
@@ -1395,6 +1423,7 @@
   "keystonejs/keystone": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 78
@@ -1419,6 +1448,7 @@
   "leeoniya/uPlot": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 73
@@ -1647,6 +1677,7 @@
   "oblien/openship": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 1,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 67
@@ -1671,6 +1702,7 @@
   "open-multi-agent/open-multi-agent": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 1,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 78
@@ -1707,6 +1739,7 @@
   "owncast/owncast": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 85
@@ -1791,6 +1824,7 @@
   "plasmicapp/plasmic": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 78
@@ -1851,6 +1885,7 @@
   "rcourtman/Pulse": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 85
@@ -1863,6 +1898,7 @@
   "rmyndharis/OpenWA": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 1,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 85
@@ -1899,6 +1935,7 @@
   "sanity-io/sanity": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 2,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 77
@@ -1947,6 +1984,7 @@
   "sissbruecker/linkding": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 80
@@ -2019,6 +2057,7 @@
   "suitenumerique/docs": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 90
@@ -2031,6 +2070,7 @@
   "superplanehq/superplane": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 59
@@ -2043,6 +2083,7 @@
   "superradcompany/microsandbox": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 65
@@ -2091,6 +2132,7 @@
   "tbphp/gpt-load": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 88
@@ -2115,6 +2157,7 @@
   "thedevdojo/wave": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 66
@@ -2127,6 +2170,7 @@
   "theonedev/onedev": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 67
@@ -2175,6 +2219,7 @@
   "usekaneo/kaneo": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 1,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 87
@@ -2199,6 +2244,7 @@
   "vas3k/TaxHacker": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 89
@@ -2211,6 +2257,7 @@
   "vercel/commerce": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 67
@@ -2259,6 +2306,7 @@
   "wallabag/wallabag": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 2,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 69
@@ -2295,6 +2343,7 @@
   "winsiderss/systeminformer": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 2,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 78
@@ -2331,6 +2380,7 @@
   "xerrors/Yuxi": {
    "excluded": false,
    "first_seen": "2026-W39",
+   "kr_signals": 0,
    "last_seen": "2026-W39",
    "score": {
     "2026-W39": 90
