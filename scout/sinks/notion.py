@@ -16,6 +16,7 @@ DB_TITLE = "OSS Scout"
 MODEL_OPTIONS = ["managed-hosting", "si-onprem", "korean-localization", "template-sale", "plugin-sale"]
 FLAG_OPTIONS = ["ee_dir", "trademark", "restricted_terms", "copyleft_deps", "unknown", "readme_terms"]
 STATUS_OPTIONS = ["New", "Reviewing", "Forked", "Selling", "Rejected"]
+BUYER_OPTIONS = ["narrow", "consumer", "devtool", "business", "enterprise"]
 CATEGORY_OPTIONS = ["analytics", "crm", "commerce", "cms", "booking", "invoice", "notification", "monitoring",
                     "llm-workflow", "internal-tools", "devtool", "lib", "other"]
 
@@ -33,6 +34,9 @@ def schema_properties() -> dict:
         "KR Opportunity": {"number": {"format": "number"}},
         "KR Signals": {"number": {"format": "number"}},
         "KR Signal Issues": {"rich_text": {}},
+        "KR Mentions": {"number": {"format": "number"}},
+        "Buyer": {"select": {"options": [{"name": n, "color": c} for n, c in
+                             zip(BUYER_OPTIONS, ["gray", "brown", "orange", "green", "blue"])]}},
         "Flags": {"multi_select": {"options": [{"name": n} for n in FLAG_OPTIONS]}},
         "Status": {"select": {"options": [{"name": n, "color": c} for n, c in
                               zip(STATUS_OPTIONS, ["blue", "yellow", "purple", "green", "red"])]}},
@@ -161,6 +165,10 @@ class NotionSink:
             "First Seen": {"date": {"start": first_seen or _week_monday(week)}},
             "Notes": {"rich_text": _rt(notes)},
         }
+        if s.breadth in BUYER_OPTIONS:
+            props["Buyer"] = {"select": {"name": s.breadth}}
+        if s.naver_mentions is not None:
+            props["KR Mentions"] = {"number": s.naver_mentions}
         if e.demand and e.demand.fetched:
             d = e.demand
             props["KR Signals"] = {"number": d.issues + d.prs}

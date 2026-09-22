@@ -72,7 +72,14 @@ def test_naver_collect_apihub(cfg):
     assert sig.naver_blog == 120 and sig.naver_cafe == 30 and sig.naver_news is None
     assert sig.naver_total == 150
     assert first.headers["X-NCP-APIGW-API-KEY-ID"] == "kid" and first.headers["X-NCP-APIGW-API-KEY"] == "ksecret"
-    assert str(first.url).count("widget") == 1 and "%EC%98%A4%ED%94%88%EC%86%8C%EC%8A%A4" in str(first.url)  # "오픈소스"
+    assert str(first.url).count("widget") == 1 and "github" in str(first.url)
+
+
+def test_awareness_query_normalises_name():
+    from scout.market import awareness_query
+
+    assert awareness_query(make_candidate(full_name="louislam/uptime-kuma")) == "uptime kuma github"
+    assert awareness_query(make_candidate(full_name="a/daily_stock_analysis")) == "daily stock analysis github"
 
 
 def test_naver_collect_legacy(cfg):

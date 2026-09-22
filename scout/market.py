@@ -125,8 +125,15 @@ class NaverSearch:
 
 
 def awareness_query(c: Candidate) -> str:
-    """Repo name plus a disambiguator so common words (docs, hive, pulse) don't count everything."""
-    return f'"{c.name}" 오픈소스'
+    """Repo name AND 'github'.
+
+    First run (2026-W39) used '"<name>" 오픈소스' and common-word names (docs, pulse, prest) hit thousands
+    of unrelated posts while hyphenated names (uptime-kuma) under-matched. Korean posts about an OSS tool
+    almost always mention github; requiring it removes most generic hits. Hyphens/underscores become
+    spaces so Naver tokenizes the name the way bloggers write it.
+    """
+    name = re.sub(r"[-_.]+", " ", c.name).strip()
+    return f"{name} github"
 
 
 def collect_market(c: Candidate, category: str, cfg: Config, naver: NaverSearch | None) -> MarketSignals:

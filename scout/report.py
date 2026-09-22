@@ -149,6 +149,8 @@ def detail_card(rank: int, e: Entry) -> str:
         f"- **한국 기회 {s.korea_points}/10**: ko 로케일 {'있음' if sig.korean_locale else ('없음' if sig.korean_locale is False else '미확인')} · "
         f"stripe {'O' if sig.has_stripe else 'X'} / 국내결제 {'O' if sig.has_kr_pay else 'X'} · 카카오/네이버 로그인 {'O' if sig.has_kr_login else 'X'}"
     )
+    lines.append(f"- **시장**: 구매자 폭 {s.breadth}"
+                 + (f" · 네이버 언급 {s.naver_mentions:,}건" if s.naver_mentions is not None else " · 네이버 미조회"))
     if e.demand and e.demand.fetched and e.signals:
         d = e.demand
         lines.append(f"- **한국 수요 신호**: 이슈 {d.issues} (open {d.open_issues}) · PR {d.prs} · 최근 1년 {d.recent}"
