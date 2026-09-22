@@ -23,23 +23,33 @@ def _item(title, number, is_pr=False, state="open", created="2026-08-01T00:00:00
 
 def test_build_query_groups_keywords(cfg):
     q = build_query("acme/widget", cfg)
-    assert q.startswith("repo:acme/widget AND (")
+    assert q.startswith("repo:acme/widget AND is:issue AND (")
     assert " OR " in q and "한국어 in:title" in q and q.endswith(")")
     assert q.count("in:title") == len(cfg.demand.keywords)
+    assert "is:pull-request" in build_query("acme/widget", cfg, "pull-request")
+
+
+def _by_kind(issues, prs):
+    def side_effect(request):
+        q = str(request.url)
+        return httpx.Response(200, json={"total_count": len(prs) if "pull-request" in q else len(issues),
+                                         "items": prs if "pull-request" in q else issues})
+    return side_effect
 
 
 def test_fetch_signals_counts(cfg, client):
-    items = [
+    issues = [
         _item("Korean translation?", 1, plus1=5),
-        _item("Add ko locale", 2, is_pr=True, state="closed", created="2016-03-01T00:00:00Z"),
         _item("KakaoPay support", 3, state="closed", created="2026-01-15T00:00:00Z", plus1=2),
         _item("Naver login", 4, state="open", created="2024-01-01T00:00:00Z"),
     ]
+    prs = [_item("Add ko locale", 2, is_pr=True, state="closed", created="2016-03-01T00:00:00Z")]
     with respx.mock() as r:
-        route = r.get(f"{API}/search/issues").mock(return_value=httpx.Response(200, json={"total_count": 4, "items": items}))
+        route = r.get(f"{API}/search/issues").mock(side_effect=_by_kind(issues, prs))
         sig = fetch_signals(client, "acme/widget", cfg, now=NOW)
-    assert route.called
+    assert route.call_count == 2  # one query per kind
     assert "advanced_search" in str(route.calls[0].request.url)
+    assert "is%3Aissue" in str(route.calls[0].request.url) and "is%3Apull-request" in str(route.calls[1].request.url)
     assert sig.fetched and sig.total == 4
     assert sig.issues == 3 and sig.prs == 1
     assert sig.open_issues == 2
@@ -56,6 +66,18 @@ def test_fetch_signals_failure_is_soft(cfg, client):
         r.get(f"{API}/search/issues").mock(return_value=httpx.Response(422, json={"message": "Validation Failed"}))
         sig = fetch_signals(client, "acme/widget", cfg, now=NOW)
     assert not sig.fetched and sig.total == 0 and sig.top == []
+
+
+def test_fetch_signals_partial_failure(cfg, client):
+    def side_effect(request):
+        if "pull-request" in str(request.url):
+            return httpx.Response(422, json={"message": "nope"})
+        return httpx.Response(200, json={"total_count": 1, "items": [_item("Korean UI?", 9)]})
+
+    with respx.mock() as r:
+        r.get(f"{API}/search/issues").mock(side_effect=side_effect)
+        sig = fetch_signals(client, "acme/widget", cfg, now=NOW)
+    assert sig.fetched and sig.issues == 1 and sig.prs == 0
 
 
 def test_report_demand_section(cfg):

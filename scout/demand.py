@@ -44,16 +44,21 @@ class DemandSignals(BaseModel):
         return self.issues * 2 + self.open_issues * 2 + self.recent * 3 + self.prs + min(self.reactions, 20)
 
 
-def build_query(full_name: str, cfg: Config) -> str:
-    """Title-only match per keyword.
+KINDS = ("issue", "pull-request")
 
-    Verified against the live API (2026-09): `repo:X (a OR b) in:title` and `repo:X AND (a OR b) AND in:title`
-    both degrade to "every issue in the repo" under advanced_search, while attaching `in:title` to each
-    term inside the group returns exact matches. Body/comment matching was far too noisy ("toss out", ISO
-    region tables, contributors writing Korean in PR bodies).
+
+def build_query(full_name: str, cfg: Config, kind: str = "issue") -> str:
+    """Title-only match per keyword, one query per kind (issue / pull-request).
+
+    Verified against the live API (2026-09):
+    - `repo:X (a OR b) in:title` and `repo:X AND (a OR b) AND in:title` both degrade to "every issue in the
+      repo" under advanced_search; attaching `in:title` to each term inside the group returns exact matches.
+    - Body/comment matching was far too noisy ("toss out", ISO region tables, Korean in PR bodies).
+    - Newer tokens (fine-grained PAT in Actions) get HTTP 422 "Query must include 'is:issue' or
+      'is:pull-request'", so the kind qualifier is mandatory and we search the two kinds separately.
     """
     terms = " OR ".join(f"{k} in:title" for k in cfg.demand.keywords)
-    return f"repo:{full_name} AND ({terms})"
+    return f"repo:{full_name} AND is:{kind} AND ({terms})"
 
 
 def _parse_dt(s: str | None) -> datetime | None:
@@ -68,24 +73,27 @@ def _parse_dt(s: str | None) -> datetime | None:
 def fetch_signals(client: GitHubClient, full_name: str, cfg: Config, now: datetime | None = None) -> DemandSignals:
     now = now or datetime.now(timezone.utc)
     sig = DemandSignals(full_name=full_name)
-    r = client.get(
-        "/search/issues",
-        {
-            "q": build_query(full_name, cfg),
-            "sort": "reactions",
-            "order": "desc",
-            "per_page": cfg.demand.sample_size,
-            "advanced_search": "true",
-        },
-    )
-    if not r.ok or not isinstance(r.body, dict):
-        log.warning("demand search failed for %s: HTTP %s %s", full_name, r.status, (r.text or "")[:200].replace("\n", " "))
-        return sig
-    sig.fetched = True
-    sig.total = int(r.body.get("total_count") or 0)
     cutoff = now - timedelta(days=cfg.demand.recent_days)
-    for it in r.body.get("items") or []:
-        is_pr = "pull_request" in it
+    items: list[tuple[dict, bool]] = []
+    for kind in KINDS:
+        r = client.get(
+            "/search/issues",
+            {
+                "q": build_query(full_name, cfg, kind),
+                "sort": "reactions",
+                "order": "desc",
+                "per_page": cfg.demand.sample_size,
+                "advanced_search": "true",
+            },
+        )
+        if not r.ok or not isinstance(r.body, dict):
+            log.warning("demand search failed for %s (%s): HTTP %s %s", full_name, kind, r.status,
+                        (r.text or "")[:200].replace("\n", " "))
+            continue
+        sig.fetched = True
+        sig.total += int(r.body.get("total_count") or 0)
+        items += [(it, kind == "pull-request" or "pull_request" in it) for it in (r.body.get("items") or [])]
+    for it, is_pr in items:
         created = _parse_dt(it.get("created_at"))
         plus1 = int(((it.get("reactions") or {}).get("+1")) or 0)
         issue = SignalIssue(

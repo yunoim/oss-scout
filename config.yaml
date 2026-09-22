@@ -162,10 +162,10 @@ scoring:
   confidence_low_unknowns: 3
 
 # Korea demand signals: search each top candidate's issues/PRs for Korean-market keywords.
-# One Search API call per repo (30/min limit) -> keep max_repos modest.
+# Two Search API calls per repo (issues + PRs; 30/min limit) -> keep max_repos modest.
 demand:
   enabled: true
-  max_repos: 60            # top-N passed candidates by score
+  max_repos: 50            # top-N passed candidates by score
   sample_size: 30          # issues fetched per repo (sorted by reactions)
   recent_days: 365
   top_issues: 3            # links kept per repo for the report / Notion
