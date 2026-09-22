@@ -79,7 +79,7 @@ def fetch_signals(client: GitHubClient, full_name: str, cfg: Config, now: dateti
         },
     )
     if not r.ok or not isinstance(r.body, dict):
-        log.debug("demand search failed for %s: %s", full_name, r.status)
+        log.warning("demand search failed for %s: HTTP %s %s", full_name, r.status, (r.text or "")[:200].replace("\n", " "))
         return sig
     sig.fetched = True
     sig.total = int(r.body.get("total_count") or 0)
