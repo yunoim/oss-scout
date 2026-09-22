@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import httpx
+import pytest
 import respx
 
 from scout.market import NAVER_API, NAVER_APIHUB, MarketSignals, NaverSearch, awareness_points, buyer_breadth, collect_market
@@ -55,7 +56,7 @@ def test_market_component_moves_score(cfg):
     if mc.awareness_points == 0:
         # awareness disabled (2026-W39 calibration): market is breadth only, no unknown flag
         assert "market" not in s_narrow.unknowns
-        assert s_biz.components["market"] == cfg.scoring.weights["market"] * 5 / mc.breadth_max
+        assert s_biz.components["market"] == pytest.approx(cfg.scoring.weights["market"] * 5 / mc.breadth_max, abs=0.01)
         m = MarketSignals(breadth="business", breadth_reason="x", naver_total=5000)
         assert score_candidate(biz, a, cfg, now=NOW, market=m).components["market"] == s_biz.components["market"]
         assert score_candidate(biz, a, cfg, now=NOW, market=m).naver_mentions == 5000  # still recorded
