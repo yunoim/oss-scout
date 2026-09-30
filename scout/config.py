@@ -173,6 +173,8 @@ class Config(BaseModel):
     discovery: DiscoveryConfig
     audit: AuditConfig
     known_traps: dict[str, str] = {}
+    # Not excluded, but flagged `provider_tos` with the reason shown on the card (legit core, risky feature).
+    known_flags: dict[str, str] = {}
     scoring: ScoringConfig
     demand: DemandConfig = DemandConfig()
     report: ReportConfig = ReportConfig()

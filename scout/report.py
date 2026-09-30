@@ -144,6 +144,8 @@ def detail_card(rank: int, e: Entry) -> str:
                      + (f" — “{a.ee_license_excerpt}”" if a.ee_license_excerpt else ""))
     if a.trademark_notice:
         lines.append("- **상표 고지 있음** → 리브랜딩 필수")
+    if a.provider_tos:
+        lines.append(f"- **공급사 약관 주의**: {a.provider_tos}")
     sig = a.signals
     lines.append(
         f"- **한국 기회 {s.korea_points}/10**: ko 로케일 {'있음' if sig.korean_locale else ('없음' if sig.korean_locale is False else '미확인')} · "

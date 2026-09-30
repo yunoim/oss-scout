@@ -263,6 +263,8 @@ def score_candidate(
 
 def next_action(a: AuditResult, sb: ScoreBreakdown) -> str:
     actions: list[str] = []
+    if a.provider_tos:
+        actions.append("공급사 약관 확인")
     if a.has_ee_dir:
         actions.append("ee 폴더 라이선스 확인")
     if a.trademark_notice:

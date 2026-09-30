@@ -154,3 +154,11 @@ def test_next_action_priorities(cfg):
     assert "ee 폴더" in score_candidate(c, _ok_audit(has_ee_dir=True), cfg, now=NOW).next_action
     assert "리브랜딩" in score_candidate(c, _ok_audit(trademark_notice=True), cfg, now=NOW).next_action
     assert "한국어" in score_candidate(c, _ok_audit(), cfg, now=NOW).next_action
+
+
+def test_provider_tos_flag_keeps_repo_but_leads_next_action(cfg):
+    assert "tbphp/gpt-load" in cfg.known_flags and "decolua/9router" in cfg.known_traps
+    a = _ok_audit(provider_tos="subscription pooling")
+    sb = score_candidate(make_candidate(), a, cfg, now=NOW)
+    assert not sb.excluded and "provider_tos" in a.flags()
+    assert sb.next_action.startswith("공급사 약관 확인")

@@ -93,6 +93,10 @@ known_traps:
   decolua/9router: "AI 구독 계정 풀링 릴레이 — 공급사 약관 위반 소지"
   dwgx/windsurfapi: "Windsurf 역프록시 — 공급사 약관 위반 소지"
 
+# Legit core product with one feature that leans on another provider's ToS: kept in the pool, flagged `provider_tos`.
+known_flags:
+  tbphp/gpt-load: "구독 계정(Claude·Codex 등) 다중 연결 기능 — 해당 기능은 공급사 약관 위반 소지, 상품화 시 API 키 경로만"
+
 scoring:
   # Max points per component. Must sum to 100.
   weights:

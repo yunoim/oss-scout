@@ -65,6 +65,7 @@ class AuditResult(BaseModel):
     copyleft_deps: list[str] = []
     unknown_deps: int = 0
     trademark_notice: bool = False
+    provider_tos: str | None = None  # known_flags reason: a feature leans on another provider's ToS
     readme_fetched: bool = False
     excluded: bool = False
     exclusion_reason: str | None = None
@@ -84,6 +85,8 @@ class AuditResult(BaseModel):
             out.append("unknown")
         if self.readme_terms:
             out.append("readme_terms")
+        if self.provider_tos:
+            out.append("provider_tos")
         return out
 
 
@@ -402,6 +405,7 @@ class Auditor:
             res.exclusion_reason = f"known_trap: {trap}"
             res.license_status = "copyleft_or_restricted"
             return res
+        res.provider_tos = cfg.known_flags.get(c.full_name.lower())
 
         # 1. root license
         status = classify_spdx(c.license_spdx, cfg)
