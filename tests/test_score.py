@@ -47,6 +47,25 @@ def test_restricted_terms_and_copyleft_deps_zero_license(cfg):
     sb2 = score_candidate(c, _ok_audit(copyleft_deps=["x (GPL-3.0)"]), cfg, now=NOW)
     assert sb1.components["license"] == 0 and sb2.components["license"] == 0
     assert not sb1.excluded
+    # the hit on the total stays license weight + restricted_penalty even after the weight was lowered
+    clean = score_candidate(c, _ok_audit(), cfg, now=NOW)
+    assert clean.total - sb1.total == cfg.scoring.weights["license"] + cfg.scoring.license.restricted_penalty
+
+
+def test_unknown_korean_locale_scores_less_than_confirmed_absent(cfg):
+    c = make_candidate(topics=["analytics", "self-hosted"])
+    unknown = Signals(korean_locale=None, has_stripe=False, has_kr_pay=False, has_kr_login=False, auth_mentioned=False, i18n_dirs_checked=["locales"])
+    absent = unknown.model_copy(update={"korean_locale": False})
+    kc = cfg.scoring.korea
+    sb_u = score_candidate(c, _ok_audit(signals=unknown), cfg, now=NOW)
+    sb_a = score_candidate(c, _ok_audit(signals=absent), cfg, now=NOW)
+    assert sb_a.korea_points - sb_u.korea_points == kc.no_korean_locale - kc.unknown_korean_locale > 0
+
+
+def test_bare_llm_topic_is_not_llm_workflow(cfg):
+    assert detect_category(make_candidate(topics=["llm", "python"], description="Memory system"), cfg)[0] != "llm-workflow"
+    assert detect_category(make_candidate(topics=["llm", "llm-gateway", "api-gateway"], description="AI gateway"), cfg)[0] == "devtool"
+    assert detect_category(make_candidate(topics=["rag", "llm"], description="RAG"), cfg)[0] == "llm-workflow"
 
 
 def test_ee_dir_penalty_and_unknown_license(cfg):

@@ -89,17 +89,20 @@ known_traps:
   calcom/cal.com: "AGPL + ee 상용"
   directus/directus: "BSL"
   outline/outline: "BSL"
+  # Resell access to someone else's AI subscription/accounts -> provider ToS, not a license question.
+  decolua/9router: "AI 구독 계정 풀링 릴레이 — 공급사 약관 위반 소지"
+  dwgx/windsurfapi: "Windsurf 역프록시 — 공급사 약관 위반 소지"
 
 scoring:
   # Max points per component. Must sum to 100.
   weights:
-    license: 20
+    license: 10   # gate is the exclusion list; restricted terms also take license.restricted_penalty off the total
     activity: 15
     popularity: 10
     community: 10
     deploy: 15
     category: 10
-    market: 10
+    market: 20    # 2026-09-30: +10 from license (buyer breadth first)
     korea: 10
   # Market breadth: who pays for this in Korea, and how many of them exist.
   market:
@@ -117,7 +120,11 @@ scoring:
                     selfhosting, podcast, creator, creators, writing, journal, journaling, note-taking, notes, bookmarks,
                     bookmark-manager, rss, rss-reader, feed-reader, read-it-later, gaming, minecraft, discord-bot, wallpaper,
                     resume, cv, recipes, fitness, habit-tracker, personal-finance, budgeting, photos, photo-gallery,
-                    media-server, plex, home-automation, smart-home, ebook, comics, manga, anime, music-player]
+                    media-server, plex, home-automation, smart-home, ebook, comics, manga, anime, music-player,
+                    # retail investing/trading tools (W40: A-share stock panels ranked top 15). Not bare `stock`/`trading`:
+                    # those tokens also match inventory and B2B trade products.
+                    stock-analysis, stock-market, a-stock, quant, quantitative-trading, quantitative-finance,
+                    algorithmic-trading, backtesting, investing, cryptocurrency, crypto-trading]
     consumer_topics: [productivity, todo, calendar-app, chat, messenger, social-network, fediverse, mastodon, activitypub,
                       education, learning-platform, language-learning, quiz, game]
     # Every company with infrastructure buys these -> broadest Korean B2B market.
@@ -128,6 +135,7 @@ scoring:
     ok: 20
     unknown: 8
     ee_dir_penalty: 5
+    restricted_penalty: 10  # keeps the restricted-terms hit at -20 after license weight 20 -> 10
   activity:
     recent_push_days: 14
     recent_push_points: 10
@@ -172,12 +180,15 @@ scoring:
       invoice: [invoice, invoicing, billing, accounting, expenses, subscription, payments]
       notification: [notification, notifications, email, newsletter, sms, push, messaging, chat]
       monitoring: [monitoring, uptime, status-page, observability, logging, alerting, apm, incident]
-      llm-workflow: [llm, workflow, automation, agent, agents, rag, chatbot, ai-workflow, low-code, no-code, nocode]
+      # bare `llm` removed 2026-09-30: every AI repo carries it, so it put 13 of the top 30 here.
+      llm-workflow: [workflow, automation, agent, agents, rag, chatbot, ai-workflow, low-code, no-code, nocode]
       internal-tools: [admin, admin-panel, internal-tools, backoffice, erp, hr, project-management, kanban, forms, form-builder, survey, low-code-platform]
-      devtool: [cli, devops, ci, ci-cd, developer-tools, testing, linter, sdk, terminal, kubernetes, docker, deployment, api-gateway, proxy]
+      devtool: [cli, devops, ci, ci-cd, developer-tools, testing, linter, sdk, terminal, kubernetes, docker, deployment, api-gateway, proxy,
+                llm-gateway, ai-gateway, openai-proxy, reverse-proxy, inference]
       lib: [library, framework, component, components, ui-components, react-components, plugin, hooks, utility, utils]
   korea:
     no_korean_locale: 4
+    unknown_korean_locale: 2  # no i18n dir found != confirmed no Korean; W40 top 15 were all 'unknown' at full 4
     stripe_without_kr_pay: 3
     no_kr_social_login: 3
     i18n_dirs: [locales, locale, i18n, lang, langs, languages, messages, translations, translation,

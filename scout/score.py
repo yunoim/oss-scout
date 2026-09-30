@@ -215,9 +215,11 @@ def score_candidate(
     kc = sc.korea
     sig = a.signals
     kr = 0
-    if sig.korean_locale is not True:
+    if sig.korean_locale is False:
         kr += kc.no_korean_locale
-        if sig.korean_locale is None and not sig.i18n_dirs_checked and not a.readme_fetched:
+    elif sig.korean_locale is None:
+        kr += kc.unknown_korean_locale
+        if not sig.i18n_dirs_checked and not a.readme_fetched:
             unknowns.append("korea")
     if sig.has_stripe and not sig.has_kr_pay:
         kr += kc.stripe_without_kr_pay
@@ -231,6 +233,8 @@ def score_candidate(
         unknowns.append("deps")
 
     sb.total = int(round(sum(sb.components.values())))
+    if a.restricted_terms or a.copyleft_deps:
+        sb.total -= lc.restricted_penalty
     sb.total = max(0, min(100, sb.total))
     sb.unknowns = unknowns
     sb.confidence = "low" if len(unknowns) >= sc.confidence_low_unknowns else "normal"

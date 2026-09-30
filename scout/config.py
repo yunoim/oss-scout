@@ -51,6 +51,9 @@ class LicenseScoreConfig(BaseModel):
     ok: int = 20
     unknown: int = 8
     ee_dir_penalty: int = 5
+    # Flat deduction from the total on restricted terms / copyleft deps, on top of license -> 0, so the
+    # penalty does not shrink when the license weight is lowered.
+    restricted_penalty: int = 0
 
 
 class ActivityScoreConfig(BaseModel):
@@ -105,6 +108,7 @@ class MarketScoreConfig(BaseModel):
 
 class KoreaScoreConfig(BaseModel):
     no_korean_locale: int = 4
+    unknown_korean_locale: int = 4  # locale could not be determined (no i18n dir found, not confirmed absent)
     stripe_without_kr_pay: int = 3
     no_kr_social_login: int = 3
     i18n_dirs: list[str]

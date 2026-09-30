@@ -19,6 +19,10 @@ def test_breadth_rules(cfg):
     assert buyer_breadth(make_candidate(topics=["cli"]), "devtool", cfg)[0] == "devtool"
     assert buyer_breadth(make_candidate(topics=["chat", "messenger"]), "other", cfg)[0] == "consumer"
     assert buyer_breadth(make_candidate(topics=["database", "library"]), "lib", cfg)[0] == "devtool"  # libs never enterprise
+    assert buyer_breadth(make_candidate(topics=["api-gateway", "llm-gateway"]), "devtool", cfg)[0] == "devtool"  # nor devtools
+    assert buyer_breadth(make_candidate(topics=["quant", "stock-analysis", "llm"]), "analytics", cfg)[0] == "narrow"
+    # bare `stock` must not catch inventory products
+    assert buyer_breadth(make_candidate(topics=["inventory"], description="Stock and warehouse management"), "commerce", cfg)[0] == "business"
 
 
 def test_framework_vs_product(cfg):

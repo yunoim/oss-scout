@@ -73,7 +73,8 @@ def buyer_breadth(c: Candidate, category: str, cfg: Config) -> tuple[Breadth, st
     # Individual/creator markers win over infra markers: a homelab tool tagged `kubernetes` is still homelab.
     if (w := hit(m.narrow_topics)):
         return "narrow", f"individual/creator topic: {w}"
-    if (w := hit(m.enterprise_topics)) and category not in ("lib",):
+    # Developer tools riding an infra topic (an LLM gateway tagged api-gateway) sell to developers, not IT buyers.
+    if (w := hit(m.enterprise_topics)) and category not in ("lib", "devtool"):
         return "enterprise", f"enterprise topic: {w}"
     if (w := hit(m.consumer_topics)):
         return "consumer", f"consumer topic: {w}"
