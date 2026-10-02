@@ -3,7 +3,7 @@
 GitHub에서 **상업적 재사용이 가능한(MIT / Apache-2.0 / BSD / ISC) 오픈소스**를 매주 자동으로 발굴하고,
 라이선스·의존성을 감사한 뒤 **수익화 점수(0~100)** 를 매겨 리포트하는 파이썬 파이프라인입니다.
 
-- 실행: GitHub Actions, 매주 월요일 09:00 KST (`workflow_dispatch` 수동 실행 가능)
+- 실행: GitHub Actions, 매주 월요일 08:17 KST (`workflow_dispatch` 수동 실행 가능)
 - 출력: `reports/YYYY-Www.md` 커밋 · Notion DB upsert · Gmail 주간 요약 메일
 - 한국 시장 관점(한국어 미지원 · 국내 결제/소셜 로그인 부재 = 기회)을 점수에 반영
 - 자동 포크·배포는 하지 않습니다. **최종 판단은 사람이 합니다.**
