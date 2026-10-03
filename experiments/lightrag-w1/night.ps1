@@ -5,7 +5,7 @@ $ErrorActionPreference = 'Continue'
 Set-Location $PSScriptRoot
 $env:PYTHONIOENCODING = 'utf-8'
 if (-not $Now) { $env:MLPC_DEADLINE = '06:30' }
-$env:MLPC_MIN_FREE_START = '4.0'  # 10/3 CEO: 앱 재시작 뒤 '시작' 지시가 오면 여유 4GB 기준
+$env:MLPC_MIN_FREE_START = '3.0'  # 10/4 00:48 CEO '시작': 모델 내려간 뒤 3GB
 $log = Join-Path $PSScriptRoot 'night.log'
 function Say($m) { "$(Get-Date -Format 'MM-dd HH:mm') $m" | Out-File -Append -Encoding utf8 $log }
 $py = Join-Path $PSScriptRoot '.venv\Scripts\python.exe'
