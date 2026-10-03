@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import ctypes
+import os
 import subprocess
 import time
 from datetime import datetime
@@ -38,6 +39,11 @@ def check(starting: bool = False) -> None:
     now = datetime.now()
     if (now.hour, now.minute) >= (20, 30) and (now.hour, now.minute) < (21, 30):
         raise Stop("20:30~21:30 Ollama 금지 시간")
+    dl = os.environ.get("MLPC_DEADLINE")  # 야간 실행 정지 시각 "HH:MM" (10/3 CEO: 늦어도 06:30)
+    if dl:
+        h, m = map(int, dl.split(":"))
+        if (h, m) <= (now.hour, now.minute) < (21, 0):
+            raise Stop(f"야간 실행 마감 {dl}")
     gb = free_gb()
     need = MIN_FREE_GB if starting else MIN_FREE_RUN_GB
     if gb < need:

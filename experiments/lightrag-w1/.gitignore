@@ -2,3 +2,6 @@
 rag_storage/
 index.log
 __pycache__/
+night*.log
+index*.out
+index*.log
