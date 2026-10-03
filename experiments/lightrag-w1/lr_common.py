@@ -12,8 +12,8 @@ from lightrag.utils import EmbeddingFunc
 HERE = Path(__file__).parent
 LLM = "qwen3:8b"
 EMBED = "bge-m3:latest"
-NUM_CTX = 12288          # 8GB VRAM 에 qwen3:8b Q4 + bge-m3 가 같이 올라가는 상한(ollama ps 로 확인)
-MAX_TOTAL_TOKENS = 8000  # 질의 컨텍스트 예산 — 두 모드 공통. NUM_CTX 안에 프롬프트·답이 들어가야 한다
+NUM_CTX = 8192           # 8GB VRAM 에 qwen3:8b 가 GPU 100% 로 올라가는 값(10/3 CEO 결정 — 12288 은 13% CPU 로 넘쳤다)
+MAX_TOTAL_TOKENS = 5000  # 질의 컨텍스트 예산 — 두 모드 공통. NUM_CTX 안에 시스템 프롬프트·질문·답이 함께 들어가야 한다
 LLM_OPTIONS = {"num_ctx": NUM_CTX, "temperature": 0, "seed": 42, "think": False}
 
 os.environ.setdefault("RERANK_BY_DEFAULT", "false")  # 리랭커 미구성 — 두 모드 공통으로 끈다
