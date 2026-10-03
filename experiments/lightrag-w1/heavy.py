@@ -12,8 +12,9 @@ from pathlib import Path
 
 LOCK = Path("C:/Users/quite/.mlpc-heavy.lock")
 OWNER = "github 스카우터"
-MIN_FREE_GB = 3.0
-MAX_LLAMA_GB = 2.0  # 깨끗한 qwen3:8b·8192 로드는 0.85GB(10/3 실측)
+MIN_FREE_GB = 3.0      # 시작 조건(wiki hq/README.md)
+MIN_FREE_RUN_GB = 2.0  # 실행 중 조건(10/3 CEO: 실행 중 여유 2GB 이상 유지)
+MAX_LLAMA_GB = 3.0     # qwen3:8b·8192 작업 중 정상치 2.07GB(10/3 실측, Ollama 가 Windows+CUDA 에서 mmap 을 이미 끈다). 멈춤 때는 5.3GB
 
 
 class Stop(Exception):
@@ -33,13 +34,14 @@ def free_gb() -> float:
     return m.ullAvailPhys / 1024**3
 
 
-def check() -> None:
+def check(starting: bool = False) -> None:
     now = datetime.now()
     if (now.hour, now.minute) >= (20, 30) and (now.hour, now.minute) < (21, 30):
         raise Stop("20:30~21:30 Ollama 금지 시간")
     gb = free_gb()
-    if gb < MIN_FREE_GB:
-        raise Stop(f"남은 RAM {gb:.2f}GB < {MIN_FREE_GB}GB")
+    need = MIN_FREE_GB if starting else MIN_FREE_RUN_GB
+    if gb < need:
+        raise Stop(f"남은 RAM {gb:.2f}GB < {need}GB")
     # 10/3 CEO 지시: 모델이 VRAM 에 다 안 올라가 시스템 RAM 을 먹으면 이 PC 에서는 멈춘다
     ps = subprocess.run(["ollama", "ps"], capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
     for line in ps.splitlines()[1:]:
@@ -58,7 +60,7 @@ def acquire(task: str) -> None:
         text = LOCK.read_text(encoding="utf-8", errors="replace").strip()
         if age < 2 * 3600 and not text.startswith(OWNER):
             raise Stop(f"다른 창이 작업 중: {text}")
-    check()
+    check(starting=True)
     LOCK.write_text(f"{OWNER} · {task} · {datetime.now():%Y-%m-%d %H:%M}\n", encoding="utf-8")
 
 

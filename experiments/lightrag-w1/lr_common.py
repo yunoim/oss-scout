@@ -15,6 +15,7 @@ LLM = "qwen3:8b"
 EMBED = "bge-m3:latest"
 NUM_CTX = 8192           # 8GB VRAM 에 qwen3:8b 가 GPU 100% 로 올라가는 값(10/3 CEO 결정 — 12288 은 13% CPU 로 넘쳤다)
 MAX_TOTAL_TOKENS = 5000  # 질의 컨텍스트 예산 — 두 모드 공통. NUM_CTX 안에 시스템 프롬프트·질문·답이 함께 들어가야 한다
+# mmap: Ollama 가 Windows+CUDA 에서 이미 끈다(server.log "disabling mmap ... reason=windows_cuda") — 설정 불필요.
 # num_predict: 반복 생성 폭주 차단(10/3 2019626 첫 청크가 600초 시간초과). 정상 추출·답변은 이보다 훨씬 짧다
 LLM_OPTIONS = {"num_ctx": NUM_CTX, "num_predict": 3072, "temperature": 0, "seed": 42, "think": False}
 
