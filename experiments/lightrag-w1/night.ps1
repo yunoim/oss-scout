@@ -1,11 +1,11 @@
 # CEO-16 야간 단독 실행 (10/3 CEO 결정). 22:00 까지 기다렸다가, Ollama 가 유휴(truenjoy 21시 발행 끝)인지 확인하고
 # 색인 -> 질의를 이어 돌린다. 06:30 이면 heavy 가드가 멈추고, 끝나거나 멈추면 모델을 내린다. 로그는 night.log.
-param([switch]$Now)  # -Now: CEO "시작" 지시로 바로 시작(22:00 대기·06:30 마감 없음, RAM·GPU 가드는 그대로)
+param([switch]$Now, [string]$MinFree = '3.0', [string]$Deadline = '')  # -Now: CEO "시작" 지시로 바로 시작(22:00 대기·06:30 마감 없음, RAM·GPU 가드는 그대로)
 $ErrorActionPreference = 'Continue'
 Set-Location $PSScriptRoot
 $env:PYTHONIOENCODING = 'utf-8'
-if (-not $Now) { $env:MLPC_DEADLINE = '06:30' }
-$env:MLPC_MIN_FREE_START = '3.0'  # 10/4 00:48 CEO '시작': 모델 내려간 뒤 3GB
+if ($Deadline) { $env:MLPC_DEADLINE = $Deadline } elseif (-not $Now) { $env:MLPC_DEADLINE = '06:30' }
+$env:MLPC_MIN_FREE_START = $MinFree  # CEO 지시마다 다르다(10/4 07:01: 2.4)
 $log = Join-Path $PSScriptRoot 'night.log'
 function Say($m) { "$(Get-Date -Format 'MM-dd HH:mm') $m" | Out-File -Append -Encoding utf8 $log }
 $py = Join-Path $PSScriptRoot '.venv\Scripts\python.exe'
