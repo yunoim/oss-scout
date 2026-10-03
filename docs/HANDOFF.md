@@ -22,7 +22,12 @@
   **10/5 결과를 보기 전까지 점수표 동결.**
 - 10/1 사람 검토: 상위 12개 중 스핀아웃 후보 없음. Notion `Rejected` — bagisto · hyperdx · TaxHacker · kaneo
   (사유는 Notion「나는 어떤 사람인가」업데이트 로그 10/1 — Notes 열은 매주 덮어써진다).
-- CEO-10: `docs/candidate-lightrag.md` — 셋 중 LightRAG, 4주 실험(결제 없음). 착수 여부는 CEO 결정 대기.
+- CEO-10: `docs/candidate-lightrag.md` — 셋 중 LightRAG, 4주 실험(결제 없음). CEO-16 으로 1주차만 착수.
+- **CEO-16 (진행 중)**: `experiments/lightrag-w1/` — 사전 등록 `PREREG.md`(주 비교 mix vs naive, +10%p), 30문항, 가평군 자치법규 7건.
+  색인 7건 중 2건 완료, 이어 하기: `.venv/Scripts/python index.py rag_storage docs/*.txt` 순서는 PREREG 의 7건(진행은 progress.json).
+  이어서 `query.py` → `blind.py` → Sonnet 채점(`grading/RUBRIC.md`, 동시 1개) → 메인 전수 확인 → `score.py` → results.md.
+  **무거운 작업 규칙**(wiki hq/README.md): 잠금 파일 · 남은 RAM 3GB 이상 · 20:30~21:30 Ollama 금지 — `heavy.py` 가 자동 확인.
+  완료 보고: 평가셋·스크립트·결과표 커밋 해시 + '+10%p 넘음/못 넘음' 한 줄을 wiki hq/status/D6.md 에(커밋만, push 는 CEO).
 
 ## 다음 할 일 (10/5 이후)
 1. 10/5 리포트 확인 — gpt-load 카드에 "공급사 약관 주의" 가 뜨는지, Notion Flags 에 `provider_tos` 옵션이 자동 생성되는지(실패하면 upsert 가 깨진 것).
