@@ -1,8 +1,9 @@
 {
- "indexed": {
-  "2019599.txt": 180,
-  "2019600.txt": 138,
-  "2019625.txt": 322,
-  "2019626.txt": 1072
+ "status": {
+  "2019599.txt": "processed",
+  "2019600.txt": "processed",
+  "2019625.txt": "processed",
+  "2019626.txt": "failed",
+  "2019873.txt": "processing"
  }
 }
