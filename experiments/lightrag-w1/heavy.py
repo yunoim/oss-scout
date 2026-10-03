@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import ctypes
+import subprocess
 import time
 from datetime import datetime
 from pathlib import Path
@@ -12,6 +13,7 @@ from pathlib import Path
 LOCK = Path("C:/Users/quite/.mlpc-heavy.lock")
 OWNER = "github 스카우터"
 MIN_FREE_GB = 3.0
+MAX_LLAMA_GB = 2.0  # 깨끗한 qwen3:8b·8192 로드는 0.85GB(10/3 실측)
 
 
 class Stop(Exception):
@@ -38,6 +40,16 @@ def check() -> None:
     gb = free_gb()
     if gb < MIN_FREE_GB:
         raise Stop(f"남은 RAM {gb:.2f}GB < {MIN_FREE_GB}GB")
+    # 10/3 CEO 지시: 모델이 VRAM 에 다 안 올라가 시스템 RAM 을 먹으면 이 PC 에서는 멈춘다
+    ps = subprocess.run(["ollama", "ps"], capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
+    for line in ps.splitlines()[1:]:
+        if line.strip() and "100% GPU" not in line:
+            raise Stop(f"모델이 GPU 에 다 안 올라감: {line.split()[0]} — {' '.join(line.split()[3:6])}")
+    ws = subprocess.run(["powershell", "-NoProfile", "-Command",
+                         "(Get-Process llama-server -ErrorAction SilentlyContinue | Measure-Object WorkingSet64 -Sum).Sum/1GB"],
+                        capture_output=True, text=True).stdout.strip()
+    if ws and float(ws) > MAX_LLAMA_GB:
+        raise Stop(f"llama-server 시스템 RAM {float(ws):.2f}GB > {MAX_LLAMA_GB}GB")
 
 
 def acquire(task: str) -> None:

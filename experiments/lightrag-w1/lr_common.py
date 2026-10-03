@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 from lightrag import LightRAG, QueryParam
@@ -20,13 +21,26 @@ LLM_OPTIONS = {"num_ctx": NUM_CTX, "num_predict": 3072, "temperature": 0, "seed"
 os.environ.setdefault("RERANK_BY_DEFAULT", "false")  # 리랭커 미구성 — 두 모드 공통으로 끈다
 
 
+async def guarded_complete(*args, **kwargs):
+    """LLM 호출마다 MLPC 무거운 작업 조건을 다시 본다. 어긋나면 잠금을 풀고 프로세스를 바로 끝낸다 —
+    처리 중이던 문서는 LightRAG 상태가 processing 으로 남아 다음 실행이 이어 간다."""
+    import heavy
+    try:
+        heavy.check()
+    except heavy.Stop as e:
+        print("STOP(mid-doc):", e, flush=True)
+        heavy.release()
+        os._exit(3)
+    return await ollama_model_complete(*args, **kwargs)
+
+
 def make_rag(working_dir: Path) -> LightRAG:
     async def embed(texts, **kw):
         return await ollama_embed.func(texts, embed_model=EMBED, **kw)
 
     return LightRAG(
         working_dir=str(working_dir),
-        llm_model_func=ollama_model_complete,
+        llm_model_func=guarded_complete,
         llm_model_name=LLM,
         llm_model_kwargs={"options": LLM_OPTIONS, "timeout": 600},
         llm_model_max_async=1,
