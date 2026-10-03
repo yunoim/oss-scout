@@ -4,6 +4,7 @@ $ErrorActionPreference = 'Continue'
 Set-Location $PSScriptRoot
 $env:PYTHONIOENCODING = 'utf-8'
 $env:MLPC_DEADLINE = '06:30'
+$env:MLPC_MIN_FREE_START = '2.3'  # 10/3 22:12 CEO 허용(다른 창 유휴)
 $log = Join-Path $PSScriptRoot 'night.log'
 function Say($m) { "$(Get-Date -Format 'MM-dd HH:mm') $m" | Out-File -Append -Encoding utf8 $log }
 $py = Join-Path $PSScriptRoot '.venv\Scripts\python.exe'

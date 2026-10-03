@@ -34,8 +34,8 @@ def nocontext(q: str) -> str:
 async def main() -> None:
     qs = [json.loads(l) for l in (HERE / "questions.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
     have = done()
-    heavy.acquire("LightRAG 질의 30문항x4")
     try:
+        heavy.acquire("LightRAG 질의 30문항x4")
         await run(qs, have)
     except heavy.Stop as e:
         print("STOP:", e, flush=True)

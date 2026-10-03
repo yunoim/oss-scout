@@ -39,8 +39,8 @@ async def main(wd: Path, docs: list[Path]) -> None:
     if all(st.get(d.name) == "processed" for d in docs):
         print("all processed", st, flush=True)
         return
-    heavy.acquire("LightRAG 색인")
     try:
+        heavy.acquire("LightRAG 색인")
         rag = await ready(make_rag(wd))
         if any(s in ("failed", "processing", "pending") for s in st.values()):
             heavy.check()
