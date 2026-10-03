@@ -1,0 +1,4 @@
+.venv/
+rag_storage/
+index.log
+__pycache__/
