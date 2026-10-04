@@ -1,13 +1,14 @@
 # HANDOFF — oss-scout
 
-다음 세션이 이 창을 이어받을 때 읽는 문서. 갱신 2026-10-03.
+다음 세션이 이 창을 이어받을 때 읽는 문서. 갱신 2026-10-05.
 
 ## 이 창의 역할
 - 주제 발굴 허브. 제품 작업은 별도 창(스핀아웃은 인수 프롬프트 파일로 넘긴다).
 - 2026-10-03 부터 **D6 신사업 TF 의 github 스카우터 담당** — 지시는 MLPC CEO 세션에서 온다.
   보고: wiki(mlpc-hq) `hq/status/D6.md` 맨 아래 `## 스카우터(갱신 날짜)` 절 + `hq/orders/YYYY-MM.md` 의 해당 행, 그 파일들만 커밋·push.
   경로는 단말마다 다르다 — 노트북 `C:/Users/quite/wiki`, IM-Desktop `D:\dev\mlpc-hq`.
-  ⚠️ IM-Desktop 에서는 CEO 세션('MLPC CEO 마스터 에이전트', 노트북)이 SendMessage 로 보이지 않는다(10/4 확인) — 그때는 wiki 커밋·push 가 보고 경로다.
+  CEO 세션은 10/4 18:50 부터 **IM-Desktop** 의 'MLPC CEO 마스터 에이전트'(local_ef1c9bf5) — 같은 기기라 SendMessage 가 바로 닿는다.
+  (10/4 낮의 "데스크톱에서 CEO 가 안 보인다" 는 CEO 가 노트북에 있던 때 얘기다.)
   닉에게 직접 묻지 않는다 — 아래 운영 규칙대로 CEO 경유.
 - 운영 규칙(10/3 닉 지시, CEO 경유):
   - 결정 질문은 CEO 에게 보낸다 — 권장안 1개 + 한 줄 근거. CEO 가 결정·회신한다.
@@ -41,8 +42,16 @@
   (한글 인자를 powershell.exe 명령줄로 넘기면 깨져 `-Deadline` 에 들어간다 — env 로만). Ollama 0.35 앱은 모델 경로를 **앱 설정 DB**(`%LOCALAPPDATA%\Ollama\db.sqlite` settings.models)에서 읽고 사용자 env `OLLAMA_MODELS` 는 무시한다 — 10/4 에 D:\ollama\models 로 고쳤다.
   llama-server 호스트 RAM 은 qwen3+bge-m3 러너 합으로 8GB 까지 올라간다(mmap 꺼짐) — 노트북용 3GB 상한은 이 기기에 맞지 않는다.
 
+- **CEO-96(10/5 00:30, IM-Desktop) — W41 사람 검토 `docs/reviews/2026-W41.md`.** 08:17 공식 실행 전에 로컬 dry-run 스냅샷으로 했다.
+  결론: 스핀아웃 후보 0, 관찰 2(dittofeed — 카카오 알림톡·국내 SMS 채널 공백 / emdash — 플러그인 장터 각도), 새 상위권 5개는 기각.
+  gpt-load 는 개편 뒤 73점(devtool)이라 상위 15 밖이고, `provider_tos` 는 감사 결과에 붙는다.
+  **스냅샷 방법**(다음에도 쓸 수 있다): 레포를 스크래치 폴더로 복사한 뒤 `scout.main.iso_week` 만 `"<다음 주>"` 로 바꿔 `run --dry-run --no-notion --no-mail`, `.venv` 파이썬으로 돌린다.
+  ⚠️ 일요일 밤에 레포 안에서 그냥 dry-run 하면 **이번 주 리포트 파일(`reports/<이번 주>.md`)을 덮어쓴다**(주 라벨 = 실행 시각). `reports/`·`data/` 는 Actions 가 08:17 에 커밋하니 사람이 커밋하지 않는다 — 검토는 `docs/reviews/`.
+  로컬엔 NAVER 키가 없어 시장 점수가 '미조회'(중립)이고 Notion Rejected 필터도 안 걸린다. 콜드 캐시라 API 5,999회에 18분 걸렸다.
+
 ## 다음 할 일 (10/5 이후)
-1. 10/5 리포트 확인 — gpt-load 카드에 "공급사 약관 주의" 가 뜨는지, Notion Flags 에 `provider_tos` 옵션이 자동 생성되는지(실패하면 upsert 가 깨진 것).
+1. 10/5 08:17 공식 리포트 확인 — 스냅샷과 순위 차이(NAVER 키·Rejected 필터 때문), Notion Flags 에 `provider_tos` 옵션이 자동 생성되는지(실패하면 upsert 가 깨진 것). gpt-load 는 상위 15 밖이라 카드 줄은 안 나온다 — Notion 행의 Flags 로 본다. 차이가 판정을 바꾸면 `docs/reviews/2026-W41.md` 에 덧붙인다.
+1-1. 관찰 2건 다음 주 확인: dittofeed 에 알림톡·국내 SMS 연동 요청이 실제로 있는지, emdash 플러그인 장터가 열렸는지.
 2. "유료 상품이 실제로 보이는가" 신호 설계 — 원본 HTML 이 아니라 보이는 텍스트 기준(`/mo`·`$` 오탐 실측).
 3. 검색 렌즈를 셀프서브 구독형(소상공인·개인 대상, 국내 결제·카카오 로그인 공백)으로 좁힐지 — CEO 결정(권장안 붙여 요청).
 4. 보류: 한국 수요 신호 가산(수집이 채점 뒤 상위 50) · `database` 토픽 enterprise 판정.
