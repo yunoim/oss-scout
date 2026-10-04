@@ -5,7 +5,9 @@
 ## 이 창의 역할
 - 주제 발굴 허브. 제품 작업은 별도 창(스핀아웃은 인수 프롬프트 파일로 넘긴다).
 - 2026-10-03 부터 **D6 신사업 TF 의 github 스카우터 담당** — 지시는 MLPC CEO 세션에서 온다.
-  보고: `C:/Users/quite/wiki/hq/status/D6.md` 맨 아래 `## 스카우터(갱신 날짜)` 절, wiki 레포에 그 파일만 커밋·push.
+  보고: wiki(mlpc-hq) `hq/status/D6.md` 맨 아래 `## 스카우터(갱신 날짜)` 절 + `hq/orders/YYYY-MM.md` 의 해당 행, 그 파일들만 커밋·push.
+  경로는 단말마다 다르다 — 노트북 `C:/Users/quite/wiki`, IM-Desktop `D:\dev\mlpc-hq`.
+  ⚠️ IM-Desktop 에서는 CEO 세션('MLPC CEO 마스터 에이전트', 노트북)이 SendMessage 로 보이지 않는다(10/4 확인) — 그때는 wiki 커밋·push 가 보고 경로다.
   닉에게 직접 묻지 않는다 — 아래 운영 규칙대로 CEO 경유.
 - 운영 규칙(10/3 닉 지시, CEO 경유):
   - 결정 질문은 CEO 에게 보낸다 — 권장안 1개 + 한 줄 근거. CEO 가 결정·회신한다.
@@ -25,14 +27,14 @@
 - 10/1 사람 검토: 상위 12개 중 스핀아웃 후보 없음. Notion `Rejected` — bagisto · hyperdx · TaxHacker · kaneo
   (사유는 Notion「나는 어떤 사람인가」업데이트 로그 10/1 — Notes 열은 매주 덮어써진다).
 - CEO-10: `docs/candidate-lightrag.md` — 셋 중 LightRAG, 4주 실험(결제 없음). CEO-16 으로 1주차만 착수.
-- **CEO-16 (진행 중)**: `experiments/lightrag-w1/` — 사전 등록 `PREREG.md`(주 비교 mix vs naive, +10%p), 30문항, 가평군 자치법규 7건.
-  색인 7건 중 2건 완료, 이어 하기: `.venv/Scripts/python index.py rag_storage docs/*.txt` 순서는 PREREG 의 7건(진행은 progress.json).
-  이어서 `query.py` → `blind.py` → Sonnet 채점(`grading/RUBRIC.md`, 동시 1개) → 메인 전수 확인 → `score.py` → results.md.
-  **무거운 작업 규칙**(wiki hq/README.md): 잠금 파일 · 남은 RAM 3GB 이상 · 20:30~21:30 Ollama 금지 — `heavy.py` 가 자동 확인.
-  완료 보고: 평가셋·스크립트·결과표 커밋 해시 + '+10%p 넘음/못 넘음' 한 줄을 wiki hq/status/D6.md 에(커밋만, push 는 CEO).
-  **야간 실행(10/3 22:00~06:30)**: `night.ps1` 이 분리 프로세스로 돈다 — 이 창은 깨어 있지 않을 수 있다.
-  다음에 이 창(또는 이어받은 세션)이 깨면 **가장 먼저 `experiments/lightrag-w1/night.log` 를 읽고** 끝났으면 채점으로,
-  멈췄으면 사유와 함께 위 형식으로 CEO 에 보고한다.
+- **CEO-16 완료(2026-10-04, IM-Desktop)**: `experiments/lightrag-w1/results.md` — **못 넘음.** naive 22/30(73%) · mix 1/30(3%) · hybrid 1/30 · 무검색 1/30, mix − naive = **−70%p**.
+  색인은 이 기기에서 처음부터 다시 만들었다(노트북 3/7 은 폐기). 조건·통계는 `index_stats.md`(results.md 뒤에 자동으로 붙는다).
+  ⚠️ 핵심 발견: 사전 등록 예산 5,000 토큰에서 **mix 의 최종 컨텍스트에 텍스트 청크가 0개**(그래프 컨텍스트가 예산을 다 씀) → mix 답 = hybrid 답 30/30 동일.
+  즉 결과는 "8B·예산 5,000 조건에서 LightRAG 기본 모드는 그래프 전용으로 퇴화한다" 로 읽어야 한다. 예산을 늘린 재실험은 사전 등록 밖 — CEO 결정 사항.
+  채점: Sonnet 블라인드(`grading/grades_sonnet.jsonl`) vs 메인 독립(`grades_main.jsonl`) 120건 대조, 불일치 2건, 최종은 메인(`grades.jsonl`).
+  **이 기기(IM-Desktop) 실행법**: `night.ps1 -Now -MinFree 5.0` 을 `MLPC_OWNER='D6 스카우터 desktop'` · `MLPC_OLLAMA_PRIVATE=1` · `MLPC_MAX_LLAMA_GB=16` 환경변수와 함께 띄운다
+  (한글 인자를 powershell.exe 명령줄로 넘기면 깨져 `-Deadline` 에 들어간다 — env 로만). Ollama 0.35 앱은 모델 경로를 **앱 설정 DB**(`%LOCALAPPDATA%\Ollama\db.sqlite` settings.models)에서 읽고 사용자 env `OLLAMA_MODELS` 는 무시한다 — 10/4 에 D:\ollama\models 로 고쳤다.
+  llama-server 호스트 RAM 은 qwen3+bge-m3 러너 합으로 8GB 까지 올라간다(mmap 꺼짐) — 노트북용 3GB 상한은 이 기기에 맞지 않는다.
 
 ## 다음 할 일 (10/5 이후)
 1. 10/5 리포트 확인 — gpt-load 카드에 "공급사 약관 주의" 가 뜨는지, Notion Flags 에 `provider_tos` 옵션이 자동 생성되는지(실패하면 upsert 가 깨진 것).

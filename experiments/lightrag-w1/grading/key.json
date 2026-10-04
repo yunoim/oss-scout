@@ -1,0 +1,182 @@
+{
+ "G01": {
+  "A": "mix",
+  "B": "nocontext",
+  "C": "naive",
+  "D": "hybrid"
+ },
+ "G02": {
+  "A": "nocontext",
+  "B": "mix",
+  "C": "hybrid",
+  "D": "naive"
+ },
+ "G03": {
+  "A": "mix",
+  "B": "hybrid",
+  "C": "nocontext",
+  "D": "naive"
+ },
+ "G04": {
+  "A": "hybrid",
+  "B": "mix",
+  "C": "naive",
+  "D": "nocontext"
+ },
+ "G05": {
+  "A": "naive",
+  "B": "mix",
+  "C": "nocontext",
+  "D": "hybrid"
+ },
+ "L01": {
+  "A": "mix",
+  "B": "naive",
+  "C": "hybrid",
+  "D": "nocontext"
+ },
+ "L02": {
+  "A": "mix",
+  "B": "nocontext",
+  "C": "naive",
+  "D": "hybrid"
+ },
+ "L03": {
+  "A": "mix",
+  "B": "naive",
+  "C": "hybrid",
+  "D": "nocontext"
+ },
+ "L04": {
+  "A": "hybrid",
+  "B": "nocontext",
+  "C": "mix",
+  "D": "naive"
+ },
+ "L05": {
+  "A": "naive",
+  "B": "nocontext",
+  "C": "mix",
+  "D": "hybrid"
+ },
+ "L06": {
+  "A": "nocontext",
+  "B": "naive",
+  "C": "mix",
+  "D": "hybrid"
+ },
+ "L07": {
+  "A": "mix",
+  "B": "nocontext",
+  "C": "hybrid",
+  "D": "naive"
+ },
+ "L08": {
+  "A": "nocontext",
+  "B": "mix",
+  "C": "naive",
+  "D": "hybrid"
+ },
+ "L09": {
+  "A": "hybrid",
+  "B": "nocontext",
+  "C": "mix",
+  "D": "naive"
+ },
+ "L10": {
+  "A": "naive",
+  "B": "nocontext",
+  "C": "hybrid",
+  "D": "mix"
+ },
+ "L11": {
+  "A": "mix",
+  "B": "hybrid",
+  "C": "naive",
+  "D": "nocontext"
+ },
+ "L12": {
+  "A": "mix",
+  "B": "hybrid",
+  "C": "nocontext",
+  "D": "naive"
+ },
+ "L13": {
+  "A": "mix",
+  "B": "nocontext",
+  "C": "hybrid",
+  "D": "naive"
+ },
+ "L14": {
+  "A": "mix",
+  "B": "nocontext",
+  "C": "naive",
+  "D": "hybrid"
+ },
+ "L15": {
+  "A": "mix",
+  "B": "nocontext",
+  "C": "naive",
+  "D": "hybrid"
+ },
+ "M01": {
+  "A": "naive",
+  "B": "mix",
+  "C": "hybrid",
+  "D": "nocontext"
+ },
+ "M02": {
+  "A": "mix",
+  "B": "nocontext",
+  "C": "naive",
+  "D": "hybrid"
+ },
+ "M03": {
+  "A": "nocontext",
+  "B": "hybrid",
+  "C": "naive",
+  "D": "mix"
+ },
+ "M04": {
+  "A": "naive",
+  "B": "mix",
+  "C": "hybrid",
+  "D": "nocontext"
+ },
+ "M05": {
+  "A": "mix",
+  "B": "hybrid",
+  "C": "naive",
+  "D": "nocontext"
+ },
+ "M06": {
+  "A": "hybrid",
+  "B": "mix",
+  "C": "nocontext",
+  "D": "naive"
+ },
+ "M07": {
+  "A": "mix",
+  "B": "hybrid",
+  "C": "nocontext",
+  "D": "naive"
+ },
+ "M08": {
+  "A": "naive",
+  "B": "nocontext",
+  "C": "hybrid",
+  "D": "mix"
+ },
+ "M09": {
+  "A": "mix",
+  "B": "nocontext",
+  "C": "naive",
+  "D": "hybrid"
+ },
+ "M10": {
+  "A": "naive",
+  "B": "mix",
+  "C": "hybrid",
+  "D": "nocontext"
+ }
+}
