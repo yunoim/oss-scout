@@ -12,7 +12,9 @@ from datetime import datetime
 from pathlib import Path
 
 LOCK = Path("C:/Users/quite/.mlpc-heavy.lock")
-OWNER = "github 스카우터"
+OWNER = os.environ.get("MLPC_OWNER", "github 스카우터")  # 잠금 소유자 표기 — 기기별로 다르다(IM-Desktop: "D6 스카우터 desktop", 10/4 CEO)
+# 이 기기의 Ollama 가 truenjoy 발행(20:30~21:30, 다른 기기)과 별개면 1 — IM-Desktop 은 별개(10/4 CEO). 기본은 금지 시간 적용
+OLLAMA_PRIVATE = os.environ.get("MLPC_OLLAMA_PRIVATE", "0") == "1"
 MIN_FREE_GB = float(os.environ.get("MLPC_MIN_FREE_START", "3.0"))  # 시작 조건(wiki hq/README.md). 10/3 22:12 CEO: 다른 창이 쉬면 2.4GB 도 허용
 MIN_FREE_RUN_GB = 2.0  # 실행 중 조건(10/3 CEO: 실행 중 여유 2GB 이상 유지)
 MAX_LLAMA_GB = 3.0     # qwen3:8b·8192 작업 중 정상치 2.07GB(10/3 실측, Ollama 가 Windows+CUDA 에서 mmap 을 이미 끈다). 멈춤 때는 5.3GB
@@ -37,7 +39,7 @@ def free_gb() -> float:
 
 def check(starting: bool = False) -> None:
     now = datetime.now()
-    if (now.hour, now.minute) >= (20, 30) and (now.hour, now.minute) < (21, 30):
+    if not OLLAMA_PRIVATE and (now.hour, now.minute) >= (20, 30) and (now.hour, now.minute) < (21, 30):
         raise Stop("20:30~21:30 Ollama 금지 시간")
     dl = os.environ.get("MLPC_DEADLINE")  # 야간 실행 정지 시각 "HH:MM" (10/3 CEO: 늦어도 06:30)
     if dl:
