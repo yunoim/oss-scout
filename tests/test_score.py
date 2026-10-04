@@ -137,6 +137,14 @@ def test_selfserve_component(cfg):
     assert score_candidate(infra, _ok_audit(), cfg, now=NOW).components["selfserve"] == round(ss.onboarding_two_plus / ss.raw_max * w, 2)
 
 
+def test_onboarding_variants_count_once(cfg):
+    from scout.score import onboarding_hits
+
+    one = make_candidate(topics=["workspace", "multi-tenant"], description="Shared workspaces, multitenant by default")
+    assert onboarding_hits(one, cfg) == {"workspace", "multitenant"}
+    assert len(onboarding_hits(make_candidate(topics=["subscription"], description="subscriptions"), cfg)) == 1
+
+
 def test_enterprise_and_devtool_score_below_identical_business_repo(cfg):
     from scout.market import MarketSignals
 

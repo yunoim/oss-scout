@@ -96,9 +96,18 @@ def _tokens(c: Candidate) -> set[str]:
     return set(c.topics) | set(re.split(r"[^a-z0-9-]+", (c.description or "").lower()))
 
 
+def _concept(term: str) -> str:
+    """workspaces/workspace, multi-tenant/multitenant/multitenancy, white-label/whitelabel -> one signal each."""
+    t = term.lower().replace("-", "")
+    t = re.sub(r"(ancy|ant)$", "ant", t)
+    return t[:-1] if t.endswith("s") and not t.endswith(("ss", "as")) else t  # keep saas
+
+
 def onboarding_hits(c: Candidate, cfg: Config) -> set[str]:
-    """Self-onboarding product signals in topics/description (not deploy files — that is `deploy`)."""
-    return _tokens(c) & {t.lower() for t in cfg.scoring.selfserve.onboarding_terms}
+    """Distinct self-onboarding product signals in topics/description (not deploy files — that is `deploy`).
+    Spelling variants of one signal count once."""
+    terms = {t.lower() for t in cfg.scoring.selfserve.onboarding_terms}
+    return {_concept(t) for t in _tokens(c) & terms}
 
 
 def is_messaging(c: Candidate, category: str, cfg: Config) -> bool:
