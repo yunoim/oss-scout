@@ -32,6 +32,10 @@
   ⚠️ 핵심 발견: 사전 등록 예산 5,000 토큰에서 **mix 의 최종 컨텍스트에 텍스트 청크가 0개**(그래프 컨텍스트가 예산을 다 씀) → mix 답 = hybrid 답 30/30 동일.
   즉 결과는 "8B·예산 5,000 조건에서 LightRAG 기본 모드는 그래프 전용으로 퇴화한다" 로 읽어야 한다. 예산을 늘린 재실험은 사전 등록 밖 — CEO 결정 사항.
   채점: Sonnet 블라인드(`grading/grades_sonnet.jsonl`) vs 메인 독립(`grades_main.jsonl`) 120건 대조, 불일치 2건, 최종은 메인(`grades.jsonl`).
+- **CEO-77 사후 추가 1회(2026-10-04, 사전 등록 밖) — 결론 같음, LightRAG 접음.** mix 에 청크가 들어가는 조건(개체·관계 상한 600/600, 예산 5,000·num_ctx 8,192 유지)으로 mix 만 재질의:
+  **mix 23/30 vs naive 22/30 = +3.3%p**(Sonnet 집계 +1.7%p) — 기준 +10%p 미달. 즉 청크를 넣어 주면 mix 는 naive 와 같은 수준이 되지만 그래프가 더해 주는 것은 없다.
+  CEO 지시의 '예산 12,000' 은 num_ctx 16,384 가 8GB VRAM 에서 80~89% GPU 로 떨어져(q8_0 KV+FA 로도) GPU 조건과 양립하지 않아 쓰지 못했다 — results.md '사후 추가' 절에 조건·근거.
+  스크립트: `query_post.py`(env 로 설정 덮어쓰기) · `blind_post.py` · `score_post.py`(results.md 에 절 추가). 교훈 2개: Ollama 서버를 죽일 때 `llama-server` 고아 프로세스가 VRAM 을 잡고 남는다(같이 죽일 것) · 서버 env(FA·KV 타입)는 앱 재시작으로만 바뀐다.
   **이 기기(IM-Desktop) 실행법**: `night.ps1 -Now -MinFree 5.0` 을 `MLPC_OWNER='D6 스카우터 desktop'` · `MLPC_OLLAMA_PRIVATE=1` · `MLPC_MAX_LLAMA_GB=16` 환경변수와 함께 띄운다
   (한글 인자를 powershell.exe 명령줄로 넘기면 깨져 `-Deadline` 에 들어간다 — env 로만). Ollama 0.35 앱은 모델 경로를 **앱 설정 DB**(`%LOCALAPPDATA%\Ollama\db.sqlite` settings.models)에서 읽고 사용자 env `OLLAMA_MODELS` 는 무시한다 — 10/4 에 D:\ollama\models 로 고쳤다.
   llama-server 호스트 RAM 은 qwen3+bge-m3 러너 합으로 8GB 까지 올라간다(mmap 꺼짐) — 노트북용 3GB 상한은 이 기기에 맞지 않는다.

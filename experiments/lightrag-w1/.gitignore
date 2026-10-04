@@ -6,3 +6,5 @@ night*.log
 index*.out
 index*.log
 watch.log
+post-*.log
+post-*.err

@@ -1,0 +1,122 @@
+{
+ "G01": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "G02": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "G03": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "G04": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "G05": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "L01": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "L02": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "L03": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "L04": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "L05": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "L06": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "L07": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "L08": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "L09": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "L10": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "L11": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "L12": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "L13": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "L14": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "L15": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "M01": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "M02": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "M03": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "M04": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "M05": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "M06": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "M07": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "M08": {
+  "A": "naive",
+  "B": "mix_post"
+ },
+ "M09": {
+  "A": "mix_post",
+  "B": "naive"
+ },
+ "M10": {
+  "A": "mix_post",
+  "B": "naive"
+ }
+}
