@@ -17,7 +17,9 @@ OWNER = os.environ.get("MLPC_OWNER", "github 스카우터")  # 잠금 소유자 
 OLLAMA_PRIVATE = os.environ.get("MLPC_OLLAMA_PRIVATE", "0") == "1"
 MIN_FREE_GB = float(os.environ.get("MLPC_MIN_FREE_START", "3.0"))  # 시작 조건(wiki hq/README.md). 10/3 22:12 CEO: 다른 창이 쉬면 2.4GB 도 허용
 MIN_FREE_RUN_GB = 2.0  # 실행 중 조건(10/3 CEO: 실행 중 여유 2GB 이상 유지)
-MAX_LLAMA_GB = 3.0     # qwen3:8b·8192 작업 중 정상치 2.07GB(10/3 실측, Ollama 가 Windows+CUDA 에서 mmap 을 이미 끈다). 멈춤 때는 5.3GB
+# qwen3:8b·8192 작업 중 정상치 2.07GB(10/3 노트북 16GB 실측, Ollama 가 Windows+CUDA 에서 mmap 을 이미 끈다). 멈춤 때는 5.3GB.
+# IM-Desktop(32GB) 은 100% GPU 인데도 3.22GB 로 찍혀 3.0 에 걸렸다(10/4 14:12) — 기기별로 넘긴다(IM-Desktop: 8)
+MAX_LLAMA_GB = float(os.environ.get("MLPC_MAX_LLAMA_GB", "3.0"))
 
 
 class Stop(Exception):
