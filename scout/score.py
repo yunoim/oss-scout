@@ -92,6 +92,19 @@ def plugin_dir(c: Candidate, cfg: Config) -> str | None:
     return None
 
 
+def _tokens(c: Candidate) -> set[str]:
+    return set(c.topics) | set(re.split(r"[^a-z0-9-]+", (c.description or "").lower()))
+
+
+def onboarding_hits(c: Candidate, cfg: Config) -> set[str]:
+    """Self-onboarding product signals in topics/description (not deploy files — that is `deploy`)."""
+    return _tokens(c) & {t.lower() for t in cfg.scoring.selfserve.onboarding_terms}
+
+
+def is_messaging(c: Candidate, category: str, cfg: Config) -> bool:
+    return category == "notification" or bool(set(c.topics) & set(cfg.scoring.korea.messaging_topics))
+
+
 def _scale(raw: float, raw_max: float, weight: int) -> float:
     if raw_max <= 0:
         return 0.0
@@ -225,8 +238,23 @@ def score_candidate(
         kr += kc.stripe_without_kr_pay
     if not sig.has_kr_login and (sig.auth_mentioned or sb.category in sc.models.saas_categories):
         kr += kc.no_kr_social_login
+    if is_messaging(c, sb.category, cfg) and not sig.has_kr_login:
+        kr += kc.no_kr_alimtalk
     sb.korea_points = kr
-    sb.components["korea"] = _scale(kr, kc.no_korean_locale + kc.stripe_without_kr_pay + kc.no_kr_social_login, W["korea"])
+    sb.components["korea"] = _scale(
+        kr, kc.no_korean_locale + kc.stripe_without_kr_pay + kc.no_kr_social_login + kc.no_kr_alimtalk, W["korea"])
+
+    # 8. self-serve subscription fit (CEO-119): a small business signs up and pays alone, no sales call
+    ss = sc.selfserve
+    ss_raw = ss.smb_category_points if sb.category in ss.smb_categories else 0
+    hits = onboarding_hits(c, cfg)
+    if len(hits) >= 2:
+        ss_raw += ss.onboarding_two_plus
+    elif hits:
+        ss_raw += ss.onboarding_one
+    sb.components["selfserve"] = _scale(ss_raw, ss.raw_max, W["selfserve"])
+    if hits:
+        notes.append(f"self-serve signals: {', '.join(sorted(hits))}")
 
     # deps unknown counts toward confidence
     if a.deps_system is None or (a.deps_checked and a.unknown_deps * 2 > a.deps_checked):
