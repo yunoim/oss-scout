@@ -34,6 +34,9 @@ def main() -> None:
     lines += ["", f"문항별 mix 대 naive: 승 {w} · 패 {l} · 무 {n - w - l}", "",
               "| 문항 | 범주 | " + " | ".join(MODES) + " |", "|---|---|" + "---:|" * len(MODES)]
     lines += [f"| {i} | {qs[i]['cat']} | " + " | ".join(f"{s[i][m]:g}" for m in MODES) + " |" for i in qs]
+    stats = HERE / "index_stats.md"  # 색인 통계·실행 조건 — 있으면 결과표 뒤에 붙인다
+    if stats.exists():
+        lines += ["", stats.read_text(encoding="utf-8").rstrip()]
     (HERE / "results.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines[:10]))
 
