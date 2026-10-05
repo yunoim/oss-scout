@@ -17,7 +17,7 @@ CEO-119 셀프서브 렌즈는 '개인·소상공인이 낼 수 있는 단가' �
 | emdash · Ackee | | — | — | — | 가격 없음(무료 오픈소스) — 맞음 |
 | suitenumerique/docs · uptime-kuma | | — | — | — | **판독 불가** — JS 로 그리는 페이지(HTML 2KB 안팎) |
 
-→ 스카우트 레포 9개(plausible 은 대조군이라 뺌) 중 **홈페이지만으로 맞은 것 6**(dittofeed · talivia · TaxHacker · emdash · Ackee + 가격 없음 판정), **가격 페이지 2단계가 필요한 것 1**(kaneo), **오탐 1**(Paymenter: 상거래·호스팅 **제품의 데모 가격**), **판독 불가 2**(SPA). 오탐은 commerce 카테고리에서 구조적으로 나온다.
+→ 스카우트 레포 9개(plausible 은 대조군이라 뺌) 중 **홈페이지만으로 맞은 것 5**(dittofeed · talivia · TaxHacker 는 가격, emdash · Ackee 는 가격 없음), **가격 페이지 2단계가 필요한 것 1**(kaneo), **오탐 1**(Paymenter: 상거래·호스팅 **제품의 데모 가격**), **판독 불가 2**(SPA). 오탐은 commerce 카테고리에서 구조적으로 나온다.
 
 ## 설계
 **대상**: 점수 상위 N(=30, `pricing.max_repos`) 중 GitHub `homepage` 필드가 있는 레포만. 채점 뒤, 수요 신호(demand)와 같은 자리에서 돈다(외부 HTTP 라 상위만).
