@@ -157,7 +157,7 @@ def test_non_public_hosts_are_blocked_before_any_request(cfg):
     import pytest
 
     for u in ("http://127.0.0.1/", "http://169.254.169.254/latest/meta-data/", "http://10.0.0.5/", "http://localhost/",
-              "https://example.com:8443/", "ftp://example.com/"):
+              "https://example.com:8443/", "ftp://example.com/", "http://example.com:abc/", "http://example.com:99999/"):
         with pytest.raises(Blocked):
             check_public_url(u)
     hit: list[str] = []

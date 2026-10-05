@@ -145,19 +145,27 @@ class Blocked(Exception):
     """URL refused before any request (non-public host, odd scheme/port)."""
 
 
+def _is_public_ip(addr: str) -> bool:
+    ip = ipaddress.ip_address(addr)
+    return ip.is_global and not ip.is_multicast
+
+
 def check_public_url(url: str) -> None:
-    p = urlparse(url)
+    try:
+        p = urlparse(url)
+        port = p.port  # raises ValueError on "host:abc" / out-of-range ports
+    except ValueError:
+        raise Blocked("잘못된 URL") from None
     if p.scheme not in ("http", "https") or not p.hostname:
         raise Blocked("http(s) 아님")
-    if p.port not in (None, 80, 443):
-        raise Blocked(f"포트 {p.port}")
+    if port not in (None, 80, 443):
+        raise Blocked(f"포트 {port}")
     try:
         infos = socket.getaddrinfo(p.hostname, p.port or (443 if p.scheme == "https" else 80), proto=socket.IPPROTO_TCP)
     except socket.gaierror:
         raise Blocked("DNS 실패") from None
     for info in infos:
-        ip = ipaddress.ip_address(info[4][0])
-        if not ip.is_global or ip.is_multicast:
+        if not _is_public_ip(info[4][0]):
             raise Blocked("공개 주소 아님")
 
 
@@ -175,6 +183,12 @@ class PricingFetcher:
         """One GET of a vetted public URL; body streamed and cut at MAX_BYTES. Returns (response, text)."""
         self._check_url(url)
         with self.client.stream("GET", url) as r:
+            # DNS can change between the check above and connect (rebinding): re-check the peer we actually reached
+            # before reading the body. MockTransport has no network stream -> skipped in tests.
+            stream = r.extensions.get("network_stream")
+            peer = stream.get_extra_info("server_addr") if stream is not None else None
+            if peer and not _is_public_ip(peer[0]):
+                raise Blocked("연결된 주소가 공개 주소 아님")
             buf = bytearray()
             for chunk in r.iter_bytes():
                 buf += chunk
@@ -202,7 +216,7 @@ class PricingFetcher:
                     rp.allow_all = True  # type: ignore[union-attr]
                 else:
                     rp.parse(body.splitlines())  # type: ignore[union-attr]
-            except (httpx.HTTPError, Blocked):
+            except (httpx.HTTPError, httpx.InvalidURL, Blocked, ValueError):
                 rp = None
             self._robots[host] = rp
         rp = self._robots[host]
@@ -236,7 +250,7 @@ class PricingFetcher:
                 except Blocked as e:
                     sig.note = f"차단: {e}"
                     return None
-                except httpx.HTTPError as e:
+                except (httpx.HTTPError, httpx.InvalidURL, ValueError) as e:
                     sig.note = f"요청 실패: {type(e).__name__}"
                     return None
                 if r.is_redirect and r.headers.get("location"):
