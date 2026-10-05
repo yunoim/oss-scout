@@ -150,6 +150,8 @@ class NotionSink:
             notes = f"EXCLUDED: {s.exclusion_reason}"
         elif s.next_action:
             notes += f" | 다음: {s.next_action}"
+        if e.pricing and not s.excluded:
+            notes += f" | 가격: {e.pricing.label()}"
         if a.copyleft_deps:
             notes += f" | copyleft_deps: {', '.join(a.copyleft_deps[:5])}"
         props = {

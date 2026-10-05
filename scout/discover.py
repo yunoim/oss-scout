@@ -29,6 +29,7 @@ class Candidate(BaseModel):
     topics: list[str] = []
     default_branch: str = "main"
     license_spdx: str | None = None
+    homepage: str | None = None
     # enrichment
     root_files: list[str] = []
     root_dirs: list[str] = []
@@ -72,6 +73,7 @@ def candidate_from_api(item: dict) -> Candidate:
         topics=[t.lower() for t in (item.get("topics") or [])],
         default_branch=item.get("default_branch") or "main",
         license_spdx=lic.get("spdx_id") if isinstance(lic, dict) else None,
+        homepage=(item.get("homepage") or "").strip() or None,
     )
 
 

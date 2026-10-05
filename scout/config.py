@@ -177,6 +177,15 @@ class DemandConfig(BaseModel):
     keywords: list[str] = ["korean", "한국어", "korea", "kakao", "naver", "toss"]
 
 
+class PricingConfig(BaseModel):
+    """CEO-157 pricing-page signal. Display only in v1 (no score effect). Network limits live in scout/pricing.py."""
+    enabled: bool = True
+    max_repos: int = 30                 # top-N passed entries by score (external HTTP -> keep small)
+    selfserve_max_usd: float = 50.0     # lowest monthly price at or under this = self-serve small-business price
+    fx: dict[str, float] = {"$": 1.0, "€": 1.1, "£": 1.27, "₩": 0.00073}  # rough, fixed (no live rates)
+    home_price_ignored_categories: list[str] = ["commerce"]  # homepage prices may be the product's demo shop
+
+
 class ReportConfig(BaseModel):
     top_n: int = 15
     mail_top_n: int = 10
@@ -196,6 +205,7 @@ class Config(BaseModel):
     known_flags: dict[str, str] = {}
     scoring: ScoringConfig
     demand: DemandConfig = DemandConfig()
+    pricing: PricingConfig = PricingConfig()
     report: ReportConfig = ReportConfig()
     state: StateConfig = StateConfig()
 
