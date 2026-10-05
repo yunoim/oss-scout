@@ -20,11 +20,13 @@ def test_weights_sum_to_100(cfg):
 def test_perfect_candidate_hits_100(cfg):
     from scout.market import MarketSignals
 
+    # CEO-119: the perfect candidate is a small-business messaging SaaS (business buyer), not enterprise infra
     c = make_candidate(stars=200_000, contributors=500, open_issues=0, language="Go",
-                       topics=["analytics", "observability", "self-hosted"],
+                       topics=["notifications", "sms", "saas", "multi-tenant", "self-hosted"],
+                       description="Self-hosted notification platform with workspaces and billing",
                        root_files=["README.md", "LICENSE", "Dockerfile", "docker-compose.yml", ".env.example", "go.mod"])
     sb = score_candidate(c, _ok_audit(), cfg, prev_stars=("2026-W38", 150_000), is_new=False, now=NOW,
-                         market=MarketSignals(breadth="enterprise", naver_total=10_000))
+                         market=MarketSignals(breadth="business", naver_total=10_000))
     assert sb.total == 100
     assert sb.confidence == "normal"
     assert sb.unknowns == []
@@ -111,6 +113,57 @@ def test_korea_points_and_models(cfg):
     assert "managed-hosting" in sb.models and "korean-localization" in sb.models
     a_kr = _ok_audit(signals=Signals(korean_locale=True, has_stripe=True, has_kr_pay=True, has_kr_login=True, auth_mentioned=True))
     assert score_candidate(c, a_kr, cfg, now=NOW).korea_points == 0
+
+
+def test_selfserve_weight_loaded_from_real_config(cfg):
+    # a mistyped `selfserve:` block would be silently dropped by pydantic -> guard the real config.yaml
+    assert cfg.scoring.weights["selfserve"] > 0
+    assert "booking" in cfg.scoring.selfserve.smb_categories and cfg.scoring.korea.no_kr_alimtalk > 0
+    bp = cfg.scoring.market.breadth_points
+    assert bp["business"] == max(bp.values()) and bp["enterprise"] < bp["business"]
+
+
+def test_selfserve_component(cfg):
+    plain = make_candidate(topics=["booking"], description="Appointment booking")
+    saas = make_candidate(topics=["booking", "saas", "multi-tenant"], description="Appointment booking")
+    one = make_candidate(topics=["booking", "saas"], description="Appointment booking")
+    infra = make_candidate(topics=["monitoring", "saas", "multi-tenant"], description="Uptime monitoring")
+    ss = cfg.scoring.selfserve
+    w = cfg.scoring.weights["selfserve"]
+    assert score_candidate(plain, _ok_audit(), cfg, now=NOW).components["selfserve"] == round(ss.smb_category_points / ss.raw_max * w, 2)
+    assert score_candidate(saas, _ok_audit(), cfg, now=NOW).components["selfserve"] == w
+    assert score_candidate(one, _ok_audit(), cfg, now=NOW).components["selfserve"] == round((ss.smb_category_points + ss.onboarding_one) / ss.raw_max * w, 2)
+    # monitoring is not a small-business category: onboarding signals alone
+    assert score_candidate(infra, _ok_audit(), cfg, now=NOW).components["selfserve"] == round(ss.onboarding_two_plus / ss.raw_max * w, 2)
+
+
+def test_onboarding_variants_count_once(cfg):
+    from scout.score import onboarding_hits
+
+    one = make_candidate(topics=["workspace", "multi-tenant"], description="Shared workspaces, multitenant by default")
+    assert onboarding_hits(one, cfg) == {"workspace", "multitenant"}
+    assert len(onboarding_hits(make_candidate(topics=["subscription"], description="subscriptions"), cfg)) == 1
+
+
+def test_enterprise_and_devtool_score_below_identical_business_repo(cfg):
+    from scout.market import MarketSignals
+
+    c = make_candidate(topics=["crm"], description="Open source CRM")
+    biz = score_candidate(c, _ok_audit(), cfg, now=NOW, market=MarketSignals(breadth="business")).total
+    ent = score_candidate(c, _ok_audit(), cfg, now=NOW, market=MarketSignals(breadth="enterprise")).total
+    dev = score_candidate(c, _ok_audit(), cfg, now=NOW, market=MarketSignals(breadth="devtool")).total
+    assert biz > ent and biz > dev
+
+
+def test_alimtalk_gap_only_for_messaging_without_kakao(cfg):
+    msg = make_candidate(topics=["sms", "notifications"], description="Messaging platform")
+    other = make_candidate(topics=["analytics"], description="Analytics dashboard")
+    kc = cfg.scoring.korea
+    base = kc.no_korean_locale + kc.stripe_without_kr_pay + kc.no_kr_social_login
+    assert score_candidate(msg, _ok_audit(), cfg, now=NOW).korea_points == base + kc.no_kr_alimtalk
+    assert score_candidate(other, _ok_audit(), cfg, now=NOW).korea_points == base
+    kakao = _ok_audit(signals=Signals(korean_locale=False, has_stripe=True, has_kr_pay=False, has_kr_login=True, auth_mentioned=True))
+    assert score_candidate(msg, kakao, cfg, now=NOW).korea_points == kc.no_korean_locale + kc.stripe_without_kr_pay
 
 
 def test_category_detection_and_models(cfg):

@@ -133,11 +133,13 @@ class NotionSink:
                 props = page.get("properties") or {}
                 status = ((props.get("Status") or {}).get("select") or {}).get("name")
                 first_seen = ((props.get("First Seen") or {}).get("date") or {}).get("start")
-                self._pages[name.lower()] = {"id": page["id"], "status": status, "first_seen": first_seen}
+                self._pages[name.lower()] = {"id": page["id"], "status": status, "first_seen": first_seen, "name": name}
             if not resp.get("has_more"):
                 break
             cursor = resp.get("next_cursor")
-        return {n: p["status"] for n, p in self._pages.items() if p.get("status")}
+        # original-case title: report filtering and State.set_status match on full_name as GitHub spells it
+        # (W41: lowercased keys let Rejected vas3k/TaxHacker back into the Top 15)
+        return {p.get("name", n): p["status"] for n, p in self._pages.items() if p.get("status")}
 
     # ------------------------------------------------------------ write
     def _properties(self, e: Entry, week: str, first_seen: str | None, set_status: bool) -> dict:

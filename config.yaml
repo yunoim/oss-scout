@@ -101,16 +101,18 @@ scoring:
   # Max points per component. Must sum to 100.
   weights:
     license: 10   # gate is the exclusion list; restricted terms also take license.restricted_penalty off the total
-    activity: 15
+    activity: 10  # 2026-10-05 CEO-119: 15 -> 10
     popularity: 10
-    community: 10
-    deploy: 15
+    community: 5  # 2026-10-05 CEO-119: 10 -> 5
+    deploy: 10    # 2026-10-05 CEO-119: 15 -> 10
     category: 10
-    market: 20    # 2026-09-30: +10 from license (buyer breadth first)
+    market: 15    # 2026-09-30: +10 from license (buyer breadth first) · 2026-10-05 CEO-119: 20 -> 15
     korea: 10
+    selfserve: 20 # 2026-10-05 CEO-119: lens = self-serve subscription for small businesses / individuals
   # Market breadth: who pays for this in Korea, and how many of them exist.
+  # 2026-10-05 CEO-119: business is the top buyer now; enterprise/devtool (sales-led, infra) dropped to 2/1.
   market:
-    breadth_points: {narrow: 1, consumer: 2, devtool: 3, business: 5, enterprise: 6}
+    breadth_points: {narrow: 1, consumer: 3, devtool: 1, business: 6, enterprise: 2}
     # Naver mention counts (blog+cafe+news, query "<name> github") are collected and shown as `KR Mentions`
     # but weighted 0: measured 2026-W39, common-word names (docs, content, prest) hit 10k-30k while genuinely
     # known tools (ClickHouse 150, uptime-kuma 16) under-matched. Raise awareness_points once a query form is
@@ -190,11 +192,23 @@ scoring:
       devtool: [cli, devops, ci, ci-cd, developer-tools, testing, linter, sdk, terminal, kubernetes, docker, deployment, api-gateway, proxy,
                 llm-gateway, ai-gateway, openai-proxy, reverse-proxy, inference]
       lib: [library, framework, component, components, ui-components, react-components, plugin, hooks, utility, utils]
+  # Self-serve subscription fit (CEO-119). No pricing-page check yet: "affordable to a small business" is a proxy
+  # from market breadth + these small-business categories. Onboarding = product signals in topics/description.
+  selfserve:
+    smb_categories: [booking, invoice, crm, commerce, cms, notification, internal-tools, analytics]
+    smb_category_points: 5
+    onboarding_terms: [saas, multi-tenant, multitenant, multitenancy, workspace, workspaces, teams, subscription,
+                       subscriptions, billing, white-label, whitelabel, signup, onboarding]
+    onboarding_one: 3
+    onboarding_two_plus: 5
   korea:
     no_korean_locale: 4
     unknown_korean_locale: 2  # no i18n dir found != confirmed no Korean; W40 top 15 were all 'unknown' at full 4
     stripe_without_kr_pay: 3
     no_kr_social_login: 3
+    # 2026-10-05 CEO-119: messaging product without any kakao/naver mention -> 알림톡 gap (loose proxy: reuses has_kr_login).
+    no_kr_alimtalk: 2
+    messaging_topics: [sms, messaging, notifications, push-notifications, transactional-emails, alimtalk]
     i18n_dirs: [locales, locale, i18n, lang, langs, languages, messages, translations, translation,
                 public/locales, public/lang, public/i18n, public/intl, public/intl/messages, public/static/locales, src/locales, src/locale, src/i18n, src/lang, src/langs,
                 src/translations, src/messages, app/locales, assets/i18n, resources/lang, frontend/src/locales,

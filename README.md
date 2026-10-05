@@ -98,18 +98,19 @@ discover ──▶ audit ──▶ score ──▶ report.md ──▶ state.jso
 5. **report** — 요약 · Top 15 · 신규 진입 · 급상승 · 한국 수요 신호 · 제외 목록 · 상세 카드(점수 분해·다음 액션).
 6. **sinks** — Notion(`Status` 는 덮어쓰지 않음, `Rejected` 는 다음 주 Top 15 에서 제외) · Gmail.
 
-### 점수 (기본 가중치)
+### 점수 (기본 가중치 — 2026-10-05 CEO-119 '셀프서브 구독형' 렌즈)
 
 | 항목 | 최대 | 산식 |
 |---|---:|---|
-| 라이선스 청결도 | 20 | ok 20 · unknown 8 · `restricted_terms`/`copyleft_deps` 0 · `ee_dir` −5 |
-| 활성도 | 15 | push ≤14일 10 + 90일 내 릴리즈 5 |
+| 라이선스 청결도 | 10 | ok 20 · unknown 8 · `restricted_terms`/`copyleft_deps` 0 · `ee_dir` −5 (20점 원점수를 10점으로 환산, 제한 문구는 총점에서 −10 더) |
+| 활성도 | 10 | push ≤14일 10 + 90일 내 릴리즈 5 |
 | 인기·모멘텀 | 10 | log10(stars) 정규화 8 + 주간 star 증가율 7 (히스토리 없는 첫 주는 stars 만으로 환산) |
-| 커뮤니티 건강 | 10 | 컨트리뷰터 ≥20 5 + open_issues/stars 비율 낮을수록 5 |
-| 배포 용이성 | 15 | Dockerfile 5 + compose 5 + helm/k8s 또는 .env.example 3 + Go/Rust 단일 바이너리 2 |
+| 커뮤니티 건강 | 5 | 컨트리뷰터 ≥20 5 + open_issues/stars 비율 낮을수록 5 |
+| 배포 용이성 | 10 | Dockerfile 5 + compose 5 + helm/k8s 또는 .env.example 3 + Go/Rust 단일 바이너리 2 |
 | 카테고리 시장성 | 10 | analytics/crm/commerce/cms/booking/invoice/notification/monitoring/llm-workflow/internal-tools 15 · devtool/lib 5 · 기타 8 (10점으로 환산) |
-| **시장 규모** | 10 | **구매자 폭** 0~6: 개인·크리에이터용(newsletter/blog/homelab…) 1 · 소비자 2 · 개발도구 3(pip/npm 패키지인데 Dockerfile·compose·UI 없으면 여기) · 모든 사업체 5 · 기업 인프라(observability/database/security…) 6. **네이버 언급 수**는 수집해 `KR Mentions` 로 보여주지만 가중치 0 (2026-W39 측정: 일반 단어 이름이 1~3만 건으로 부풀고 ClickHouse 150 · uptime-kuma 16 으로 과소. 검색어 보정 뒤 `awareness_points` 로 켬) |
-| 한국 기회 | 10 | ko 로케일 없음 +4 · stripe 만 있고 toss/kakao 없음 +3 · 카카오/네이버 로그인 없음 +3 (README 에 로그인/OAuth 언급 또는 SaaS 계열 카테고리일 때만) |
+| **시장 규모** | 15 | **구매자 폭** 0~6: 개인·크리에이터용(newsletter/blog/homelab…) 1 · 개발도구 1 · 기업 인프라(observability/database/security…) 2 · 소비자 3 · **모든 사업체 6**. 2026-10-05 부터 기업·인프라는 영업 주도 판매라 낮춘다. **네이버 언급 수**는 수집해 `KR Mentions` 로 보여주지만 가중치 0 (2026-W39 측정: 일반 단어 이름이 1~3만 건으로 부풀고 ClickHouse 150 · uptime-kuma 16 으로 과소. 검색어 보정 뒤 `awareness_points` 로 켬) |
+| 한국 기회 | 10 | ko 로케일 없음 +4 · stripe 만 있고 toss/kakao 없음 +3 · 카카오/네이버 로그인 없음 +3 (README 에 로그인/OAuth 언급 또는 SaaS 계열 카테고리일 때만) · 메시징 제품(notification 카테고리 또는 sms/messaging 토픽)인데 카카오 언급 없음 → 알림톡 공백 +2 (카카오/네이버 언급 여부로 근사) |
+| **셀프서브 구독 적합** | 20 | 소상공인 카테고리(booking/invoice/crm/commerce/cms/notification/internal-tools/analytics) 5 + 셀프 온보딩 신호(토픽·설명의 saas/multi-tenant/workspace/teams/subscription/billing/white-label/signup/onboarding — 1개 3, 2개 이상 5). 가격 페이지는 아직 안 본다 — '소상공인이 낼 수 있는 단가' 는 구매자 폭 + 카테고리로 근사 |
 
 보정: copyleft/제한 라이선스 · known_traps → **0점 + excluded**. 미확인 항목(license/contributors/releases/deps/korea) 3개 이상 → `confidence: low`.
 

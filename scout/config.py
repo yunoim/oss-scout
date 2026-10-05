@@ -106,11 +106,29 @@ class MarketScoreConfig(BaseModel):
         return max(self.breadth_points.values())
 
 
+class SelfServeScoreConfig(BaseModel):
+    """Fit for a self-serve subscription product sold to small businesses and individuals (CEO-119, 2026-10-05)."""
+    smb_categories: list[str] = ["booking", "invoice", "crm", "commerce", "cms", "notification", "internal-tools", "analytics"]
+    smb_category_points: int = 5
+    # Product signals (topics / description tokens) that a customer can sign up and run a workspace alone.
+    onboarding_terms: list[str] = ["saas", "multi-tenant", "multitenant", "multitenancy", "workspace", "workspaces", "teams",
+                                   "subscription", "subscriptions", "billing", "white-label", "whitelabel", "signup", "onboarding"]
+    onboarding_one: int = 3
+    onboarding_two_plus: int = 5
+
+    @property
+    def raw_max(self) -> int:
+        return self.smb_category_points + max(self.onboarding_one, self.onboarding_two_plus)
+
+
 class KoreaScoreConfig(BaseModel):
     no_korean_locale: int = 4
     unknown_korean_locale: int = 4  # locale could not be determined (no i18n dir found, not confirmed absent)
     stripe_without_kr_pay: int = 3
     no_kr_social_login: int = 3
+    # Messaging products without a Kakao mention -> 알림톡 gap. Proxy: `has_kr_login` (any kakao/naver mention) is reused.
+    no_kr_alimtalk: int = 0
+    messaging_topics: list[str] = ["sms", "messaging", "notifications", "push-notifications", "transactional-emails", "alimtalk"]
     i18n_dirs: list[str]
     korean_locale_markers: list[str]
     max_i18n_listings: int = 4
@@ -133,13 +151,14 @@ class ScoringConfig(BaseModel):
     deploy: DeployScoreConfig = DeployScoreConfig()
     category: CategoryScoreConfig
     market: MarketScoreConfig = MarketScoreConfig()
+    selfserve: SelfServeScoreConfig = SelfServeScoreConfig()
     korea: KoreaScoreConfig
     models: ModelsConfig
     confidence_low_unknowns: int = 3
 
     @model_validator(mode="after")
     def _weights_sum_100(self) -> "ScoringConfig":
-        required = {"license", "activity", "popularity", "community", "deploy", "category", "market", "korea"}
+        required = {"license", "activity", "popularity", "community", "deploy", "category", "market", "korea", "selfserve"}
         missing = required - set(self.weights)
         if missing:
             raise ValueError(f"scoring.weights missing: {sorted(missing)}")
