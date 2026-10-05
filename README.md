@@ -96,6 +96,7 @@ discover ──▶ audit ──▶ score ──▶ report.md ──▶ state.jso
    반자동 영업의 리드 소스입니다. 공개 이슈에 답글을 다는 것은 스팸 규제와 무관합니다.
    `python -m scout.main demand owner/repo` 로 단일 조회. `demand.enabled: false` 또는 `--no-demand` 로 끔.
 5. **report** — 요약 · Top 15 · 신규 진입 · 급상승 · 한국 수요 신호 · 제외 목록 · 상세 카드(점수 분해·다음 액션).
+5-1. **pricing** (CEO-157, v1 표시만) — 점수 상위 30 의 GitHub homepage·가격 페이지를 읽어 `selfserve`(최저가 ≤ $50/월) · `pricey` · `sales` · `no_price` · `unknown` 판정. 리포트 카드·Notion Notes 에 한 줄, 점수 무관. 식별 UA·재시도 없음·레포당 2페이지·robots.txt·공개 주소만·2MB 상한은 코드 상수. 설계 `docs/design/pricing-signal.md`
 6. **sinks** — Notion(`Status` 는 덮어쓰지 않음, `Rejected` 는 다음 주 Top 15 에서 제외) · Gmail.
 
 ### 점수 (기본 가중치 — 2026-10-05 CEO-119 '셀프서브 구독형' 렌즈)

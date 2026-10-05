@@ -1,6 +1,6 @@
 # 설계안 — 가격 페이지 판독 (HANDOFF 2번 · CEO-119 후속)
 
-갱신 2026-10-05 · 상태: **설계안(CEO 승인 전, 코드 없음)**
+갱신 2026-10-05 · 상태: **구현됨 v1(표시만) — CEO-157**
 
 ## 왜
 CEO-119 셀프서브 렌즈는 '개인·소상공인이 낼 수 있는 단가' 를 **구매자 폭 + 카테고리로 근사**한다. 실제로 그 단가에 파는 사람이 있는지(= 셀프서브 구독 시장이 이미 검증됐는지)는 보지 않는다. 가격표를 직접 읽어 이 근사를 사실로 바꾼다.
@@ -73,3 +73,22 @@ CEO-119 셀프서브 렌즈는 '개인·소상공인이 낼 수 있는 단가' �
 1. 점수 반영 크기(±3 / 원점수 13) — 아니면 **v1 은 표시만, 점수 반영은 2주 관찰 뒤**(권장: 표시만 먼저. 상위 30 에만 있는 신호라 순위를 흔들기 전에 정확도부터 본다)
 2. `selfserve_max_usd` = 50/월
 3. 대상 상위 30
+
+## 구현 결과 (CEO-157, 2026-10-05)
+CEO 승인: ① v1 표시만(2주 관찰 뒤 점수 반영) ② 50달러/월 ③ 상위 30 + 조건: robots.txt 가 막으면 `unknown`, 식별 UA · 재시도 없음 · 레포당 페이지 요청 2회를 코드 상수로 고정.
+- 구현: `scout/pricing.py` · 리포트 카드 '가격(표시만, 점수 무관)' 한 줄 · Notion `Notes` 끝 `| 가격: …` (스키마 변경 없음) · `--no-pricing` 로 끈다
+- 코드 리뷰·보안 리뷰에서 더한 것: 리다이렉트를 직접 따라가며 **매 홉 robots.txt 확인**(최대 3홉) · **공개 주소만**(http/https, 포트 80/443, 사설·루프백·링크로컬·예약 IP 거부 — homepage 는 임의 레포 메타데이터이고 Actions 에서 돈다) · 본문 **2MB 에서 자름**
+- 테스트 17건(설계 10 + 연간 환산 + 네트워크 정책 + 리다이렉트 robots 2 + 비공개 주소 + 크기 상한 + homepage 없음)
+
+### 실측 9개 재판독 (10/5 실네트워크, 구현 코드)
+| 레포 | 카테고리 | 홈페이지 | 판정 | 최저 $/월 | 근거 페이지 | 요청 | 설계 때 실측과 |
+|---|---|---|---|---:|---|---:|---|
+| dittofeed | notification | dittofeed.com | `pricey` | 75 | www.dittofeed.com/pricing | 2 | 같음(영업 문구보다 가격 우선) |
+| talivia | analytics | talivia.com | `selfserve` | 9.99 | talivia.com | 2 | 같음 |
+| TaxHacker | invoice | taxhacker.app | `selfserve` | 11 (€10) | taxhacker.app | 1 | 같음 |
+| kaneo | internal-tools | kaneo.app | `selfserve` | 3.33 ($40/년) | kaneo.app/pricing | 2 | **2단계로 해결** |
+| Paymenter | commerce | paymenter.org | `no_price` | — | — | 1 | **오탐 제거**(홈의 $5/mo 는 데모 상점) |
+| emdash | cms | emdashcms.com | `no_price` | — | — | 1 | 같음 |
+| Ackee | analytics | ackee.electerious.com | `no_price` | — | — | 1 | 같음 |
+| suitenumerique/docs | cms | docs.la-suite.eu | `no_price` | — | — | 1 | **판독 가능해짐**(레포 homepage 가 SPA 주소에서 바뀜) |
+| uptime-kuma | monitoring | uptime.kuma.pet | `unknown` | — | — | 1 | 같음(JS 렌더링) |

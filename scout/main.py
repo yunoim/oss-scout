@@ -67,6 +67,8 @@ def cmd_run(args: argparse.Namespace, cfg: Config, env: Env) -> int:
                      a.spdx or "?", " EXCLUDED" if sb.excluded else "")
         if cfg.demand.enabled and not args.no_demand:
             _collect_demand(client, cfg, entries, now)
+        if cfg.pricing.enabled and not args.no_pricing:
+            _collect_pricing(cfg, entries)
         log.info("api calls=%d etag hits=%d", client.requests_made, client.cache.hits)
     finally:
         client.close()
@@ -175,6 +177,26 @@ def _collect_demand(client: GitHubClient, cfg: Config, entries: list[Entry], now
     log.info("demand signals done: %d/%d repos have Korea-related issues/PRs", hits, len(targets))
 
 
+def _collect_pricing(cfg: Config, entries: list[Entry]) -> None:
+    """CEO-157: read the top-N homepages/pricing pages (display only, no score effect)."""
+    from .pricing import PricingFetcher
+
+    targets = sorted((e for e in entries if not e.score.excluded), key=lambda e: e.score.total, reverse=True)[: cfg.pricing.max_repos]
+    fetcher = PricingFetcher()
+    tiers: dict[str, int] = {}
+    try:
+        for e in targets:
+            try:
+                e.pricing = fetcher.fetch(e.candidate.full_name, e.candidate.homepage, e.score.category, cfg)
+            except Exception as ex:  # noqa: BLE001 — a pricing failure must never fail the weekly run
+                log.warning("pricing failed for %s: %s", e.candidate.full_name, ex)
+                continue
+            tiers[e.pricing.tier] = tiers.get(e.pricing.tier, 0) + 1
+    finally:
+        fetcher.close()
+    log.info("pricing done: %s", " · ".join(f"{k} {v}" for k, v in sorted(tiers.items())) or "none")
+
+
 def cmd_demand(args: argparse.Namespace, cfg: Config, env: Env) -> int:
     from .demand import fetch_signals
 
@@ -242,6 +264,7 @@ def build_parser() -> argparse.ArgumentParser:
     r.add_argument("--no-notion", action="store_true")
     r.add_argument("--no-mail", action="store_true")
     r.add_argument("--no-demand", action="store_true", help="skip Korea demand-signal issue search")
+    r.add_argument("--no-pricing", action="store_true", help="skip the homepage/pricing-page check (CEO-157)")
     r.set_defaults(func=cmd_run)
 
     d = sub.add_parser("demand", help="Korea demand signals (issues/PRs) for a single owner/repo")

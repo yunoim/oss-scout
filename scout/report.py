@@ -7,6 +7,7 @@ from datetime import datetime
 from .audit import AuditResult
 from .config import Config
 from .demand import DemandSignals
+from .pricing import PricingSignal
 from .discover import Candidate
 from .score import ScoreBreakdown
 
@@ -17,6 +18,7 @@ class Entry:
     audit: AuditResult
     score: ScoreBreakdown
     demand: DemandSignals | None = None
+    pricing: PricingSignal | None = None
 
     @property
     def signals(self) -> int:
@@ -157,6 +159,8 @@ def detail_card(rank: int, e: Entry) -> str:
         d = e.demand
         lines.append(f"- **한국 수요 신호**: 이슈 {d.issues} (open {d.open_issues}) · PR {d.prs} · 최근 1년 {d.recent}"
                      + (" · " + " · ".join(f"[{i.title[:40]}]({i.url})" for i in d.top[:2]) if d.top else ""))
+    if e.pricing:
+        lines.append(f"- **가격(표시만, 점수 무관)**: {e.pricing.label()}")
     if s.unknowns:
         lines.append(f"- **미확인 항목**: {', '.join(s.unknowns)}")
     lines.append(f"- **다음 액션**: {s.next_action}")
