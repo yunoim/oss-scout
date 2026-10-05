@@ -4,13 +4,19 @@ v1 is display only (report card + Notion Notes); it does not touch the score unt
 Design: docs/design/pricing-signal.md.
 
 Network rules are fixed in code, not config (CEO condition):
-- identifying User-Agent, no retries, at most MAX_PAGE_REQUESTS page GETs per repo
+- identifying User-Agent, no retries, at most MAX_PAGE_REQUESTS page GETs per repo (a page may follow up to
+  MAX_REDIRECTS redirect hops; each hop is checked against robots.txt before it is requested)
+- public hosts only: every hop must be http(s) on port 80/443 and resolve to public IPs (no loopback, private,
+  link-local or reserved — the homepage URL comes from arbitrary GitHub repo metadata and this runs on Actions)
+- bodies are streamed and cut at MAX_BYTES
 - robots.txt is honoured: a disallowed path -> tier `unknown`. robots.txt itself is fetched once per host per run
   (cached across repos) and is not counted as a page request.
 """
 from __future__ import annotations
 
 import html as htmllib
+import ipaddress
+import socket
 import logging
 import re
 from typing import Literal
@@ -26,7 +32,9 @@ log = logging.getLogger(__name__)
 
 USER_AGENT = "oss-scout/1.0 (+https://github.com/yunoim/oss-scout; weekly pricing check)"
 MAX_PAGE_REQUESTS = 2   # homepage + one pricing page
+MAX_REDIRECTS = 3       # per page; every hop is robots-checked before it is requested
 TIMEOUT_S = 10.0
+MAX_BYTES = 2_000_000    # stop reading a body after this (pages and robots.txt)
 MIN_TEXT_CHARS = 600    # less visible text than this = JS-rendered shell (SPA) -> unreadable
 
 Tier = Literal["selfserve", "pricey", "sales", "no_price", "unknown"]
@@ -133,14 +141,47 @@ def classify(home_text: str | None, pricing_text: str | None, category: str, cfg
 
 
 # ------------------------------------------------------------------ network
+class Blocked(Exception):
+    """URL refused before any request (non-public host, odd scheme/port)."""
+
+
+def check_public_url(url: str) -> None:
+    p = urlparse(url)
+    if p.scheme not in ("http", "https") or not p.hostname:
+        raise Blocked("http(s) 아님")
+    if p.port not in (None, 80, 443):
+        raise Blocked(f"포트 {p.port}")
+    try:
+        infos = socket.getaddrinfo(p.hostname, p.port or (443 if p.scheme == "https" else 80), proto=socket.IPPROTO_TCP)
+    except socket.gaierror:
+        raise Blocked("DNS 실패") from None
+    for info in infos:
+        ip = ipaddress.ip_address(info[4][0])
+        if not ip.is_global or ip.is_multicast:
+            raise Blocked("공개 주소 아님")
+
+
 class PricingFetcher:
     """One per run. Holds the HTTP client and the per-host robots.txt cache."""
 
-    def __init__(self, transport: httpx.BaseTransport | None = None):
+    def __init__(self, transport: httpx.BaseTransport | None = None, check_url=check_public_url):
         # transport retries stay at httpx's default of 0; no tenacity here on purpose (CEO condition: no retries)
-        self.client = httpx.Client(timeout=TIMEOUT_S, follow_redirects=True, transport=transport,
+        self.client = httpx.Client(timeout=TIMEOUT_S, follow_redirects=False, transport=transport,
                                    headers={"User-Agent": USER_AGENT, "Accept": "text/html"})
         self._robots: dict[str, RobotFileParser | None] = {}
+        self._check_url = check_url  # tests inject a no-op (MockTransport hosts don't resolve)
+
+    def _get(self, url: str) -> tuple[httpx.Response, str]:
+        """One GET of a vetted public URL; body streamed and cut at MAX_BYTES. Returns (response, text)."""
+        self._check_url(url)
+        with self.client.stream("GET", url) as r:
+            buf = bytearray()
+            for chunk in r.iter_bytes():
+                buf += chunk
+                if len(buf) >= MAX_BYTES:
+                    break
+            text = bytes(buf[:MAX_BYTES]).decode(r.encoding or "utf-8", errors="replace")
+        return r, text
 
     def close(self) -> None:
         self.client.close()
@@ -152,7 +193,7 @@ class PricingFetcher:
         if host not in self._robots:
             rp: RobotFileParser | None = RobotFileParser()
             try:
-                r = self.client.get(f"{host}/robots.txt")
+                r, body = self._get(f"{host}/robots.txt")
                 if r.status_code in (401, 403):
                     rp.disallow_all = True  # type: ignore[union-attr]
                 elif r.status_code >= 500:
@@ -160,8 +201,8 @@ class PricingFetcher:
                 elif r.status_code >= 400:
                     rp.allow_all = True  # type: ignore[union-attr]
                 else:
-                    rp.parse(r.text.splitlines())  # type: ignore[union-attr]
-            except httpx.HTTPError:
+                    rp.parse(body.splitlines())  # type: ignore[union-attr]
+            except (httpx.HTTPError, Blocked):
                 rp = None
             self._robots[host] = rp
         rp = self._robots[host]
@@ -173,35 +214,56 @@ class PricingFetcher:
             sig.note = "homepage 없음"
             return sig
 
-        def get(url: str) -> httpx.Response | None:
+        def get(url: str) -> tuple[httpx.Response, str] | None:
             if sig.requests >= MAX_PAGE_REQUESTS:
                 raise RuntimeError("page request cap reached")  # guards future edits; never hit by the flow below
-            allowed = self._robots_allows(url)
-            if allowed is not True:
-                sig.note = "robots.txt 차단" if allowed is False else "robots.txt 못 읽음"
-                return None
-            sig.requests += 1
-            try:
-                r = self.client.get(url)
-            except httpx.HTTPError as e:
-                sig.note = f"요청 실패: {type(e).__name__}"
-                return None
-            if r.status_code >= 400 or "html" not in r.headers.get("content-type", "html"):
-                sig.note = f"HTTP {r.status_code}"
-                return None
-            return r
+            counted = False
+            for _ in range(MAX_REDIRECTS + 1):
+                allowed = self._robots_allows(url)
+                if allowed is not True:
+                    sig.note = "robots.txt 차단" if allowed is False else "robots.txt 못 읽음"
+                    return None
+                try:
+                    self._check_url(url)  # refuse non-public hosts before counting or requesting anything
+                except Blocked as e:
+                    sig.note = f"차단: {e}"
+                    return None
+                if not counted:  # a page counts once, when its first hop is actually requested
+                    sig.requests += 1
+                    counted = True
+                try:
+                    r, body = self._get(url)
+                except Blocked as e:
+                    sig.note = f"차단: {e}"
+                    return None
+                except httpx.HTTPError as e:
+                    sig.note = f"요청 실패: {type(e).__name__}"
+                    return None
+                if r.is_redirect and r.headers.get("location"):
+                    url = urljoin(str(r.url), r.headers["location"])
+                    if not url.startswith(("http://", "https://")):
+                        sig.note = "이상한 리다이렉트"
+                        return None
+                    continue
+                if r.status_code >= 400 or "html" not in r.headers.get("content-type", "html"):
+                    sig.note = f"HTTP {r.status_code}"
+                    return None
+                return r, body
+            sig.note = "리다이렉트 너무 많음"
+            return None
 
         home = get(homepage)
         if home is None:
             return sig
-        home_url = str(home.url)
-        plink = pricing_link(home.text, home_url)
+        home_r, home_html = home
+        home_url = str(home_r.url)
+        plink = pricing_link(home_html, home_url)
         pricing_text = pricing_url = None
         if plink:
             pr = get(plink)
             if pr is not None:
-                pricing_text, pricing_url = visible_text(pr.text), str(pr.url)
-        tier, low, src, note = classify(visible_text(home.text), pricing_text, category, cfg, home_url, pricing_url)
+                pricing_text, pricing_url = visible_text(pr[1]), str(pr[0].url)
+        tier, low, src, note = classify(visible_text(home_html), pricing_text, category, cfg, home_url, pricing_url)
         sig.tier, sig.min_usd_month, sig.source_url = tier, low, src
         sig.note = note or (sig.note if tier == "unknown" else "")
         return sig

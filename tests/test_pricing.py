@@ -80,7 +80,7 @@ def test_yearly_price_is_divided_by_12(cfg):
 
 # ------------------------------------------------------------------ network policy (CEO condition, fixed in code)
 def _fetcher(handler):
-    return PricingFetcher(transport=httpx.MockTransport(handler))
+    return PricingFetcher(transport=httpx.MockTransport(handler), check_url=lambda _u: None)
 
 
 def test_network_policy_ua_cap_no_retry_robots(cfg):
@@ -122,6 +122,57 @@ def test_network_policy_ua_cap_no_retry_robots(cfg):
 
     s3 = _fetcher(blocked).fetch("a/e", "https://baz.com/", "analytics", cfg)
     assert s3.tier == "unknown" and "robots" in s3.note and hits == ["/robots.txt"] and s3.requests == 0
+
+
+def test_redirect_hop_is_robots_checked(cfg):
+    # foo.com/ -> app.bar.com/ whose robots.txt disallows everything: the redirected page is never fetched
+    seen: list[str] = []
+
+    def h(req: httpx.Request) -> httpx.Response:
+        seen.append(f"{req.url.host}{req.url.path}")
+        if req.url.path == "/robots.txt":
+            return httpx.Response(200, text="User-agent: *\nDisallow: /\n" if req.url.host == "app.bar.com" else "")
+        if req.url.host == "foo.com":
+            return httpx.Response(301, headers={"location": "https://app.bar.com/"})
+        return httpx.Response(200, headers={"content-type": "text/html"}, text=page("<p>$9/mo</p>"))
+
+    s = _fetcher(h).fetch("a/b", "https://foo.com/", "analytics", cfg)
+    assert s.tier == "unknown" and "robots" in s.note and "app.bar.com/" not in seen
+
+
+def test_same_site_redirect_still_reads(cfg):
+    def h(req: httpx.Request) -> httpx.Response:
+        if req.url.path == "/robots.txt":
+            return httpx.Response(404)
+        if req.url.host == "foo.com":
+            return httpx.Response(301, headers={"location": "https://www.foo.com/"})
+        return httpx.Response(200, headers={"content-type": "text/html"}, text=page("<p>Pro $12/mo</p>"))
+
+    s = _fetcher(h).fetch("a/b", "https://foo.com/", "analytics", cfg)
+    assert s.tier == "selfserve" and s.requests == 1 and s.source_url == "https://www.foo.com/"
+
+
+def test_non_public_hosts_are_blocked_before_any_request(cfg):
+    from scout.pricing import Blocked, check_public_url
+    import pytest
+
+    for u in ("http://127.0.0.1/", "http://169.254.169.254/latest/meta-data/", "http://10.0.0.5/", "http://localhost/",
+              "https://example.com:8443/", "ftp://example.com/"):
+        with pytest.raises(Blocked):
+            check_public_url(u)
+    hit: list[str] = []
+    f = PricingFetcher(transport=httpx.MockTransport(lambda r: hit.append(str(r.url)) or httpx.Response(200)))
+    s = f.fetch("a/b", "http://169.254.169.254/", "analytics", cfg)
+    assert s.tier == "unknown" and hit == [] and s.requests == 0
+
+
+def test_body_is_cut_at_max_bytes(cfg):
+    from scout import pricing
+
+    big = page("<p>Pro $9/mo</p>") + "x" * (pricing.MAX_BYTES * 2)
+    f = _fetcher(lambda r: httpx.Response(404) if r.url.path == "/robots.txt" else httpx.Response(200, headers={"content-type": "text/html"}, text=big))
+    _r, text = f._get("https://foo.com/")
+    assert len(text) <= pricing.MAX_BYTES
 
 
 def test_no_homepage_is_unknown_without_requests(cfg):
